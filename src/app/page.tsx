@@ -11,9 +11,9 @@ export default function Home() {
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-home');
   
   const featuredProperties = [
-    { id: "1", image: "https://picsum.photos/seed/lux-house-1/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
-    { id: "2", image: "https://picsum.photos/seed/lux-apt-2/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
-    { id: "3", image: "https://picsum.photos/seed/lux-estate-3/800/600", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: "8,900,000", beds: 5, baths: 4, cars: 4, area: 1200, agent: "David Beck" },
+    { id: "1", image: "https://picsum.photos/seed/lux-house-sydney/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
+    { id: "2", image: "https://picsum.photos/seed/lux-apt-melbourne/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
+    { id: "3", image: "https://picsum.photos/seed/lux-estate-byron/800/600", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: "8,900,000", beds: 5, baths: 4, cars: 4, area: 1200, agent: "David Beck" },
   ];
 
   return (
@@ -21,11 +21,11 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
         <Image
-          src={heroImage?.imageUrl || "https://picsum.photos/seed/architecture-hero/1920/1080"}
+          src={heroImage?.imageUrl || "https://picsum.photos/seed/modern-building-arch/1920/1080"}
           alt={heroImage?.description || "Modern Architecture"}
           fill
           priority
-          className="object-cover scale-105"
+          className="object-cover"
           data-ai-hint={heroImage?.imageHint || "Modern Architecture"}
         />
         <div className="absolute inset-0 bg-black/40" />
@@ -67,7 +67,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div className="relative aspect-[16/10] bg-gray-200">
             <Image
-              src="https://picsum.photos/seed/market-insights/800/600"
+              src="https://picsum.photos/seed/market-insights-main/800/600"
               alt="Market Insights"
               fill
               className="object-cover"
@@ -110,7 +110,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="py-32 bg-[#111111] text-white text-center px-6 overflow-hidden relative">
-        <div className="absolute inset-0 opacity-10 bg-[url('https://picsum.photos/seed/au-pattern-bg/1920/1080')] bg-cover" />
+        <div className="absolute inset-0 opacity-10 bg-[url('https://picsum.photos/seed/australia-pattern/1920/1080')] bg-cover" />
         <div className="relative z-10">
           <h2 className="font-headline font-extrabold text-4xl md:text-6xl mb-8">READY TO MOVE?</h2>
           <div className="flex flex-col md:flex-row justify-center gap-4">

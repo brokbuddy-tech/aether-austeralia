@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-home",
-      "description": "Modern Australian coastal home with floor-to-ceiling glass and natural light",
-      "imageUrl": "https://picsum.photos/seed/aether1/1920/1080",
-      "imageHint": "Modern Coastal Architecture"
+      "description": "Ultra-luxury modern Australian estate with infinity pool and panoramic views",
+      "imageUrl": "https://picsum.photos/seed/luxury-estate/1920/1080",
+      "imageHint": "Luxury Modern Estate"
     },
     {
       "id": "property-1",

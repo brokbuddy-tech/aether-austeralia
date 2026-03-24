@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import HeroSearch from "@/components/hero-search";
@@ -27,7 +26,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative text-center px-6 w-full max-w-7xl">
           <h1 className="text-white font-headline font-extrabold text-5xl md:text-8xl mb-8 tracking-tighter leading-none animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            DISCOVER THE <br /> <span className="text-primary italic">AETHER</span> LIFESTYLE.
+            DISCOVER THE <br /> <span className="text-white italic">AETHER</span> LIFESTYLE.
           </h1>
           <HeroSearch />
         </div>

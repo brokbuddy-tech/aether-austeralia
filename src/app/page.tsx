@@ -20,14 +20,14 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
         <Image
-          src={heroImage?.imageUrl || "https://picsum.photos/seed/aether1/1920/1080"}
-          alt={heroImage?.description || "Luxury Australian Home"}
+          src={heroImage?.imageUrl || "https://picsum.photos/seed/aether-arch/1920/1080"}
+          alt={heroImage?.description || "Modern Architecture"}
           fill
           priority
           className="object-cover scale-105"
-          data-ai-hint={heroImage?.imageHint || "Modern Coastal Architecture"}
+          data-ai-hint={heroImage?.imageHint || "Modern Architecture"}
         />
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-black/40" />
         <div className="relative text-center px-6 w-full max-w-7xl">
           <h1 className="text-white font-headline font-extrabold text-4xl md:text-6xl mb-8 tracking-tighter leading-none animate-in fade-in slide-in-from-bottom-8 duration-1000">
             DISCOVER THE <span className="text-white italic">AETHER</span> LIFESTYLE.

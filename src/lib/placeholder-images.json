@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-home",
-      "description": "Stunning luxury Australian waterfront estate with architectural brilliance",
-      "imageUrl": "https://picsum.photos/seed/luxury-home-1/1920/1080",
-      "imageHint": "Luxury Architecture"
+      "description": "Stunning modern building architecture featuring clean geometric lines, glass facades, and sophisticated Australian urban design",
+      "imageUrl": "https://picsum.photos/seed/architecture-hero/1920/1080",
+      "imageHint": "Modern Architecture"
     },
     {
       "id": "property-1",

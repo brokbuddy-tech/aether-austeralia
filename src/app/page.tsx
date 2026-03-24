@@ -11,9 +11,9 @@ export default function Home() {
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-home');
   
   const featuredProperties = [
-    { id: "1", image: "https://picsum.photos/seed/au1/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
-    { id: "2", image: "https://picsum.photos/seed/au2/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
-    { id: "3", image: "https://picsum.photos/seed/au3/800/600", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: "8,900,000", beds: 5, baths: 4, cars: 4, area: 1200, agent: "David Beck" },
+    { id: "1", image: "https://picsum.photos/seed/au-luxury-1/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
+    { id: "2", image: "https://picsum.photos/seed/au-luxury-2/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
+    { id: "3", image: "https://picsum.photos/seed/au-luxury-3/800/600", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: "8,900,000", beds: 5, baths: 4, cars: 4, area: 1200, agent: "David Beck" },
   ];
 
   return (
@@ -31,7 +31,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative text-center px-6 w-full max-w-7xl">
           <h1 className="text-white font-headline font-extrabold text-4xl md:text-6xl mb-8 tracking-tighter leading-none animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            DISCOVER THE <span className="text-white italic">AETHER</span> LIFESTYLE.
+            DISCOVER THE AETHER LIFESTYLE.
           </h1>
           <HeroSearch />
         </div>
@@ -67,10 +67,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div className="relative aspect-[16/10] bg-gray-200">
             <Image
-              src="https://picsum.photos/seed/market/800/600"
+              src="https://picsum.photos/seed/market-insights/800/600"
               alt="Market Insights"
               fill
               className="object-cover"
+              data-ai-hint="Property Analysis"
             />
             <div className="absolute top-8 -left-8 bg-white p-8 shadow-2xl max-w-xs hidden md:block">
               <span className="text-secondary font-bold text-xs tracking-[0.2em] block mb-4">MARKET UPDATE</span>
@@ -109,7 +110,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="py-32 bg-[#111111] text-white text-center px-6 overflow-hidden relative">
-        <div className="absolute inset-0 opacity-10 bg-[url('https://picsum.photos/seed/aupattern/1920/1080')] bg-cover" />
+        <div className="absolute inset-0 opacity-10 bg-[url('https://picsum.photos/seed/au-pattern-bg/1920/1080')] bg-cover" />
         <div className="relative z-10">
           <h2 className="font-headline font-extrabold text-4xl md:text-6xl mb-8">READY TO MOVE?</h2>
           <div className="flex flex-col md:flex-row justify-center gap-4">

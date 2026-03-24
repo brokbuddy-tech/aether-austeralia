@@ -4,8 +4,11 @@ import HeroSearch from "@/components/hero-search";
 import DifferenceBlock from "@/components/difference-block";
 import PropertyCard from "@/components/property-card";
 import { Button } from "@/components/ui/button";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default function Home() {
+  const heroImage = PlaceHolderImages.find(img => img.id === 'hero-home');
+  
   const featuredProperties = [
     { id: "1", image: "https://picsum.photos/seed/au1/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
     { id: "2", image: "https://picsum.photos/seed/au2/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
@@ -17,11 +20,12 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
         <Image
-          src="https://picsum.photos/seed/homehero/1920/1080"
-          alt="Luxury Australian Home"
+          src={heroImage?.imageUrl || "https://picsum.photos/seed/aether1/1920/1080"}
+          alt={heroImage?.description || "Luxury Australian Home"}
           fill
           priority
           className="object-cover scale-105"
+          data-ai-hint={heroImage?.imageHint || "Modern Coastal Architecture"}
         />
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative text-center px-6 w-full max-w-7xl">

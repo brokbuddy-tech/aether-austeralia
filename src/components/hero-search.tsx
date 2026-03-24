@@ -47,7 +47,7 @@ export default function HeroSearch() {
                 className={cn(
                   "px-4 py-1.5 text-[13px] font-bold tracking-tight rounded-full transition-all duration-300",
                   activeTab === tab
-                    ? "bg-[#005555] text-white shadow-lg"
+                    ? "bg-primary text-white shadow-lg"
                     : "text-white hover:bg-white/20"
                 )}
               >
@@ -82,7 +82,7 @@ export default function HeroSearch() {
               <Link href={`/search?type=${activeTab.toLowerCase()}&q=${query}`}>
                 <Button 
                   size="sm" 
-                  className="bg-[#005555] hover:bg-[#004444] text-white font-bold px-6 h-9 rounded-full flex items-center gap-2"
+                  className="bg-primary hover:opacity-90 text-white font-bold px-6 h-9 rounded-full flex items-center gap-2"
                 >
                   <Search className="w-3.5 h-3.5" />
                   <span className="font-headline tracking-widest uppercase text-[10px]">SEARCH</span>

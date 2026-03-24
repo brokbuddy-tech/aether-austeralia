@@ -3,9 +3,9 @@
   "placeholderImages": [
     {
       "id": "hero-home",
-      "description": "Stunning modern residential architecture featuring expansive glass, natural stone, and sophisticated Australian landscape integration",
-      "imageUrl": "https://picsum.photos/seed/aether-arch/1920/1080",
-      "imageHint": "Modern Architecture"
+      "description": "Exquisite modern building architecture featuring clean geometric lines, glass facades, and sophisticated Australian urban design",
+      "imageUrl": "https://picsum.photos/seed/building-luxe/1920/1080",
+      "imageHint": "Modern Building"
     },
     {
       "id": "property-1",

@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-home",
-      "description": "Ultra-luxury modern Australian estate with infinity pool and panoramic views",
-      "imageUrl": "https://picsum.photos/seed/luxury-estate/1920/1080",
-      "imageHint": "Luxury Modern Estate"
+      "description": "Stunning luxury Australian waterfront estate with architectural brilliance",
+      "imageUrl": "https://picsum.photos/seed/luxury-home-1/1920/1080",
+      "imageHint": "Luxury Architecture"
     },
     {
       "id": "property-1",

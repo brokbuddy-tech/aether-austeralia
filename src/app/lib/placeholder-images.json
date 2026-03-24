@@ -3,39 +3,39 @@
   "placeholderImages": [
     {
       "id": "hero-home",
-      "description": "Stunning modern building architecture featuring clean geometric lines, glass facades, and sophisticated Australian urban design",
-      "imageUrl": "https://picsum.photos/seed/modern-building-arch/1920/1080",
-      "imageHint": "Modern Building"
+      "description": "Premium Australian waterfront estate with modern architectural lines and high-key natural lighting",
+      "imageUrl": "https://picsum.photos/seed/lux-waterfront-au/1920/1080",
+      "imageHint": "Luxury Waterfront Estate"
     },
     {
       "id": "property-1",
-      "description": "Sydney Terrace house with modern renovation",
-      "imageUrl": "https://picsum.photos/seed/sydney-terrace/800/600",
-      "imageHint": "Sydney Terrace House"
+      "description": "Sydney Modern Terrace with warm timber accents and architectural lighting",
+      "imageUrl": "https://picsum.photos/seed/sydney-modern-arch/800/600",
+      "imageHint": "Modern Sydney Terrace"
     },
     {
       "id": "property-2",
-      "description": "Hamptons style luxury home in Melbourne",
-      "imageUrl": "https://picsum.photos/seed/hamptons-home/800/600",
-      "imageHint": "Hamptons Luxury Home"
+      "description": "Hamptons style luxury coastal home with neutral linens and earthy textures",
+      "imageUrl": "https://picsum.photos/seed/hamptons-coastal/800/600",
+      "imageHint": "Hamptons Luxury Coastal"
     },
     {
       "id": "property-3",
-      "description": "Modern apartment with ocean views in Gold Coast",
-      "imageUrl": "https://picsum.photos/seed/gold-coast-apt/800/600",
-      "imageHint": "Modern Gold Coast Apartment"
+      "description": "High-end urban apartment with floor-to-ceiling glass and city views",
+      "imageUrl": "https://picsum.photos/seed/urban-lux-apt/800/600",
+      "imageHint": "Luxury Urban Apartment"
     },
     {
       "id": "agent-1",
-      "description": "Professional agent with biophilic background",
-      "imageUrl": "https://picsum.photos/seed/agent-profile-1/400/400",
-      "imageHint": "Professional Real Estate Agent"
+      "description": "Professional agent portrait with a blurred biophilic greenery background",
+      "imageUrl": "https://picsum.photos/seed/agent-bio-1/400/400",
+      "imageHint": "Professional Agent Portrait"
     },
     {
-      "id": "insight-1",
-      "description": "Australian property market graphs and sandstone architecture",
-      "imageUrl": "https://picsum.photos/seed/market-analysis/600/400",
-      "imageHint": "Property Market Analysis"
+      "id": "location-1",
+      "description": "Nearby pristine Australian beach at golden hour",
+      "imageUrl": "https://picsum.photos/seed/bondi-lifestyle/800/600",
+      "imageHint": "Australian Beach Lifestyle"
     }
   ]
 }

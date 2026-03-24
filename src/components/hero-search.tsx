@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -48,7 +47,7 @@ export default function HeroSearch() {
                 className={cn(
                   "px-4 py-1.5 text-[13px] font-bold tracking-tight rounded-full transition-all duration-300",
                   activeTab === tab
-                    ? "bg-[#0047AB] text-white shadow-lg"
+                    ? "bg-[#005555] text-white shadow-lg"
                     : "text-white hover:bg-white/20"
                 )}
               >

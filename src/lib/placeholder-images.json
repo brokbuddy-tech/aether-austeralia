@@ -1,3 +1,40 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-home",
+      "description": "Modern Australian coastal home with floor-to-ceiling glass and natural light",
+      "imageUrl": "https://picsum.photos/seed/aether1/1920/1080",
+      "imageHint": "Modern Coastal Architecture"
+    },
+    {
+      "id": "property-1",
+      "description": "Sydney Terrace house with modern renovation",
+      "imageUrl": "https://picsum.photos/seed/aether2/800/600",
+      "imageHint": "Sydney Terrace House"
+    },
+    {
+      "id": "property-2",
+      "description": "Hamptons style luxury home in Melbourne",
+      "imageUrl": "https://picsum.photos/seed/aether3/800/600",
+      "imageHint": "Hamptons Luxury Home"
+    },
+    {
+      "id": "property-3",
+      "description": "Modern apartment with ocean views in Gold Coast",
+      "imageUrl": "https://picsum.photos/seed/aether4/800/600",
+      "imageHint": "Modern Gold Coast Apartment"
+    },
+    {
+      "id": "agent-1",
+      "description": "Professional agent with biophilic background",
+      "imageUrl": "https://picsum.photos/seed/agent1/400/400",
+      "imageHint": "Professional Real Estate Agent"
+    },
+    {
+      "id": "insight-1",
+      "description": "Australian property market graphs and sandstone architecture",
+      "imageUrl": "https://picsum.photos/seed/insight1/600/400",
+      "imageHint": "Property Market Analysis"
+    }
+  ]
 }

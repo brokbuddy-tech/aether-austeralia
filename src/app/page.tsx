@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import HeroSearch from "@/components/hero-search";
@@ -17,8 +16,8 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex flex-col relative">
-      {/* Fixed Background Layer */}
+    <div className="flex flex-col relative min-h-screen">
+      {/* Fixed Background Layer - Only visible through the transparent hero */}
       <div className="fixed inset-0 w-full h-screen z-0">
         <Image
           src={heroImage?.imageUrl || "https://picsum.photos/seed/modern-building-arch/1920/1080"}
@@ -28,21 +27,21 @@ export default function Home() {
           className="object-cover"
           data-ai-hint={heroImage?.imageHint || "Modern Architecture"}
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/30" />
       </div>
 
-      {/* Hero Content Section - Transparent to show the fixed image */}
-      <section className="relative z-10 h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-transparent">
-        <div className="relative text-center px-6 w-full max-w-7xl">
-          <h1 className="text-white font-headline font-extrabold text-4xl md:text-6xl mb-8 tracking-tighter leading-none animate-in fade-in slide-in-from-bottom-8 duration-1000 uppercase">
+      {/* Hero Content Section - Transparent background to reveal the fixed image */}
+      <section className="relative z-10 h-screen min-h-[700px] flex items-center justify-center bg-transparent">
+        <div className="text-center px-6 w-full max-w-7xl">
+          <h1 className="text-white font-headline font-extrabold text-4xl md:text-6xl mb-8 tracking-tighter leading-none uppercase animate-in fade-in slide-in-from-bottom-8 duration-1000">
             DISCOVER THE AETHER LIFESTYLE.
           </h1>
           <HeroSearch />
         </div>
       </section>
 
-      {/* Scrollable Content Container - Solid backgrounds to cover the fixed layer */}
-      <div className="relative z-20">
+      {/* Main Content Container - Solid background to cover the fixed hero layer when scrolling */}
+      <div className="relative z-20 bg-white">
         {/* Featured Properties */}
         <section className="py-24 px-6 bg-[#F5F7FA]">
           <div className="max-w-7xl mx-auto">
@@ -66,14 +65,12 @@ export default function Home() {
         </section>
 
         {/* The Difference Section */}
-        <div className="bg-white">
-          <DifferenceBlock />
-        </div>
+        <DifferenceBlock />
 
         {/* Insights Preview */}
-        <section className="py-24 px-6 bg-secondary/5 border-y border-secondary/10 relative z-20">
+        <section className="py-24 px-6 bg-secondary/5 border-y border-secondary/10">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div className="relative aspect-[16/10] bg-gray-200">
+            <div className="relative aspect-[16/10] bg-gray-200 shadow-2xl">
               <Image
                 src="https://picsum.photos/seed/market-insights-main/800/600"
                 alt="Market Insights"
@@ -117,17 +114,26 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-32 bg-[#111111] text-white text-center px-6 overflow-hidden relative z-20">
-          <div className="absolute inset-0 opacity-10 bg-[url('https://picsum.photos/seed/australia-pattern/1920/1080')] bg-cover" />
+        <section className="py-32 bg-[#111111] text-white text-center px-6 overflow-hidden relative">
+          <div className="absolute inset-0 opacity-10 grayscale">
+             <Image 
+              src="https://picsum.photos/seed/australia-pattern/1920/1080" 
+              alt="Pattern" 
+              fill 
+              className="object-cover" 
+            />
+          </div>
           <div className="relative z-30">
             <h2 className="font-headline font-extrabold text-4xl md:text-6xl mb-8 uppercase tracking-tighter">READY TO MOVE?</h2>
             <div className="flex flex-col md:flex-row justify-center gap-4">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold px-12 h-16 text-lg rounded-none uppercase tracking-[0.2em]">
                 LIST YOUR PROPERTY
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black font-bold px-12 h-16 text-lg rounded-none uppercase tracking-[0.2em]">
-                FIND A RESIDENCE
-              </Button>
+              <Link href="/search">
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black font-bold px-12 h-16 text-lg rounded-none uppercase tracking-[0.2em]">
+                  FIND A RESIDENCE
+                </Button>
+              </Link>
             </div>
           </div>
         </section>

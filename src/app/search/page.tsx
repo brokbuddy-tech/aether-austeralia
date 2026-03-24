@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 
 export default function SearchPage() {
   const properties = [
-    { id: "1", image: "https://picsum.photos/seed/au-luxury-1/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
-    { id: "2", image: "https://picsum.photos/seed/au-luxury-2/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
-    { id: "3", image: "https://picsum.photos/seed/au-luxury-3/800/600", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: "8,900,000", beds: 5, baths: 4, cars: 4, area: 1200, agent: "David Beck" },
-    { id: "4", image: "https://picsum.photos/seed/au-luxury-4/800/600", address: "55 The Esplanade", suburb: "GOLD COAST, QLD", price: "1,850,000", beds: 3, baths: 2, cars: 2, area: 180, agent: "Sarah Jenkins" },
-    { id: "5", image: "https://picsum.photos/seed/au-luxury-5/800/600", address: "10 Terrace St", suburb: "PADDINGTON, NSW", price: "3,400,000", beds: 3, baths: 2, cars: 0, area: 150, agent: "Marcus Thorne" },
-    { id: "6", image: "https://picsum.photos/seed/au-luxury-6/800/600", address: "Acreage Lot 9", suburb: "MALENY, QLD", price: "2,750,000", beds: 4, baths: 3, cars: 6, area: 4500, agent: "David Beck" },
+    { id: "1", image: "https://picsum.photos/seed/lux-house-1/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
+    { id: "2", image: "https://picsum.photos/seed/lux-apt-2/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
+    { id: "3", image: "https://picsum.photos/seed/lux-estate-3/800/600", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: "8,900,000", beds: 5, baths: 4, cars: 4, area: 1200, agent: "David Beck" },
+    { id: "4", image: "https://picsum.photos/seed/lux-villa-4/800/600", address: "55 The Esplanade", suburb: "GOLD COAST, QLD", price: "1,850,000", beds: 3, baths: 2, cars: 2, area: 180, agent: "Sarah Jenkins" },
+    { id: "5", image: "https://picsum.photos/seed/lux-terrace-5/800/600", address: "10 Terrace St", suburb: "PADDINGTON, NSW", price: "3,400,000", beds: 3, baths: 2, cars: 0, area: 150, agent: "Marcus Thorne" },
+    { id: "6", image: "https://picsum.photos/seed/lux-acreage-6/800/600", address: "Acreage Lot 9", suburb: "MALENY, QLD", price: "2,750,000", beds: 4, baths: 3, cars: 6, area: 4500, agent: "David Beck" },
   ];
 
   return (

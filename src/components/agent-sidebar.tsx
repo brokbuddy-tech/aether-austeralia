@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -5,15 +6,9 @@ import { MessageSquare, Phone, ShieldCheck, Mail, FileDown } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
+import Link from "next/link";
 
-export default function AgentSidebar() {
-  const handleDownloadBrochure = () => {
-    toast({
-      title: "Brochure Requested",
-      description: "The digital property portfolio is being prepared for download.",
-    });
-  };
-
+export default function AgentSidebar({ propertyId }: { propertyId: string }) {
   return (
     <div className="space-y-6">
       <Card className="rounded-none border-none shadow-2xl overflow-hidden bg-white/15 backdrop-blur-xl border border-white/20">
@@ -67,13 +62,14 @@ export default function AgentSidebar() {
               BOOK PRIVATE INSPECTION
             </Button>
             
-            <Button 
-              variant="outline" 
-              onClick={handleDownloadBrochure}
-              className="w-full border-black text-black hover:bg-black hover:text-white transition-all font-bold h-12 rounded-none uppercase tracking-[0.2em] text-[10px]"
-            >
-              <FileDown className="w-3.5 h-3.5 mr-2" /> DOWNLOAD BROCHURE
-            </Button>
+            <Link href={`/property/${propertyId}/brochure`} target="_blank">
+              <Button 
+                variant="outline" 
+                className="w-full border-black text-black hover:bg-black hover:text-white transition-all font-bold h-12 rounded-none uppercase tracking-[0.2em] text-[10px]"
+              >
+                <FileDown className="w-3.5 h-3.5 mr-2" /> VIEW DIGITAL BROCHURE
+              </Button>
+            </Link>
 
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" className="border-gray-200 rounded-none h-12 font-bold text-[10px] tracking-widest uppercase hover:bg-gray-50">

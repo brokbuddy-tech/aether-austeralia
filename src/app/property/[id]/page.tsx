@@ -1,5 +1,6 @@
+
 import Image from "next/image";
-import { Bed, Bath, Car, Maximize, MapPin, Share2, Heart, ShieldCheck, PlayCircle, Info, ArrowLeft, Calendar, MessageSquare, Phone } from "lucide-react";
+import { Bed, Bath, Car, Maximize, MapPin, Share2, Heart, ShieldCheck, PlayCircle, Info, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AgentSidebar from "@/components/agent-sidebar";
 import InspectionScheduler from "@/components/inspection-scheduler";
@@ -170,7 +171,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
               </div>
             </div>
 
-            {/* Amenities Grid - Now positioned above description */}
+            {/* Amenities Grid */}
             <div className="mb-16">
               <h3 className="text-[9px] font-bold text-gray-400 tracking-[0.4em] uppercase mb-6">PREMIUM FEATURES</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
@@ -223,7 +224,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
           {/* Sticky Action Sidebar */}
           <div className="lg:col-span-4 relative">
             <div className="sticky top-24 space-y-6">
-              <AgentSidebar />
+              <AgentSidebar propertyId={id} />
               
               {/* Inspection Times Block */}
               <div className="bg-gray-50 p-6 border border-gray-100 text-center">

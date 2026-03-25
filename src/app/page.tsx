@@ -5,6 +5,12 @@ import DifferenceBlock from "@/components/difference-block";
 import PropertyCard from "@/components/property-card";
 import { Button } from "@/components/ui/button";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-home');
@@ -117,7 +123,7 @@ export default function Home() {
         </section>
 
         {/* Insights & Advice Section */}
-        <section className="relative py-32 px-6 bg-white overflow-hidden">
+        <section className="relative py-32 px-6 bg-white overflow-hidden border-t border-gray-100">
           {/* Parallax Background */}
           <div className="absolute inset-0 opacity-[0.05] grayscale pointer-events-none z-0">
              <Image 
@@ -227,6 +233,84 @@ export default function Home() {
                   FIND A RESIDENCE
                 </Button>
               </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-24 px-6 bg-white border-t border-gray-100">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+              {/* Image Side */}
+              <div className="relative aspect-square lg:aspect-[4/5] overflow-hidden shadow-2xl group">
+                <Image
+                  src="https://picsum.photos/seed/faq-concierge/800/1000"
+                  alt="Aether Australia Specialist"
+                  fill
+                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                  data-ai-hint="Luxury Interior Office"
+                />
+                <div className="absolute inset-0 bg-primary/10 mix-blend-multiply" />
+                <div className="absolute bottom-10 left-10 right-10 bg-white/95 backdrop-blur-md p-10 border-l-8 border-primary shadow-2xl">
+                  <p className="text-[10px] font-bold text-gray-400 tracking-[0.4em] uppercase mb-4">Concierge Desk</p>
+                  <h3 className="font-headline font-extrabold text-3xl tracking-tighter uppercase leading-none">Your journey,<br /> refined.</h3>
+                </div>
+              </div>
+
+              {/* Accordion Side */}
+              <div>
+                <div className="mb-16">
+                  <span className="inline-block text-[10px] font-bold text-primary tracking-[0.5em] uppercase mb-4 border-b-2 border-primary pb-1">
+                    FREQUENTLY ASKED QUESTIONS
+                  </span>
+                  <h3 className="font-headline font-extrabold text-4xl md:text-5xl tracking-tighter uppercase leading-[0.9] mt-6">
+                    Clarity at every <br /><span className="text-gray-300">touchpoint.</span>
+                  </h3>
+                </div>
+
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="item-1" className="border-b border-gray-100 py-6">
+                    <AccordionTrigger className="font-headline font-bold text-xl hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
+                      How does Aether verify property listings?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-4 text-lg">
+                      Every residence in our portfolio undergoes a rigorous 6-star audit. Our specialists verify structural integrity, metadata accuracy, and compliance with REIA 2026 standards before any property is presented to our clients.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-2" className="border-b border-gray-100 py-6">
+                    <AccordionTrigger className="font-headline font-bold text-xl hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
+                      What is the "Aether Difference" in management?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-4 text-lg">
+                      We combine hyper-local data with global heritage. Our landlords benefit from real-time performance metrics via our proprietary Proprietor Portals and a dedicated 24/7 concierge for all management inquiries.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-3" className="border-b border-gray-100 py-6">
+                    <AccordionTrigger className="font-headline font-bold text-xl hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
+                      Can I request a private digital viewing?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-4 text-lg">
+                      Absolutely. Most of our premium listings feature 360° virtual tours. We can also arrange private, agent-led digital walk-throughs for interstate and international clients who require immediate inspections.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-4" className="border-b border-gray-100 py-6">
+                    <AccordionTrigger className="font-headline font-bold text-xl hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
+                      What Australian states do you operate in?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-4 text-lg">
+                      Aether Australia operates nationally, with fully licensed specialist teams in NSW, VIC, QLD, WA, SA, TAS, ACT, and NT. We specialize in Australia's most coveted urban and coastal residential enclaves.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+                
+                <div className="mt-16">
+                   <Link href="/contact">
+                    <Button variant="outline" className="border-black text-black font-bold h-16 px-10 rounded-none uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-all shadow-lg">
+                      Connect with a Specialist
+                    </Button>
+                   </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>

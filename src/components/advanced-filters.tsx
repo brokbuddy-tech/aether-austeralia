@@ -93,8 +93,8 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
             variant={value === opt ? "default" : "outline"}
             onClick={() => onChange(opt)}
             className={cn(
-              "flex-1 rounded-none h-12 font-bold text-xs transition-all focus-visible:ring-0 focus-visible:ring-offset-0",
-              value === opt ? "bg-[#111111] text-white" : "border-gray-200 text-gray-500 hover:bg-gray-50"
+              "flex-1 rounded-none h-12 font-bold text-xs transition-all focus-visible:ring-0 focus-visible:ring-offset-0 outline-none",
+              value === opt ? "bg-[#111111] text-white" : "border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-black"
             )}
           >
             {opt === "any" ? "ANY" : opt === "5" ? "5+" : opt}
@@ -161,7 +161,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
       <DialogTrigger asChild>
         <Button 
           variant="outline" 
-          className="rounded-full border-gray-300 bg-transparent text-black font-bold h-9 px-4 hover:bg-gray-100 hover:text-black transition-all text-[11px]"
+          className="rounded-full border-gray-300 bg-transparent text-black font-bold h-9 px-4 hover:bg-gray-100 hover:text-black transition-all text-[11px] focus-visible:ring-0 focus-visible:ring-offset-0 outline-none"
         >
           <SlidersHorizontal className="w-3.5 h-3.5 mr-2" />
           More Filters
@@ -170,7 +170,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
       <DialogContent className="max-w-2xl h-[90vh] p-0 rounded-none border-none bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col">
         <DialogHeader className="p-8 border-b border-gray-100 flex-shrink-0">
           <div className="flex justify-between items-center">
-            <DialogTitle className="font-headline font-extrabold text-3xl tracking-tighter uppercase">Advanced Filters</DialogTitle>
+            <DialogTitle className="font-headline font-extrabold text-3xl tracking-tighter uppercase text-[#111111]">Advanced Filters</DialogTitle>
           </div>
         </DialogHeader>
 
@@ -235,7 +235,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
                       "px-6 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all border focus-visible:ring-0 focus-visible:ring-offset-0 outline-none",
                       propertyTypes.includes(type)
                         ? "bg-[#111111] text-white border-[#111111]"
-                        : "bg-white text-gray-500 border-gray-200 hover:border-gray-400"
+                        : "bg-white text-gray-500 border-gray-200 hover:border-gray-400 hover:text-black"
                     )}
                   >
                     {type}
@@ -258,7 +258,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
                   { label: "Fully Fenced", icon: Shield },
                 ].map((item) => (
                   <div key={item.label} className="flex items-center space-x-3 group cursor-pointer">
-                    <Checkbox id={item.label} className="rounded-none border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" />
+                    <Checkbox id={item.label} className="rounded-none border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary focus-visible:ring-0 focus-visible:ring-offset-0 outline-none" />
                     <label 
                       htmlFor={item.label}
                       className="text-sm font-bold text-gray-600 cursor-pointer group-hover:text-black flex items-center gap-2 transition-colors"
@@ -280,9 +280,9 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
                   { label: "Furnished", icon: Sofa },
                   { label: "Elite School Catchment", icon: Shield, highlight: true },
                 ].map((item) => (
-                  <div key={item.label} className="flex items-center space-x-3 p-4 bg-gray-50 border border-transparent hover:border-gray-200 transition-all cursor-pointer">
-                    <Checkbox id={item.label} className="rounded-none border-gray-300 data-[state=checked]:bg-primary focus-visible:ring-0 focus-visible:ring-offset-0" />
-                    <label htmlFor={item.label} className="text-xs font-bold text-gray-500 cursor-pointer flex-1 flex items-center gap-2">
+                  <div key={item.label} className="flex items-center space-x-3 p-4 bg-gray-50 border border-transparent hover:border-gray-200 transition-all cursor-pointer group">
+                    <Checkbox id={item.label} className="rounded-none border-gray-300 data-[state=checked]:bg-primary focus-visible:ring-0 focus-visible:ring-offset-0 outline-none" />
+                    <label htmlFor={item.label} className="text-xs font-bold text-gray-500 cursor-pointer flex-1 flex items-center gap-2 group-hover:text-black transition-colors">
                       {item.label}
                       {item.highlight && <Info className="w-3 h-3 text-primary" />}
                     </label>
@@ -303,7 +303,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
           </button>
           <Button 
             onClick={handleShowProperties}
-            className="bg-[#111111] hover:bg-black text-white px-10 h-14 rounded-none font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-xl focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="bg-[#111111] hover:bg-black text-white px-10 h-14 rounded-none font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-xl focus-visible:ring-0 focus-visible:ring-offset-0 outline-none"
           >
             Show {resultCount} Properties
           </Button>

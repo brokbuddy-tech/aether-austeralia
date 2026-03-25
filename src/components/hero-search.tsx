@@ -35,22 +35,42 @@ export default function HeroSearch() {
   }, []);
 
   const handleSearch = async () => {
-    if (activeTab === "AI Agent") {
-      if (!query.trim()) return;
-      setIsLoadingAi(true);
-      setAiResponse(null);
-      try {
-        const response = await searchWithAi({ query });
-        setAiResponse(response);
-      } catch (error) {
-        console.error("AI Search failed:", error);
-      } finally {
-        setIsLoadingAi(false);
-      }
+    if (!query.trim()) return;
+    
+    // Ensure we are in AI mode if handleSearch is triggered (e.g., via Enter key)
+    if (activeTab !== "AI Agent") {
+      setLastNonAiTab(activeTab);
+      setActiveTab("AI Agent");
+    }
+
+    setIsLoadingAi(true);
+    setAiResponse(null);
+    try {
+      const response = await searchWithAi({ query });
+      setAiResponse(response);
+    } catch (error) {
+      console.error("AI Search failed:", error);
+    } finally {
+      setIsLoadingAi(false);
     }
   };
 
   const isAiMode = activeTab === "AI Agent";
+
+  const handleAiButtonClick = () => {
+    if (!isAiMode) {
+      setLastNonAiTab(activeTab);
+      setActiveTab("AI Agent");
+      setAiResponse(null);
+      // If there's already text, trigger search immediately for better UX
+      if (query.trim()) {
+        handleSearch();
+      }
+    } else if (query.trim()) {
+      // If already in AI mode and has text, act as a search button
+      handleSearch();
+    }
+  };
 
   const toggleAiMode = () => {
     if (isAiMode) {
@@ -100,9 +120,9 @@ export default function HeroSearch() {
                 onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-                placeholder={isAiMode ? "Ask our AI about the market, schools, or lifestyle..." : "Try a location or a school..."}
+                placeholder={isAiMode ? "Describe your ideal lifestyle or area..." : "Try a location or a school..."}
                 className="border-none focus-visible:ring-0 text-sm py-3 placeholder:text-gray-400 bg-transparent h-auto"
-                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                onKeyDown={(e) => e.key === 'Enter' && (isAiMode ? handleSearch() : null)}
               />
             </div>
             
@@ -118,28 +138,23 @@ export default function HeroSearch() {
               )}
 
               <Button
-                onClick={toggleAiMode}
+                onClick={handleAiButtonClick}
                 variant={isAiMode ? "default" : "secondary"}
                 className={cn(
                   "rounded-full font-bold h-9 px-4 transition-all text-[11px] flex items-center gap-2",
                   isAiMode ? "bg-accent text-white hover:bg-accent/90" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 )}
+                disabled={isLoadingAi}
               >
-                <Sparkles className={cn("w-3.5 h-3.5", isAiMode && "animate-pulse")} />
-                AI Agent
+                {isLoadingAi ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Sparkles className={cn("w-3.5 h-3.5", isAiMode && "animate-pulse")} />
+                )}
+                {isAiMode && query.trim() ? "Search with AI" : "AI Agent"}
               </Button>
               
-              {isAiMode ? (
-                <Button 
-                  onClick={handleSearch}
-                  disabled={isLoadingAi || !query.trim()}
-                  size="sm" 
-                  className="bg-primary hover:opacity-90 text-white font-bold px-6 h-9 rounded-full flex items-center gap-2"
-                >
-                  {isLoadingAi ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
-                  <span className="font-headline tracking-widest uppercase text-[10px]">ASK AI</span>
-                </Button>
-              ) : (
+              {!isAiMode && (
                 <Link href={`/search?type=${activeTab.toLowerCase()}&q=${query}`}>
                   <Button 
                     size="sm" 
@@ -150,13 +165,24 @@ export default function HeroSearch() {
                   </Button>
                 </Link>
               )}
+
+              {isAiMode && (
+                <Button 
+                  onClick={toggleAiMode}
+                  variant="ghost" 
+                  size="icon"
+                  className="rounded-full w-9 h-9 text-gray-400 hover:text-black"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              )}
             </div>
           </div>
         </div>
 
         {/* AI Response Display */}
         {aiResponse && (
-          <div className="mt-4 p-6 bg-white/95 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl animate-in fade-in slide-in-from-top-2 duration-500 relative">
+          <div className="mt-4 p-6 bg-white/95 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl animate-in fade-in slide-in-from-top-2 duration-500 relative text-left">
             <button 
               onClick={() => setAiResponse(null)}
               className="absolute top-4 right-4 text-gray-400 hover:text-black transition-colors"
@@ -168,21 +194,24 @@ export default function HeroSearch() {
                 <Sparkles className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1">
-                <h4 className="font-headline font-bold text-sm uppercase tracking-wider text-primary mb-2">AI Agent Response</h4>
+                <h4 className="font-headline font-bold text-sm uppercase tracking-wider text-primary mb-2">AI Property Insights</h4>
                 <p className="text-gray-700 text-sm leading-relaxed mb-4 whitespace-pre-wrap">
                   {aiResponse.answer}
                 </p>
                 {aiResponse.suggestedAreas && aiResponse.suggestedAreas.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {aiResponse.suggestedAreas.map((area) => (
-                      <Link 
-                        key={area}
-                        href={`/search?q=${area}`}
-                        className="px-3 py-1 bg-gray-100 hover:bg-primary/10 hover:text-primary transition-all text-[10px] font-bold tracking-tight rounded-full border border-gray-200"
-                      >
-                        {area}
-                      </Link>
-                    ))}
+                  <div>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Recommended Areas to Explore</p>
+                    <div className="flex flex-wrap gap-2">
+                      {aiResponse.suggestedAreas.map((area) => (
+                        <Link 
+                          key={area}
+                          href={`/search?q=${area}`}
+                          className="px-4 py-2 bg-gray-50 hover:bg-primary hover:text-white transition-all text-[11px] font-bold tracking-tight rounded-full border border-gray-200 shadow-sm"
+                        >
+                          {area}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -191,8 +220,8 @@ export default function HeroSearch() {
         )}
 
         {/* Suggestions Dropdown */}
-        {isFocused && !aiResponse && (
-          <div className="absolute top-[calc(100%+10px)] left-0 w-full bg-white/95 backdrop-blur-xl mt-1 shadow-2xl rounded-3xl p-6 z-50 animate-in fade-in slide-in-from-top-4 duration-500 border border-white/40">
+        {isFocused && !aiResponse && !isLoadingAi && (
+          <div className="absolute top-[calc(100%+10px)] left-0 w-full bg-white/95 backdrop-blur-xl mt-1 shadow-2xl rounded-3xl p-6 z-50 animate-in fade-in slide-in-from-top-4 duration-500 border border-white/40 text-left">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <div className="flex items-center gap-2 text-[9px] font-bold text-gray-400 mb-4 tracking-[0.2em] uppercase">
@@ -215,13 +244,13 @@ export default function HeroSearch() {
               <div>
                 <div className="flex items-center gap-2 text-[9px] font-bold text-gray-400 mb-4 tracking-[0.2em] uppercase">
                   <History className="w-3.5 h-3.5" />
-                  Recent Searches
+                  Expert Inquiries
                 </div>
                 <div className="space-y-1.5">
                   {isAiMode ? [
-                    "Where are the best schools in Sydney?",
-                    "What's the market outlook for Melbourne?",
-                    "Best beach suburbs for families in NSW"
+                    "What are the best schools in Sydney?",
+                    "Where should I invest for long-term growth?",
+                    "Best beach suburbs for young families"
                   ].map((search) => (
                     <button
                       key={search}
@@ -235,9 +264,9 @@ export default function HeroSearch() {
                       <span className="opacity-0 group-hover:opacity-100 transition-opacity text-primary">→</span>
                     </button>
                   )) : [
-                    "Luxury Homes in Sydney", 
-                    "Apartments Melbourne CBD", 
-                    "Coastal Living NSW"
+                    "Luxury Waterfront Estates", 
+                    "Melbourne CBD Penthouse", 
+                    "Byron Bay Coastal Living"
                   ].map((search) => (
                     <button
                       key={search}

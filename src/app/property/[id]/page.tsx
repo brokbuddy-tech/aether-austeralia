@@ -122,7 +122,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
 
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* Main Story Column */}
+          {/* Main Column */}
           <div className="lg:col-span-8">
             <div className="mb-10">
               <div className="flex items-center gap-4 mb-4">
@@ -131,10 +131,10 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 </Badge>
                 <div className="h-px flex-1 bg-gray-100" />
               </div>
-              <h1 className="font-headline font-extrabold text-xl md:text-2xl mb-2 tracking-tighter text-[#111111] leading-none uppercase">
+              <h1 className="font-headline font-extrabold text-lg md:text-xl mb-2 tracking-tighter text-[#111111] leading-none uppercase">
                 {propertyData.address}
               </h1>
-              <p className="text-[10px] md:text-xs text-gray-400 font-bold tracking-[0.2em] uppercase mb-8 flex items-center gap-2">
+              <p className="text-[9px] md:text-[10px] text-gray-400 font-bold tracking-[0.2em] uppercase mb-8 flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-primary" /> {propertyData.suburb}
               </p>
               
@@ -143,37 +143,34 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                   <span className="text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BEDROOMS</span>
                   <div className="flex items-center gap-2">
                     <Bed className="w-4 h-4 text-primary/40" />
-                    <span className="font-extrabold text-lg">{propertyData.beds}</span>
+                    <span className="font-extrabold text-base">{propertyData.beds}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BATHROOMS</span>
                   <div className="flex items-center gap-2">
                     <Bath className="w-4 h-4 text-primary/40" />
-                    <span className="font-extrabold text-lg">{propertyData.baths}</span>
+                    <span className="font-extrabold text-base">{propertyData.baths}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase block">CAR SPACES</span>
                   <div className="flex items-center gap-2">
                     <Car className="w-4 h-4 text-primary/40" />
-                    <span className="font-extrabold text-lg">{propertyData.cars}</span>
+                    <span className="font-extrabold text-base">{propertyData.cars}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase block">AREA</span>
                   <div className="flex items-center gap-2">
                     <Maximize className="w-4 h-4 text-primary/40" />
-                    <span className="font-extrabold text-lg">{propertyData.area}m<sup>2</sup></span>
+                    <span className="font-extrabold text-base">{propertyData.area}m<sup>2</sup></span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* AI Generated Narrative Story Component */}
-            <PropertyStory story={story} />
-
-            {/* Amenities Grid */}
+            {/* Amenities Grid - Now positioned above description */}
             <div className="mb-16">
               <h3 className="text-[9px] font-bold text-gray-400 tracking-[0.4em] uppercase mb-6">PREMIUM FEATURES</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
@@ -192,6 +189,9 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 ))}
               </div>
             </div>
+
+            {/* AI Generated Narrative Story Component */}
+            <PropertyStory story={story} />
 
             {/* Investment Summary */}
             <div className="mb-16 p-8 bg-[#111111] text-white shadow-2xl">

@@ -233,7 +233,7 @@ export default function Home() {
                 LIST YOUR PROPERTY
               </Button>
               <Link href="/search">
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black font-bold px-12 h-16 text-lg rounded-none uppercase tracking-[0.2em]">
+                <Button size="lg" variant="outline" className="bg-white border-white text-black hover:bg-white/90 font-bold px-12 h-16 text-lg rounded-none uppercase tracking-[0.2em]">
                   FIND A RESIDENCE
                 </Button>
               </Link>

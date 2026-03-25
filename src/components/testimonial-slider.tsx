@@ -1,8 +1,8 @@
-
 "use client";
 
 import * as React from "react";
 import Image from "next/image";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
@@ -34,6 +34,10 @@ const testimonials = [
 ];
 
 export default function TestimonialSlider() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 2500, stopOnInteraction: true })
+  );
+
   return (
     <section className="relative py-20 px-6 overflow-hidden bg-white border-t border-gray-50">
       {/* Parallax Background Layer */}
@@ -56,6 +60,9 @@ export default function TestimonialSlider() {
             align: "start",
             loop: true,
           }}
+          plugins={[plugin.current]}
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
           className="w-full"
         >
           <CarouselContent>

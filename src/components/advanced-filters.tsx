@@ -94,7 +94,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
             onClick={() => onChange(opt)}
             className={cn(
               "flex-1 rounded-none h-12 font-bold text-xs transition-all focus-visible:ring-0 focus-visible:ring-offset-0 outline-none",
-              value === opt ? "bg-[#111111] text-white" : "border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-black"
+              value === opt ? "bg-primary text-white" : "border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-black"
             )}
           >
             {opt === "any" ? "ANY" : opt === options[options.length - 1] ? `${opt}+` : opt}
@@ -234,7 +234,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
                     className={cn(
                       "px-6 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all border focus-visible:ring-0 focus-visible:ring-offset-0 outline-none",
                       propertyTypes.includes(type)
-                        ? "bg-[#111111] text-white border-[#111111]"
+                        ? "bg-primary text-white border-primary"
                         : "bg-white text-gray-500 border-gray-200 hover:border-gray-400 hover:text-black"
                     )}
                   >

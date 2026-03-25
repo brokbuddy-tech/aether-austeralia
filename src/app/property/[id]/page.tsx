@@ -130,40 +130,40 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 </Badge>
                 <div className="h-px flex-1 bg-gray-100" />
               </div>
-              <h1 className="font-headline font-extrabold text-2xl md:text-4xl mb-3 tracking-tighter text-[#111111] leading-none uppercase">
+              <h1 className="font-headline font-extrabold text-xl md:text-2xl mb-2 tracking-tighter text-[#111111] leading-none uppercase">
                 {propertyData.address}
               </h1>
-              <p className="text-sm md:text-base text-gray-400 font-bold tracking-[0.2em] uppercase mb-8 flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-primary" /> {propertyData.suburb}
+              <p className="text-[10px] md:text-xs text-gray-400 font-bold tracking-[0.2em] uppercase mb-8 flex items-center gap-2">
+                <MapPin className="w-3.5 h-3.5 text-primary" /> {propertyData.suburb}
               </p>
               
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-10 border-y border-gray-100">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-y border-gray-100">
                 <div className="space-y-1">
-                  <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BEDROOMS</span>
-                  <div className="flex items-center gap-2.5">
-                    <Bed className="w-5 h-5 text-primary/40" />
-                    <span className="font-extrabold text-xl">{propertyData.beds}</span>
+                  <span className="text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BEDROOMS</span>
+                  <div className="flex items-center gap-2">
+                    <Bed className="w-4 h-4 text-primary/40" />
+                    <span className="font-extrabold text-lg">{propertyData.beds}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BATHROOMS</span>
-                  <div className="flex items-center gap-2.5">
-                    <Bath className="w-5 h-5 text-primary/40" />
-                    <span className="font-extrabold text-xl">{propertyData.baths}</span>
+                  <span className="text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BATHROOMS</span>
+                  <div className="flex items-center gap-2">
+                    <Bath className="w-4 h-4 text-primary/40" />
+                    <span className="font-extrabold text-lg">{propertyData.baths}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">CAR SPACES</span>
-                  <div className="flex items-center gap-2.5">
-                    <Car className="w-5 h-5 text-primary/40" />
-                    <span className="font-extrabold text-xl">{propertyData.cars}</span>
+                  <span className="text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase block">CAR SPACES</span>
+                  <div className="flex items-center gap-2">
+                    <Car className="w-4 h-4 text-primary/40" />
+                    <span className="font-extrabold text-lg">{propertyData.cars}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">AREA</span>
-                  <div className="flex items-center gap-2.5">
-                    <Maximize className="w-5 h-5 text-primary/40" />
-                    <span className="font-extrabold text-xl">{propertyData.area}m<sup>2</sup></span>
+                  <span className="text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase block">AREA</span>
+                  <div className="flex items-center gap-2">
+                    <Maximize className="w-4 h-4 text-primary/40" />
+                    <span className="font-extrabold text-lg">{propertyData.area}m<sup>2</sup></span>
                   </div>
                 </div>
               </div>
@@ -171,8 +171,8 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
 
             {/* AI Generated Narrative Story */}
             <div className="mb-16">
-              <h2 className="font-headline font-extrabold text-lg uppercase tracking-tighter mb-6 text-primary">THE PROPERTY STORY</h2>
-              <div className="prose max-w-none text-gray-600 leading-relaxed font-body text-sm whitespace-pre-wrap">
+              <h2 className="font-headline font-extrabold text-base uppercase tracking-tighter mb-6 text-primary">THE PROPERTY STORY</h2>
+              <div className="prose max-w-none text-gray-600 leading-relaxed font-body text-xs whitespace-pre-wrap">
                 {story}
               </div>
             </div>
@@ -191,7 +191,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2.5 p-3.5 bg-gray-50 border border-gray-100">
                     <div className="text-primary">{item.icon}</div>
-                    <span className="text-[10px] font-bold tracking-tight uppercase">{item.label}</span>
+                    <span className="text-xs font-bold tracking-tight uppercase">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -200,21 +200,21 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
             {/* Investment Summary */}
             <div className="mb-16 p-8 bg-[#111111] text-white shadow-2xl">
               <div className="flex justify-between items-center mb-8">
-                <h3 className="font-headline font-bold text-lg uppercase tracking-tighter text-primary">INVESTMENT SNAPSHOT</h3>
+                <h3 className="font-headline font-bold text-base uppercase tracking-tighter text-primary">INVESTMENT SNAPSHOT</h3>
                 <Badge className="bg-white/10 text-white rounded-none border-none text-[7px] tracking-[0.2em]">EST. 2026</Badge>
               </div>
               <div className="space-y-5">
                 <div className="flex justify-between border-b border-white/5 pb-3">
-                  <span className="text-gray-400 text-[9px] font-bold uppercase tracking-widest">Market Price</span>
-                  <span className="font-extrabold text-lg">${propertyData.price.toLocaleString()} AUD</span>
+                  <span className="text-gray-400 text-[8px] font-bold uppercase tracking-widest">Market Price</span>
+                  <span className="font-extrabold text-base">${propertyData.price.toLocaleString()} AUD</span>
                 </div>
                 <div className="flex justify-between border-b border-white/5 pb-3">
-                  <span className="text-gray-400 text-[9px] font-bold uppercase tracking-widest">Stamp Duty (EST)</span>
-                  <span className="font-extrabold text-lg text-primary">+ ${stampDuty.toLocaleString()} AUD</span>
+                  <span className="text-gray-400 text-[8px] font-bold uppercase tracking-widest">Stamp Duty (EST)</span>
+                  <span className="font-extrabold text-base text-primary">+ ${stampDuty.toLocaleString()} AUD</span>
                 </div>
                 <div className="pt-4 text-center">
-                  <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">TOTAL PROJECTED INVESTMENT</p>
-                  <p className="text-3xl md:text-4xl font-headline font-extrabold tracking-tighter">
+                  <p className="text-[8px] font-bold text-gray-500 uppercase tracking-widest mb-2">TOTAL PROJECTED INVESTMENT</p>
+                  <p className="text-2xl md:text-3xl font-headline font-extrabold tracking-tighter">
                     ${(propertyData.price + stampDuty).toLocaleString()} <span className="text-[10px]">AUD</span>
                   </p>
                 </div>
@@ -231,21 +231,21 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
               
               {/* Inspection Times Block */}
               <div className="bg-gray-50 p-6 border border-gray-100 text-center">
-                <h4 className="font-bold text-[10px] tracking-[0.3em] uppercase mb-4 text-gray-400">OPEN FOR INSPECTION</h4>
+                <h4 className="font-bold text-[9px] tracking-[0.3em] uppercase mb-4 text-gray-400">OPEN FOR INSPECTION</h4>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center border-b border-gray-200 pb-2.5">
                     <div className="text-left">
-                      <p className="font-bold text-xs">Saturday, 12 Oct</p>
-                      <p className="text-[9px] text-gray-500">10:00 AM - 10:45 AM</p>
+                      <p className="font-bold text-[11px]">Saturday, 12 Oct</p>
+                      <p className="text-[8px] text-gray-500">10:00 AM - 10:45 AM</p>
                     </div>
-                    <Button variant="link" className="text-primary p-0 text-[9px] font-bold uppercase">ADD</Button>
+                    <Button variant="link" className="text-primary p-0 text-[8px] font-bold uppercase">ADD</Button>
                   </div>
                   <div className="flex justify-between items-center pb-2.5">
                     <div className="text-left">
-                      <p className="font-bold text-xs">Wednesday, 16 Oct</p>
-                      <p className="text-[9px] text-gray-500">05:00 PM - 05:30 PM</p>
+                      <p className="font-bold text-[11px]">Wednesday, 16 Oct</p>
+                      <p className="text-[8px] text-gray-500">05:00 PM - 05:30 PM</p>
                     </div>
-                    <Button variant="link" className="text-primary p-0 text-[9px] font-bold uppercase">ADD</Button>
+                    <Button variant="link" className="text-primary p-0 text-[8px] font-bold uppercase">ADD</Button>
                   </div>
                 </div>
               </div>

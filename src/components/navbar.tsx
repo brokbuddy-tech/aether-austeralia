@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -31,14 +32,11 @@ export default function Navbar() {
     <nav
       className={cn(
         "fixed top-0 w-full z-[100] transition-all duration-300 px-6 py-4 flex items-center justify-between",
-        scrolled ? "bg-white/90 shadow-sm py-3" : "bg-transparent text-white"
+        scrolled ? "bg-white/90 shadow-sm py-3" : "bg-transparent"
       )}
     >
       <Link href="/" className="z-[110]">
-        <span className={cn(
-          "font-headline font-extrabold text-2xl tracking-tighter",
-          !scrolled && !isOpen ? "text-white" : "text-black"
-        )}>
+        <span className="font-headline font-extrabold text-2xl tracking-tighter text-black">
           AETHER<span className="text-primary">.</span>
         </span>
       </Link>
@@ -48,22 +46,19 @@ export default function Navbar() {
           <Link
             key={link.name}
             href={link.href}
-            className={cn(
-              "text-xs font-bold tracking-widest hover:text-primary transition-colors",
-              !scrolled && !isOpen ? "text-white" : "text-black"
-            )}
+            className="text-xs font-bold tracking-widest text-black hover:text-primary transition-colors"
           >
             {link.name}
           </Link>
         ))}
-        <Button variant="ghost" size="icon" className={cn(!scrolled && !isOpen && "text-white")}>
+        <Button variant="ghost" size="icon" className="text-black">
           <Search className="w-5 h-5" />
         </Button>
         <Link href="/contact">
           <Button variant="outline" className={cn(
             "border-2 font-bold px-6",
             !scrolled && !isOpen 
-              ? "border-white text-black bg-white hover:bg-white/90" 
+              ? "border-black text-black bg-white hover:bg-white/90" 
               : "border-black text-black hover:bg-black hover:text-white"
           )}>
             CONTACT US
@@ -78,7 +73,7 @@ export default function Navbar() {
         {isOpen ? (
           <X className="w-8 h-8 text-black" />
         ) : (
-          <Menu className={cn("w-8 h-8", scrolled ? "text-black" : "text-white")} />
+          <Menu className="w-8 h-8 text-black" />
         )}
       </button>
 

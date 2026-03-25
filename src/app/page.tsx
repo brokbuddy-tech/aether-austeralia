@@ -22,7 +22,7 @@ export default function Home() {
     { id: "3", image: "https://picsum.photos/seed/lux-estate-byron/800/600", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: "8,900,000", beds: 5, baths: 4, cars: 4, area: 1200, agent: "David Beck" },
   ];
 
-  const newListings = [
+  const developments = [
     { id: "4", image: "https://picsum.photos/seed/new-listing-1/800/600", address: "42 High Street", suburb: "PRAHRAN, VIC", price: "1,250,000", beds: 2, baths: 1, cars: 1, area: 85, agent: "Marcus Thorne" },
     { id: "5", image: "https://picsum.photos/seed/new-listing-2/800/600", address: "5/20 Bondi Rd", suburb: "BONDI, NSW", price: "950,000", beds: 1, baths: 1, cars: 0, area: 55, agent: "Sarah Jenkins" },
     { id: "6", image: "https://picsum.photos/seed/new-listing-3/800/600", address: "12 Riverina Ct", suburb: "NOOSA, QLD", price: "3,450,000", beds: 4, baths: 3, cars: 3, area: 600, agent: "David Beck" },
@@ -101,22 +101,22 @@ export default function Home() {
         {/* The Difference Section */}
         <DifferenceBlock />
 
-        {/* New Listings Section */}
+        {/* New Developments Section */}
         <section className="py-24 px-6 bg-white border-t border-gray-100">
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-end mb-12">
               <div>
-                <h2 className="font-headline font-extrabold text-4xl mb-4 text-[#111111] uppercase tracking-tighter">NEW LISTINGS</h2>
-                <p className="text-muted-foreground font-body">The latest additions to our premium collection.</p>
+                <h2 className="font-headline font-extrabold text-4xl mb-4 text-[#111111] uppercase tracking-tighter">NEW DEVELOPMENTS</h2>
+                <p className="text-muted-foreground font-body">Pioneering luxury living with Australia's most exclusive off-plan opportunities.</p>
               </div>
               <Link href="/search">
                 <Button variant="link" className="font-bold text-primary tracking-widest text-xs p-0">
-                  VIEW ALL NEW LISTINGS →
+                  VIEW ALL NEW DEVELOPMENTS →
                 </Button>
               </Link>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {newListings.map((prop) => (
+              {developments.map((prop) => (
                 <PropertyCard key={prop.id} property={prop} />
               ))}
             </div>

@@ -37,6 +37,26 @@ const propertyStoryPrompt = ai.definePrompt({
   name: 'propertyStoryPrompt',
   input: { schema: AiGeneratedPropertyStoryInputSchema },
   output: { schema: AiGeneratedPropertyStoryOutputSchema },
+  config: {
+    safetySettings: [
+      {
+        category: 'HARM_CATEGORY_HATE_SPEECH',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_HARASSMENT',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+        threshold: 'BLOCK_NONE',
+      },
+    ],
+  },
   prompt: `You are an expert real estate copywriter for "Aether Australia", specializing in crafting compelling and detailed property stories that highlight unique appeal and key selling points for the Australian market. Your goal is to make potential buyers/renters quickly understand why this property is special.
 
 Write a detailed property story for the following Australian property listing. Focus on engaging language, highlighting its unique features and neighborhood benefits. The story should be at least 300 words and paint a vivid picture for the reader.
@@ -73,11 +93,19 @@ const generatePropertyStoryFlow = ai.defineFlow(
     outputSchema: AiGeneratedPropertyStoryOutputSchema,
   },
   async (input) => {
-    const { output } = await propertyStoryPrompt(input);
-    if (!output) {
-      throw new Error('Failed to generate property story.');
+    try {
+      const { output } = await propertyStoryPrompt(input);
+      if (!output) {
+        throw new Error('Failed to generate property story output.');
+      }
+      return output;
+    } catch (error) {
+      console.error('AI Property Story Generation Error:', error);
+      // Fallback description if AI fails
+      return {
+        story: `Welcome to this exceptional ${input.propertyType} located at ${input.address}. This residence features ${input.bedrooms} bedrooms, ${input.bathrooms} bathrooms, and ${input.carSpaces} car spaces, offering a sophisticated living experience. ${input.areaM2 ? `Boasting ${input.areaM2}m2 of internal space, the` : 'The'} property is designed with a focus on quality and comfort. ${input.locationDescription ? input.locationDescription : `Situated in a prime Australian enclave, this home represents a significant opportunity for the discerning buyer.`} With its modern amenities and architectural integrity, this property is a testament to the Aether Australia standard of excellence. We invite you to explore this unique residence and experience the lifestyle it offers.`
+      };
     }
-    return output;
   }
 );
 

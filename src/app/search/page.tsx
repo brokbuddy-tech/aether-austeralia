@@ -1,13 +1,21 @@
-
 import Image from "next/image";
 import FilterBar from "@/components/filter-bar";
 import PropertyCard from "@/components/property-card";
 import { Button } from "@/components/ui/button";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
-export default function SearchPage() {
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; type?: string }>;
+}) {
+  const params = await searchParams;
+  const searchQuery = params.q || "";
+  const searchType = params.type || "buy";
+
   const searchHeaderImage = PlaceHolderImages.find(img => img.id === 'search-header');
 
+  // In a real app, we would filter based on searchQuery and searchType
   const properties = [
     { id: "1", image: "https://picsum.photos/seed/lux-house-1/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
     { id: "2", image: "https://picsum.photos/seed/lux-apt-2/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
@@ -32,7 +40,9 @@ export default function SearchPage() {
         <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] z-10" />
         
         <div className="relative z-20 max-w-7xl mx-auto">
-          <h1 className="font-headline font-extrabold text-4xl md:text-5xl mb-2 tracking-tighter uppercase">Properties for Sale in Australia</h1>
+          <h1 className="font-headline font-extrabold text-4xl md:text-5xl mb-2 tracking-tighter uppercase">
+            Properties for {searchType.toUpperCase()} {searchQuery && `in ${searchQuery}`}
+          </h1>
           <p className="text-gray-200 font-body text-lg">Found {properties.length} results matching your search</p>
         </div>
       </div>

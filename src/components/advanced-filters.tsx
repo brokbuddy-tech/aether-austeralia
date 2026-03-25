@@ -97,7 +97,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
               value === opt ? "bg-[#111111] text-white" : "border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-black"
             )}
           >
-            {opt === "any" ? "ANY" : opt === "5" ? "5+" : opt}
+            {opt === "any" ? "ANY" : opt === options[options.length - 1] ? `${opt}+` : opt}
           </Button>
         ))}
       </div>

@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { X, SlidersHorizontal, Info, Car, Bed, Bath, Trees, Waves, Sun, Shield, Dog, Move, Sofa, Home as HomeIcon } from "lucide-react";
+import { X, SlidersHorizontal, Info, Car, Bed, Bath, Trees, Waves, Sun, Shield, Dog, Move, Sofa, DollarSign } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -22,7 +22,11 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
   const [baths, setBaths] = React.useState<string>("any");
   const [cars, setCars] = React.useState<string>("any");
   const [propertyTypes, setPropertyTypes] = React.useState<string[]>([]);
-  const [landSize, setLandSize] = React.useState([0, 5000]);
+  
+  const [minPrice, setMinPrice] = React.useState("");
+  const [maxPrice, setMaxPrice] = React.useState("");
+  const [minLand, setMinLand] = React.useState("");
+  const [maxLand, setMaxLand] = React.useState("");
 
   const togglePropertyType = (type: string) => {
     setPropertyTypes(prev => 
@@ -35,11 +39,23 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
     setBaths("any");
     setCars("any");
     setPropertyTypes([]);
-    setLandSize([0, 5000]);
+    setMinPrice("");
+    setMaxPrice("");
+    setMinLand("");
+    setMaxLand("");
   };
 
   const handleShowProperties = () => {
-    onApply?.({ beds, baths, cars, propertyTypes, landSize });
+    onApply?.({ 
+      beds, 
+      baths, 
+      cars, 
+      propertyTypes, 
+      minPrice, 
+      maxPrice, 
+      minLand, 
+      maxLand 
+    });
     setOpen(false);
   };
 
@@ -88,6 +104,58 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
     </div>
   );
 
+  const RangeInputs = ({ 
+    label, 
+    minVal, 
+    maxVal, 
+    onMinChange, 
+    onMaxChange, 
+    prefix, 
+    suffix,
+    icon: Icon 
+  }: { 
+    label: string; 
+    minVal: string; 
+    maxVal: string; 
+    onMinChange: (val: string) => void; 
+    onMaxChange: (val: string) => void; 
+    prefix?: string;
+    suffix?: string;
+    icon?: any;
+  }) => (
+    <div className="mb-8">
+      <div className="flex items-center gap-2 mb-4">
+        {Icon && <Icon className="w-4 h-4 text-gray-400" />}
+        <Label className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">{label}</Label>
+      </div>
+      <div className="flex items-center gap-4">
+        <div className="relative flex-1">
+          {prefix && <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-xs">{prefix}</span>}
+          <Input 
+            type="number"
+            placeholder="Min" 
+            value={minVal}
+            onChange={(e) => onMinChange(e.target.value)}
+            className={cn("rounded-none h-14 border-gray-200 bg-white focus:ring-primary", prefix && "pl-8", suffix && "pr-10")}
+          />
+          {suffix && <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-[10px]">{suffix}</span>}
+        </div>
+        <div className="w-4 h-px bg-gray-200" />
+        <div className="relative flex-1">
+          {prefix && <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-xs">{prefix}</span>}
+          <Input 
+            type="number"
+            placeholder="Max" 
+            value={maxVal}
+            onChange={(e) => onMaxChange(e.target.value)}
+            className={cn("rounded-none h-14 border-gray-200 bg-white focus:ring-primary", prefix && "pl-8", suffix && "pr-10")}
+          />
+          {suffix && <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-[10px]">{suffix}</span>}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -108,6 +176,19 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
 
         <ScrollArea className="flex-1 px-8">
           <div className="pb-12">
+            {/* Price Range */}
+            <FilterSection title="Price Range">
+              <RangeInputs 
+                label="Property Price (AUD)" 
+                minVal={minPrice} 
+                maxVal={maxPrice} 
+                onMinChange={setMinPrice} 
+                onMaxChange={setMaxPrice} 
+                prefix="$"
+                icon={DollarSign}
+              />
+            </FilterSection>
+
             {/* Property Specifications */}
             <FilterSection title="The Essentials">
               <ToggleGroup 
@@ -132,22 +213,15 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
                 icon={Car}
               />
               
-              <div className="mt-10">
-                <div className="flex justify-between items-end mb-6">
-                  <div className="flex items-center gap-2">
-                    <Move className="w-4 h-4 text-gray-400" />
-                    <Label className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Land Size (m²)</Label>
-                  </div>
-                  <span className="font-bold text-xs text-primary">{landSize[0]} - {landSize[1] === 5000 ? '5,000+' : landSize[1]} m²</span>
-                </div>
-                <Slider 
-                  value={landSize} 
-                  onValueChange={setLandSize} 
-                  max={5000} 
-                  step={50} 
-                  className="py-4"
-                />
-              </div>
+              <RangeInputs 
+                label="Land Size" 
+                minVal={minLand} 
+                maxVal={maxLand} 
+                onMinChange={setMinLand} 
+                onMaxChange={setMaxLand} 
+                suffix="m²"
+                icon={Move}
+              />
             </FilterSection>
 
             {/* Property Types */}

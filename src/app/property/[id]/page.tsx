@@ -6,6 +6,7 @@ import InspectionScheduler from "@/components/inspection-scheduler";
 import { generatePropertyStory } from "@/ai/flows/ai-generated-property-story";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import PropertyStory from "@/components/property-story";
 
 // Mock data fetcher to make the page feel connected
 const getPropertyData = (id: string) => {
@@ -169,13 +170,8 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
               </div>
             </div>
 
-            {/* AI Generated Narrative Story */}
-            <div className="mb-16">
-              <h2 className="font-headline font-extrabold text-base uppercase tracking-tighter mb-6 text-primary">THE PROPERTY STORY</h2>
-              <div className="prose max-w-none text-gray-600 leading-relaxed font-body text-xs whitespace-pre-wrap">
-                {story}
-              </div>
-            </div>
+            {/* AI Generated Narrative Story Component */}
+            <PropertyStory story={story} />
 
             {/* Amenities Grid */}
             <div className="mb-16">
@@ -191,7 +187,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2.5 p-3.5 bg-gray-50 border border-gray-100">
                     <div className="text-primary">{item.icon}</div>
-                    <span className="text-xs font-bold tracking-tight uppercase">{item.label}</span>
+                    <span className="text-sm font-bold tracking-tight uppercase">{item.label}</span>
                   </div>
                 ))}
               </div>

@@ -11,6 +11,7 @@ import Link from "next/link";
 
 export default function HeroSearch() {
   const [activeTab, setActiveTab] = useState("Buy");
+  const [lastNonAiTab, setLastNonAiTab] = useState("Buy");
   const [isFocused, setIsFocused] = useState(false);
   const [trending, setTrending] = useState<string[]>([]);
   const [query, setQuery] = useState("");
@@ -18,7 +19,7 @@ export default function HeroSearch() {
   const [aiResponse, setAiResponse] = useState<AiSearchAgentOutput | null>(null);
 
   const tabs = [
-    "Buy", "Rent", "AI Agent", "House & Land", "New Homes", "Sold", "Retirement", "Rural"
+    "Buy", "Rent", "House & Land", "New Homes", "Sold", "Retirement", "Rural"
   ];
 
   useEffect(() => {
@@ -51,6 +52,16 @@ export default function HeroSearch() {
 
   const isAiMode = activeTab === "AI Agent";
 
+  const toggleAiMode = () => {
+    if (isAiMode) {
+      setActiveTab(lastNonAiTab);
+    } else {
+      setLastNonAiTab(activeTab);
+      setActiveTab("AI Agent");
+    }
+    setAiResponse(null);
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto z-10 transition-all duration-300 ease-in-out">
       {/* Glass Container */}
@@ -70,12 +81,11 @@ export default function HeroSearch() {
                 }}
                 className={cn(
                   "px-4 py-1.5 text-[13px] font-bold tracking-tight rounded-full transition-all duration-300 flex items-center gap-2",
-                  activeTab === tab
+                  activeTab === tab && !isAiMode
                     ? "bg-primary text-white shadow-lg"
                     : "text-white hover:bg-white/20"
                 )}
               >
-                {tab === "AI Agent" && <Sparkles className="w-3.5 h-3.5" />}
                 {tab}
               </button>
             ))}
@@ -106,6 +116,18 @@ export default function HeroSearch() {
                   Filters
                 </Button>
               )}
+
+              <Button
+                onClick={toggleAiMode}
+                variant={isAiMode ? "default" : "secondary"}
+                className={cn(
+                  "rounded-full font-bold h-9 px-4 transition-all text-[11px] flex items-center gap-2",
+                  isAiMode ? "bg-accent text-white hover:bg-accent/90" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                )}
+              >
+                <Sparkles className={cn("w-3.5 h-3.5", isAiMode && "animate-pulse")} />
+                AI Agent
+              </Button>
               
               {isAiMode ? (
                 <Button 
@@ -168,7 +190,7 @@ export default function HeroSearch() {
           </div>
         )}
 
-        {/* AI Suggestions Dropdown (Only when focused and no AI response) */}
+        {/* Suggestions Dropdown */}
         {isFocused && !aiResponse && (
           <div className="absolute top-[calc(100%+10px)] left-0 w-full bg-white/95 backdrop-blur-xl mt-1 shadow-2xl rounded-3xl p-6 z-50 animate-in fade-in slide-in-from-top-4 duration-500 border border-white/40">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

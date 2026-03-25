@@ -3,7 +3,7 @@
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Filter } from "lucide-react";
+import AdvancedFilters from "@/components/advanced-filters";
 
 export default function FilterBar() {
   return (
@@ -85,10 +85,9 @@ export default function FilterBar() {
           </Select>
         </div>
 
-        <Button variant="outline" className="ml-auto rounded-none border-gray-200 flex items-center gap-2 font-bold px-6">
-          <Filter className="w-4 h-4" />
-          MORE FILTERS
-        </Button>
+        <div className="ml-auto flex items-center">
+          <AdvancedFilters onApply={(filters) => console.log('Applying search bar filters:', filters)} />
+        </div>
       </div>
     </div>
   );

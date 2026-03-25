@@ -26,9 +26,9 @@ export default async function SearchPage({
   ];
 
   return (
-    <div className="pt-[72px] bg-gray-50 min-h-screen pb-24">
+    <div className="pt-[72px] bg-gray-50 min-h-screen pb-20">
       {/* Header with Background Image */}
-      <div className="relative py-20 px-6 border-b border-gray-100 overflow-hidden text-white">
+      <div className="relative py-16 px-6 border-b border-gray-100 overflow-hidden text-white">
         <Image
           src={searchHeaderImage?.imageUrl || "https://picsum.photos/seed/search-header-fallback/1920/400"}
           alt={searchHeaderImage?.description || "Search Results"}
@@ -40,24 +40,24 @@ export default async function SearchPage({
         <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] z-10" />
         
         <div className="relative z-20 max-w-7xl mx-auto">
-          <h1 className="font-headline font-extrabold text-4xl md:text-5xl mb-2 tracking-tighter uppercase">
+          <h1 className="font-headline font-extrabold text-3xl md:text-4xl mb-2 tracking-tighter uppercase">
             Properties for {searchType.toUpperCase()} {searchQuery && `in ${searchQuery}`}
           </h1>
-          <p className="text-gray-200 font-body text-lg">Found {properties.length} results matching your search</p>
+          <p className="text-gray-200 font-body text-base">Found {properties.length} results matching your search</p>
         </div>
       </div>
       
       <FilterBar />
 
-      <div className="max-w-7xl mx-auto px-6 mt-12">
+      <div className="max-w-7xl mx-auto px-6 mt-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {properties.map((prop) => (
             <PropertyCard key={prop.id} property={prop} />
           ))}
         </div>
 
-        <div className="mt-16 flex justify-center">
-          <Button variant="outline" className="border-2 border-black rounded-none px-12 h-14 font-bold tracking-widest hover:bg-black hover:text-white transition-all">
+        <div className="mt-12 flex justify-center">
+          <Button variant="outline" className="border-2 border-black rounded-none px-10 h-12 text-[11px] font-bold tracking-widest hover:bg-black hover:text-white transition-all">
             LOAD MORE PROPERTIES
           </Button>
         </div>

@@ -81,11 +81,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-end mb-12">
               <div>
-                <h2 className="font-headline font-extrabold text-4xl mb-4 text-[#111111] uppercase tracking-tighter">FEATURED RESIDENCES</h2>
-                <p className="text-muted-foreground font-body">Exceptional living spaces across Australia's most coveted suburbs.</p>
+                <h2 className="font-headline font-extrabold text-3xl mb-3 text-[#111111] uppercase tracking-tighter">FEATURED RESIDENCES</h2>
+                <p className="text-muted-foreground font-body text-sm">Exceptional living spaces across Australia's most coveted suburbs.</p>
               </div>
               <Link href="/search">
-                <Button variant="link" className="font-bold text-primary tracking-widest text-xs p-0">
+                <Button variant="link" className="font-bold text-primary tracking-widest text-[10px] p-0">
                   VIEW ALL PROPERTIES →
                 </Button>
               </Link>
@@ -106,11 +106,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-end mb-12">
               <div>
-                <h2 className="font-headline font-extrabold text-4xl mb-4 text-[#111111] uppercase tracking-tighter">NEW DEVELOPMENTS</h2>
-                <p className="text-muted-foreground font-body">Pioneering luxury living with Australia's most exclusive off-plan opportunities.</p>
+                <h2 className="font-headline font-extrabold text-3xl mb-3 text-[#111111] uppercase tracking-tighter">NEW DEVELOPMENTS</h2>
+                <p className="text-muted-foreground font-body text-sm">Pioneering luxury living with Australia's most exclusive off-plan opportunities.</p>
               </div>
               <Link href="/search">
-                <Button variant="link" className="font-bold text-primary tracking-widest text-xs p-0">
+                <Button variant="link" className="font-bold text-primary tracking-widest text-[10px] p-0">
                   VIEW ALL NEW DEVELOPMENTS →
                 </Button>
               </Link>
@@ -140,7 +140,7 @@ export default function Home() {
 
           <div className="relative z-10 max-w-7xl mx-auto">
             <div className="mb-16">
-              <h2 className="font-headline font-extrabold text-xs tracking-[0.5em] text-[#111111] uppercase mb-4">INSIGHTS & ADVICE</h2>
+              <h2 className="font-headline font-extrabold text-[10px] tracking-[0.5em] text-[#111111] uppercase mb-4">INSIGHTS & ADVICE</h2>
               <div className="h-1 w-20 bg-primary" />
             </div>
 
@@ -157,19 +157,19 @@ export default function Home() {
                       data-ai-hint="Luxury Australian Coastline"
                     />
                     <div className="absolute top-6 left-6">
-                      <div className="bg-primary text-white px-4 py-1.5 text-[10px] font-bold tracking-widest uppercase backdrop-blur-md bg-opacity-80">
+                      <div className="bg-primary text-white px-3 py-1 text-[9px] font-bold tracking-widest uppercase backdrop-blur-md bg-opacity-80">
                         MARKET UPDATE
                       </div>
                     </div>
                   </div>
                   <div className="max-w-2xl">
-                    <h3 className="font-serif font-extrabold text-4xl md:text-5xl mb-6 leading-tight group-hover:text-primary transition-colors">
+                    <h3 className="font-serif font-extrabold text-3xl md:text-4xl mb-5 leading-tight group-hover:text-primary transition-colors">
                       2026 Forecast: The Evolution of the Australian Coastal Market
                     </h3>
-                    <p className="text-gray-500 font-body text-lg leading-relaxed mb-6">
+                    <p className="text-gray-500 font-body text-base leading-relaxed mb-6">
                       Expert analysis from our strategic directors on the structural shift toward high-end regional assets and interest rate resilience in Australia's coastal enclaves.
                     </p>
-                    <div className="flex items-center gap-4 text-[11px] font-bold text-gray-400 tracking-widest uppercase">
+                    <div className="flex items-center gap-4 text-[10px] font-bold text-gray-400 tracking-widest uppercase">
                       <span>5 MIN READ</span>
                       <span className="h-1 w-1 bg-gray-300 rounded-full" />
                       <span>BY KIERAN WARRINER</span>
@@ -186,7 +186,7 @@ export default function Home() {
                     href="/insights" 
                     className="group flex gap-6 items-start pb-10 border-b border-gray-100 last:border-0 hover:bg-gray-50/50 transition-all p-4 -m-4"
                   >
-                    <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden border border-gray-100">
+                    <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden border border-gray-100">
                       <Image
                         src={item.image}
                         alt={item.title}
@@ -195,19 +195,19 @@ export default function Home() {
                       />
                     </div>
                     <div>
-                      <h4 className="font-headline font-bold text-lg mb-2 leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                      <h4 className="font-headline font-bold text-base mb-1 leading-tight group-hover:text-primary transition-colors line-clamp-2">
                         {item.title}
                       </h4>
-                      <p className="text-gray-400 text-sm line-clamp-2 mb-3">
+                      <p className="text-gray-400 text-xs line-clamp-2 mb-2">
                         {item.teaser}
                       </p>
-                      <span className="text-[10px] font-bold text-gray-300 tracking-widest uppercase">{item.readTime}</span>
+                      <span className="text-[9px] font-bold text-gray-300 tracking-widest uppercase">{item.readTime}</span>
                     </div>
                   </Link>
                 ))}
                 
                 <Link href="/insights">
-                  <Button variant="outline" className="w-full h-14 border-gray-200 text-xs font-bold tracking-widest uppercase hover:bg-primary hover:text-white transition-all rounded-none mt-4">
+                  <Button variant="outline" className="w-full h-12 border-gray-200 text-[10px] font-bold tracking-widest uppercase hover:bg-primary hover:text-white transition-all rounded-none mt-4">
                     VIEW ALL INSIGHTS →
                   </Button>
                 </Link>
@@ -227,13 +227,13 @@ export default function Home() {
             />
           </div>
           <div className="relative z-30">
-            <h2 className="font-headline font-extrabold text-4xl md:text-6xl mb-8 uppercase tracking-tighter">READY TO MOVE?</h2>
+            <h2 className="font-headline font-extrabold text-3xl md:text-5xl mb-8 uppercase tracking-tighter">READY TO MOVE?</h2>
             <div className="flex flex-col md:flex-row justify-center gap-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold px-12 h-16 text-lg rounded-none uppercase tracking-[0.2em]">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold px-10 h-14 text-base rounded-none uppercase tracking-[0.2em]">
                 LIST YOUR PROPERTY
               </Button>
               <Link href="/search">
-                <Button size="lg" variant="outline" className="bg-white border-white text-black hover:bg-white/90 font-bold px-12 h-16 text-lg rounded-none uppercase tracking-[0.2em]">
+                <Button size="lg" variant="outline" className="bg-white border-white text-black hover:bg-white/90 font-bold px-10 h-14 text-base rounded-none uppercase tracking-[0.2em]">
                   FIND A RESIDENCE
                 </Button>
               </Link>
@@ -254,60 +254,60 @@ export default function Home() {
                   data-ai-hint="Luxury Interior Office"
                 />
                 <div className="absolute inset-0 bg-primary/10 mix-blend-multiply" />
-                <div className="absolute bottom-10 left-10 right-10 bg-white/95 backdrop-blur-md p-10 border-l-8 border-primary shadow-2xl">
-                  <p className="text-[10px] font-bold text-gray-400 tracking-[0.4em] uppercase mb-4">Concierge Desk</p>
-                  <h3 className="font-headline font-extrabold text-3xl tracking-tighter uppercase leading-none">Your journey,<br /> refined.</h3>
+                <div className="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-md p-8 border-l-4 border-primary shadow-2xl">
+                  <p className="text-[9px] font-bold text-gray-400 tracking-[0.4em] uppercase mb-3">Concierge Desk</p>
+                  <h3 className="font-headline font-extrabold text-2xl tracking-tighter uppercase leading-none">Your journey,<br /> refined.</h3>
                 </div>
               </div>
 
               <div>
-                <div className="mb-16">
-                  <span className="inline-block text-[10px] font-bold text-primary tracking-[0.5em] uppercase mb-4 border-b-2 border-primary pb-1">
+                <div className="mb-12">
+                  <span className="inline-block text-[9px] font-bold text-primary tracking-[0.5em] uppercase mb-4 border-b-2 border-primary pb-1">
                     FREQUENTLY ASKED QUESTIONS
                   </span>
-                  <h3 className="font-headline font-extrabold text-4xl md:text-5xl tracking-tighter uppercase leading-[0.9] mt-6">
+                  <h3 className="font-headline font-extrabold text-3xl md:text-4xl tracking-tighter uppercase leading-[0.9] mt-6">
                     Clarity at every <br /><span className="text-gray-300">touchpoint.</span>
                   </h3>
                 </div>
 
                 <Accordion type="single" collapsible className="w-full">
-                  <AccordionItem value="item-1" className="border-b border-gray-100 py-6">
-                    <AccordionTrigger className="font-headline font-bold text-xl hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
+                  <AccordionItem value="item-1" className="border-b border-gray-100 py-5">
+                    <AccordionTrigger className="font-headline font-bold text-lg hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
                       How does Aether verify property listings?
                     </AccordionTrigger>
-                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-4 text-lg">
+                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-3 text-base">
                       Every residence in our portfolio undergoes a rigorous 6-star audit. Our specialists verify structural integrity, metadata accuracy, and compliance with REIA 2026 standards before any property is presented to our clients.
                     </AccordionContent>
                   </AccordionItem>
-                  <AccordionItem value="item-2" className="border-b border-gray-100 py-6">
-                    <AccordionTrigger className="font-headline font-bold text-xl hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
+                  <AccordionItem value="item-2" className="border-b border-gray-100 py-5">
+                    <AccordionTrigger className="font-headline font-bold text-lg hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
                       What is the "Aether Difference" in management?
                     </AccordionTrigger>
-                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-4 text-lg">
+                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-3 text-base">
                       We combine hyper-local data with global heritage. Our landlords benefit from real-time performance metrics via our proprietary Proprietor Portals and a dedicated 24/7 concierge for all management inquiries.
                     </AccordionContent>
                   </AccordionItem>
-                  <AccordionItem value="item-3" className="border-b border-gray-100 py-6">
-                    <AccordionTrigger className="font-headline font-bold text-xl hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
+                  <AccordionItem value="item-3" className="border-b border-gray-100 py-5">
+                    <AccordionTrigger className="font-headline font-bold text-lg hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
                       Can I request a private digital viewing?
                     </AccordionTrigger>
-                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-4 text-lg">
+                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-3 text-base">
                       Absolutely. Most of our premium listings feature 360° virtual tours. We can also arrange private, agent-led digital walk-throughs for interstate and international clients who require immediate inspections.
                     </AccordionContent>
                   </AccordionItem>
-                  <AccordionItem value="item-4" className="border-b border-gray-100 py-6">
-                    <AccordionTrigger className="font-headline font-bold text-xl hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
+                  <AccordionItem value="item-4" className="border-b border-gray-100 py-5">
+                    <AccordionTrigger className="font-headline font-bold text-lg hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
                       What Australian states do you operate in?
                     </AccordionTrigger>
-                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-4 text-lg">
+                    <AccordionContent className="text-gray-500 font-body leading-relaxed pt-3 text-base">
                       Aether Australia operates nationally, with fully licensed specialist teams in NSW, VIC, QLD, WA, SA, TAS, ACT, and NT. We specialize in Australia's most coveted urban and coastal residential enclaves.
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
                 
-                <div className="mt-16">
+                <div className="mt-12">
                    <Link href="/contact">
-                    <Button variant="outline" className="border-black text-black font-bold h-16 px-10 rounded-none uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-all shadow-lg">
+                    <Button variant="outline" className="border-black text-black font-bold h-14 px-8 rounded-none uppercase tracking-[0.2em] text-[9px] hover:bg-black hover:text-white transition-all shadow-lg">
                       Connect with a Specialist
                     </Button>
                    </Link>

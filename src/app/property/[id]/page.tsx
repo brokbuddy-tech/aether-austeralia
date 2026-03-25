@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import { Bed, Bath, Car, Maximize, MapPin, Share2, Heart, ShieldCheck, PlayCircle, Info, ArrowLeft, Calendar, MessageSquare, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -49,19 +48,19 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
   return (
     <div className="pt-[72px] bg-white min-h-screen font-body">
       {/* Navigation Header */}
-      <div className="sticky top-[72px] z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 py-3 px-6">
+      <div className="sticky top-[72px] z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 py-2.5 px-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/search">
-            <Button variant="ghost" className="text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary p-0">
-              <ArrowLeft className="w-4 h-4" /> BACK TO SEARCH
+            <Button variant="ghost" className="text-[9px] font-bold tracking-widest uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary p-0">
+              <ArrowLeft className="w-3.5 h-3.5" /> BACK TO SEARCH
             </Button>
           </Link>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" className="rounded-none border-gray-200 text-[10px] font-bold tracking-widest uppercase h-9 px-4">
-              <Share2 className="w-3.5 h-3.5 mr-2" /> SHARE
+            <Button variant="outline" size="sm" className="rounded-none border-gray-200 text-[9px] font-bold tracking-widest uppercase h-8 px-4">
+              <Share2 className="w-3 h-3 mr-2" /> SHARE
             </Button>
-            <Button variant="outline" size="sm" className="rounded-none border-gray-200 text-[10px] font-bold tracking-widest uppercase h-9 px-4">
-              <Heart className="w-3.5 h-3.5 mr-2" /> SAVE
+            <Button variant="outline" size="sm" className="rounded-none border-gray-200 text-[9px] font-bold tracking-widest uppercase h-8 px-4">
+              <Heart className="w-3 h-3 mr-2" /> SAVE
             </Button>
           </div>
         </div>
@@ -84,13 +83,13 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
           <div className="absolute inset-0 bg-black/10 transition-opacity group-hover:opacity-0" />
           <div className="absolute inset-0 flex items-center justify-center">
             <Button 
-              className="bg-white/15 backdrop-blur-xl border border-white/30 text-white hover:bg-white hover:text-black font-bold rounded-full px-8 h-14 shadow-2xl transition-all"
+              className="bg-white/15 backdrop-blur-xl border border-white/30 text-white hover:bg-white hover:text-black font-bold rounded-full px-7 h-12 text-sm shadow-2xl transition-all"
             >
-              <PlayCircle className="w-6 h-6 mr-3" /> 360° VIRTUAL TOUR
+              <PlayCircle className="w-5 h-5 mr-3" /> 360° VIRTUAL TOUR
             </Button>
           </div>
-          <div className="absolute top-6 left-6 flex gap-2">
-            <Badge className="bg-primary text-white rounded-none px-3 py-1 font-bold text-[9px] tracking-widest border-none shadow-lg uppercase">AETHER EXCLUSIVE</Badge>
+          <div className="absolute top-5 left-5 flex gap-2">
+            <Badge className="bg-primary text-white rounded-none px-2.5 py-1 font-bold text-[8px] tracking-widest border-none shadow-lg uppercase">AETHER EXCLUSIVE</Badge>
           </div>
         </div>
 
@@ -112,7 +111,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
               className="object-cover transition-transform duration-700 group-hover:scale-110" 
             />
             <div className="absolute bottom-4 right-4 z-10">
-              <Button className="bg-white/80 backdrop-blur-md text-black border-none font-bold text-[10px] tracking-widest rounded-none hover:bg-white h-10 px-6 shadow-xl">
+              <Button className="bg-white/80 backdrop-blur-md text-black border-none font-bold text-[9px] tracking-widest rounded-none hover:bg-white h-9 px-5 shadow-xl">
                 VIEW ALL 24 PHOTOS
               </Button>
             </div>
@@ -120,103 +119,103 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
           {/* Main Story Column */}
           <div className="lg:col-span-8">
-            <div className="mb-12">
-              <div className="flex items-center gap-4 mb-6">
-                <Badge variant="outline" className="border-primary/20 text-primary rounded-none px-3 py-0.5 text-[9px] font-bold tracking-widest uppercase bg-primary/5">
+            <div className="mb-10">
+              <div className="flex items-center gap-4 mb-4">
+                <Badge variant="outline" className="border-primary/20 text-primary rounded-none px-2 py-0.5 text-[8px] font-bold tracking-widest uppercase bg-primary/5">
                   {propertyData.type}
                 </Badge>
                 <div className="h-px flex-1 bg-gray-100" />
               </div>
-              <h1 className="font-headline font-extrabold text-4xl md:text-7xl mb-4 tracking-tighter text-[#111111] leading-none uppercase">
+              <h1 className="font-headline font-extrabold text-3xl md:text-5xl mb-3 tracking-tighter text-[#111111] leading-none uppercase">
                 {propertyData.address}
               </h1>
-              <p className="text-lg md:text-xl text-gray-400 font-bold tracking-[0.2em] uppercase mb-10 flex items-center gap-2">
-                <MapPin className="w-5 h-5 text-primary" /> {propertyData.suburb}
+              <p className="text-base md:text-lg text-gray-400 font-bold tracking-[0.2em] uppercase mb-8 flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-primary" /> {propertyData.suburb}
               </p>
               
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-y border-gray-100">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-10 border-y border-gray-100">
                 <div className="space-y-1">
-                  <span className="text-[9px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BEDROOMS</span>
-                  <div className="flex items-center gap-3">
-                    <Bed className="w-6 h-6 text-primary/40" />
-                    <span className="font-extrabold text-3xl">{propertyData.beds}</span>
+                  <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BEDROOMS</span>
+                  <div className="flex items-center gap-2.5">
+                    <Bed className="w-5 h-5 text-primary/40" />
+                    <span className="font-extrabold text-2xl">{propertyData.beds}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[9px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BATHROOMS</span>
-                  <div className="flex items-center gap-3">
-                    <Bath className="w-6 h-6 text-primary/40" />
-                    <span className="font-extrabold text-3xl">{propertyData.baths}</span>
+                  <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BATHROOMS</span>
+                  <div className="flex items-center gap-2.5">
+                    <Bath className="w-5 h-5 text-primary/40" />
+                    <span className="font-extrabold text-2xl">{propertyData.baths}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[9px] font-bold text-gray-400 tracking-[0.2em] uppercase block">CAR SPACES</span>
-                  <div className="flex items-center gap-3">
-                    <Car className="w-6 h-6 text-primary/40" />
-                    <span className="font-extrabold text-3xl">{propertyData.cars}</span>
+                  <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">CAR SPACES</span>
+                  <div className="flex items-center gap-2.5">
+                    <Car className="w-5 h-5 text-primary/40" />
+                    <span className="font-extrabold text-2xl">{propertyData.cars}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[9px] font-bold text-gray-400 tracking-[0.2em] uppercase block">AREA</span>
-                  <div className="flex items-center gap-3">
-                    <Maximize className="w-6 h-6 text-primary/40" />
-                    <span className="font-extrabold text-3xl">{propertyData.area}m<sup>2</sup></span>
+                  <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">AREA</span>
+                  <div className="flex items-center gap-2.5">
+                    <Maximize className="w-5 h-5 text-primary/40" />
+                    <span className="font-extrabold text-2xl">{propertyData.area}m<sup>2</sup></span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* AI Generated Narrative Story */}
-            <div className="mb-20">
-              <h2 className="font-headline font-extrabold text-2xl uppercase tracking-tighter mb-8 text-primary">THE PROPERTY STORY</h2>
-              <div className="prose max-w-none text-gray-600 leading-[2] font-body text-lg whitespace-pre-wrap">
+            <div className="mb-16">
+              <h2 className="font-headline font-extrabold text-xl uppercase tracking-tighter mb-6 text-primary">THE PROPERTY STORY</h2>
+              <div className="prose max-w-none text-gray-600 leading-relaxed font-body text-base whitespace-pre-wrap">
                 {story}
               </div>
             </div>
 
             {/* Amenities Grid */}
-            <div className="mb-20">
-              <h3 className="text-[10px] font-bold text-gray-400 tracking-[0.4em] uppercase mb-8">PREMIUM FEATURES</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="mb-16">
+              <h3 className="text-[9px] font-bold text-gray-400 tracking-[0.4em] uppercase mb-6">PREMIUM FEATURES</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
                 {[
-                  { label: "Solar Energy System", icon: <Info className="w-4 h-4" /> },
-                  { label: "Designer Kitchen", icon: <Info className="w-4 h-4" /> },
-                  { label: "Infinity Pool", icon: <Info className="w-4 h-4" /> },
-                  { label: "Smart Home Tech", icon: <Info className="w-4 h-4" /> },
-                  { label: "Wine Cellar", icon: <Info className="w-4 h-4" /> },
-                  { label: "High-Key Lighting", icon: <Info className="w-4 h-4" /> },
+                  { label: "Solar Energy System", icon: <Info className="w-3.5 h-3.5" /> },
+                  { label: "Designer Kitchen", icon: <Info className="w-3.5 h-3.5" /> },
+                  { label: "Infinity Pool", icon: <Info className="w-3.5 h-3.5" /> },
+                  { label: "Smart Home Tech", icon: <Info className="w-3.5 h-3.5" /> },
+                  { label: "Wine Cellar", icon: <Info className="w-3.5 h-3.5" /> },
+                  { label: "High-Key Lighting", icon: <Info className="w-3.5 h-3.5" /> },
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3 p-4 bg-gray-50 border border-gray-100">
+                  <div key={idx} className="flex items-center gap-2.5 p-3.5 bg-gray-50 border border-gray-100">
                     <div className="text-primary">{item.icon}</div>
-                    <span className="text-xs font-bold tracking-tight uppercase">{item.label}</span>
+                    <span className="text-[10px] font-bold tracking-tight uppercase">{item.label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Investment Summary */}
-            <div className="mb-20 p-10 bg-[#111111] text-white shadow-2xl">
-              <div className="flex justify-between items-center mb-10">
-                <h3 className="font-headline font-bold text-xl uppercase tracking-tighter text-primary">INVESTMENT SNAPSHOT</h3>
-                <Badge className="bg-white/10 text-white rounded-none border-none text-[8px] tracking-[0.2em]">EST. 2026</Badge>
+            <div className="mb-16 p-8 bg-[#111111] text-white shadow-2xl">
+              <div className="flex justify-between items-center mb-8">
+                <h3 className="font-headline font-bold text-lg uppercase tracking-tighter text-primary">INVESTMENT SNAPSHOT</h3>
+                <Badge className="bg-white/10 text-white rounded-none border-none text-[7px] tracking-[0.2em]">EST. 2026</Badge>
               </div>
-              <div className="space-y-6">
-                <div className="flex justify-between border-b border-white/5 pb-4">
-                  <span className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Market Price</span>
-                  <span className="font-extrabold text-xl">${propertyData.price.toLocaleString()} AUD</span>
+              <div className="space-y-5">
+                <div className="flex justify-between border-b border-white/5 pb-3">
+                  <span className="text-gray-400 text-[9px] font-bold uppercase tracking-widest">Market Price</span>
+                  <span className="font-extrabold text-lg">${propertyData.price.toLocaleString()} AUD</span>
                 </div>
-                <div className="flex justify-between border-b border-white/5 pb-4">
-                  <span className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Stamp Duty (EST)</span>
-                  <span className="font-extrabold text-xl text-primary">+ ${stampDuty.toLocaleString()} AUD</span>
+                <div className="flex justify-between border-b border-white/5 pb-3">
+                  <span className="text-gray-400 text-[9px] font-bold uppercase tracking-widest">Stamp Duty (EST)</span>
+                  <span className="font-extrabold text-lg text-primary">+ ${stampDuty.toLocaleString()} AUD</span>
                 </div>
-                <div className="pt-4">
-                  <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 text-center">TOTAL PROJECTED INVESTMENT</p>
-                  <p className="text-5xl md:text-6xl font-headline font-extrabold text-center tracking-tighter">
-                    ${(propertyData.price + stampDuty).toLocaleString()} <span className="text-xs">AUD</span>
+                <div className="pt-4 text-center">
+                  <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">TOTAL PROJECTED INVESTMENT</p>
+                  <p className="text-4xl md:text-5xl font-headline font-extrabold tracking-tighter">
+                    ${(propertyData.price + stampDuty).toLocaleString()} <span className="text-[10px]">AUD</span>
                   </p>
                 </div>
               </div>
@@ -231,22 +230,22 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
               <AgentSidebar />
               
               {/* Inspection Times Block */}
-              <div className="bg-gray-50 p-8 border border-gray-100 text-center">
-                <h4 className="font-bold text-xs tracking-[0.3em] uppercase mb-4 text-gray-400">OPEN FOR INSPECTION</h4>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center border-b border-gray-200 pb-3">
+              <div className="bg-gray-50 p-6 border border-gray-100 text-center">
+                <h4 className="font-bold text-[10px] tracking-[0.3em] uppercase mb-4 text-gray-400">OPEN FOR INSPECTION</h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center border-b border-gray-200 pb-2.5">
                     <div className="text-left">
-                      <p className="font-bold text-sm">Saturday, 12 Oct</p>
-                      <p className="text-[10px] text-gray-500">10:00 AM - 10:45 AM</p>
+                      <p className="font-bold text-xs">Saturday, 12 Oct</p>
+                      <p className="text-[9px] text-gray-500">10:00 AM - 10:45 AM</p>
                     </div>
-                    <Button variant="link" className="text-primary p-0 text-[10px] font-bold uppercase">ADD TO CALENDAR</Button>
+                    <Button variant="link" className="text-primary p-0 text-[9px] font-bold uppercase">ADD</Button>
                   </div>
-                  <div className="flex justify-between items-center pb-3">
+                  <div className="flex justify-between items-center pb-2.5">
                     <div className="text-left">
-                      <p className="font-bold text-sm">Wednesday, 16 Oct</p>
-                      <p className="text-[10px] text-gray-500">05:00 PM - 05:30 PM</p>
+                      <p className="font-bold text-xs">Wednesday, 16 Oct</p>
+                      <p className="text-[9px] text-gray-500">05:00 PM - 05:30 PM</p>
                     </div>
-                    <Button variant="link" className="text-primary p-0 text-[10px] font-bold uppercase">ADD TO CALENDAR</Button>
+                    <Button variant="link" className="text-primary p-0 text-[9px] font-bold uppercase">ADD</Button>
                   </div>
                 </div>
               </div>

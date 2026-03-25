@@ -29,7 +29,6 @@ export default function Navbar() {
     { name: "BUY", href: "/search?type=buy" },
     { name: "RENT", href: "/search?type=rent" },
     { name: "SOLD", href: "/search?type=sold" },
-    { name: "INSIGHTS", href: "/insights" },
     { name: "ABOUT US", href: "/about" },
     { name: "FIND AN AGENT", href: "#" },
     { name: "COMMERCIAL", href: "/search?type=commercial" },

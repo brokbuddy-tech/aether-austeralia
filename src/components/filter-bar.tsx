@@ -4,15 +4,17 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import AdvancedFilters from "@/components/advanced-filters";
+import { cn } from "@/lib/utils";
 
 export default function FilterBar() {
   return (
-    <div className="sticky top-[72px] z-40 bg-white border-b border-gray-100 shadow-sm py-3 px-6 overflow-x-auto">
-      <div className="max-w-7xl mx-auto flex items-center gap-4 whitespace-nowrap">
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold text-gray-400 tracking-widest">LOCATION</span>
+    <div className="sticky top-[72px] z-40 bg-white border-b border-gray-100 shadow-sm py-3 px-6 overflow-x-auto no-scrollbar">
+      <div className="max-w-7xl mx-auto flex items-center gap-6 whitespace-nowrap min-w-max">
+        {/* Location Filter */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">LOCATION</span>
           <Select defaultValue="sydney">
-            <SelectTrigger className="w-[180px] rounded-none border-gray-200">
+            <SelectTrigger className="w-[180px] rounded-none border-gray-200 h-10 focus:ring-0">
               <SelectValue placeholder="All Australia" />
             </SelectTrigger>
             <SelectContent>
@@ -24,10 +26,11 @@ export default function FilterBar() {
           </Select>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold text-gray-400 tracking-widest">PRICE (AUD)</span>
+        {/* Price Filter */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">PRICE (AUD)</span>
           <Select defaultValue="any">
-            <SelectTrigger className="w-[180px] rounded-none border-gray-200">
+            <SelectTrigger className="w-[180px] rounded-none border-gray-200 h-10 focus:ring-0">
               <SelectValue placeholder="Any Price" />
             </SelectTrigger>
             <SelectContent>
@@ -39,10 +42,11 @@ export default function FilterBar() {
           </Select>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold text-gray-400 tracking-widest">TYPE</span>
+        {/* Property Type Filter */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">TYPE</span>
           <Select defaultValue="house">
-            <SelectTrigger className="w-[150px] rounded-none border-gray-200">
+            <SelectTrigger className="w-[150px] rounded-none border-gray-200 h-10 focus:ring-0">
               <SelectValue placeholder="All Types" />
             </SelectTrigger>
             <SelectContent>
@@ -54,10 +58,11 @@ export default function FilterBar() {
           </Select>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold text-gray-400 tracking-widest">BEDS</span>
+        {/* Bedrooms Filter */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">BEDS</span>
           <Select defaultValue="3">
-            <SelectTrigger className="w-[100px] rounded-none border-gray-200">
+            <SelectTrigger className="w-[90px] rounded-none border-gray-200 h-10 focus:ring-0">
               <SelectValue placeholder="Any" />
             </SelectTrigger>
             <SelectContent>
@@ -70,10 +75,11 @@ export default function FilterBar() {
           </Select>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold text-gray-400 tracking-widest">BATH</span>
+        {/* Bathrooms Filter */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">BATH</span>
           <Select defaultValue="any">
-            <SelectTrigger className="w-[100px] rounded-none border-gray-200">
+            <SelectTrigger className="w-[90px] rounded-none border-gray-200 h-10 focus:ring-0">
               <SelectValue placeholder="Any" />
             </SelectTrigger>
             <SelectContent>
@@ -85,7 +91,8 @@ export default function FilterBar() {
           </Select>
         </div>
 
-        <div className="ml-auto flex items-center">
+        {/* More Filters Component */}
+        <div className="flex-shrink-0 ml-auto pl-4">
           <AdvancedFilters onApply={(filters) => console.log('Applying search bar filters:', filters)} />
         </div>
       </div>

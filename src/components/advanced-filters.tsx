@@ -93,7 +93,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
             variant={value === opt ? "default" : "outline"}
             onClick={() => onChange(opt)}
             className={cn(
-              "flex-1 rounded-none h-12 font-bold text-xs transition-all",
+              "flex-1 rounded-none h-12 font-bold text-xs transition-all focus-visible:ring-0 focus-visible:ring-offset-0",
               value === opt ? "bg-[#111111] text-white" : "border-gray-200 text-gray-500 hover:bg-gray-50"
             )}
           >
@@ -136,7 +136,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
             placeholder="Min" 
             value={minVal}
             onChange={(e) => onMinChange(e.target.value)}
-            className={cn("rounded-none h-14 border-gray-200 bg-white focus:ring-primary", prefix && "pl-8", suffix && "pr-10")}
+            className={cn("rounded-none h-14 border-gray-200 bg-white focus-visible:ring-0 focus-visible:ring-offset-0 outline-none", prefix && "pl-8", suffix && "pr-10")}
           />
           {suffix && <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-[10px]">{suffix}</span>}
         </div>
@@ -148,7 +148,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
             placeholder="Max" 
             value={maxVal}
             onChange={(e) => onMaxChange(e.target.value)}
-            className={cn("rounded-none h-14 border-gray-200 bg-white focus:ring-primary", prefix && "pl-8", suffix && "pr-10")}
+            className={cn("rounded-none h-14 border-gray-200 bg-white focus-visible:ring-0 focus-visible:ring-offset-0 outline-none", prefix && "pl-8", suffix && "pr-10")}
           />
           {suffix && <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-[10px]">{suffix}</span>}
         </div>
@@ -232,7 +232,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
                     key={type}
                     onClick={() => togglePropertyType(type)}
                     className={cn(
-                      "px-6 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all border",
+                      "px-6 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all border focus-visible:ring-0 focus-visible:ring-offset-0 outline-none",
                       propertyTypes.includes(type)
                         ? "bg-[#111111] text-white border-[#111111]"
                         : "bg-white text-gray-500 border-gray-200 hover:border-gray-400"
@@ -258,7 +258,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
                   { label: "Fully Fenced", icon: Shield },
                 ].map((item) => (
                   <div key={item.label} className="flex items-center space-x-3 group cursor-pointer">
-                    <Checkbox id={item.label} className="rounded-none border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
+                    <Checkbox id={item.label} className="rounded-none border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" />
                     <label 
                       htmlFor={item.label}
                       className="text-sm font-bold text-gray-600 cursor-pointer group-hover:text-black flex items-center gap-2 transition-colors"
@@ -281,7 +281,7 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
                   { label: "Elite School Catchment", icon: Shield, highlight: true },
                 ].map((item) => (
                   <div key={item.label} className="flex items-center space-x-3 p-4 bg-gray-50 border border-transparent hover:border-gray-200 transition-all cursor-pointer">
-                    <Checkbox id={item.label} className="rounded-none border-gray-300 data-[state=checked]:bg-primary" />
+                    <Checkbox id={item.label} className="rounded-none border-gray-300 data-[state=checked]:bg-primary focus-visible:ring-0 focus-visible:ring-offset-0" />
                     <label htmlFor={item.label} className="text-xs font-bold text-gray-500 cursor-pointer flex-1 flex items-center gap-2">
                       {item.label}
                       {item.highlight && <Info className="w-3 h-3 text-primary" />}
@@ -297,13 +297,13 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
         <div className="p-8 border-t border-gray-100 bg-white/95 backdrop-blur-md flex items-center justify-between flex-shrink-0">
           <button 
             onClick={clearAll}
-            className="text-[11px] font-bold text-gray-400 hover:text-black tracking-widest uppercase underline underline-offset-4"
+            className="text-[11px] font-bold text-gray-400 hover:text-black tracking-widest uppercase underline underline-offset-4 focus-visible:ring-0 focus-visible:ring-offset-0 outline-none"
           >
             Clear All
           </button>
           <Button 
             onClick={handleShowProperties}
-            className="bg-[#111111] hover:bg-black text-white px-10 h-14 rounded-none font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-xl"
+            className="bg-[#111111] hover:bg-black text-white px-10 h-14 rounded-none font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-xl focus-visible:ring-0 focus-visible:ring-offset-0"
           >
             Show {resultCount} Properties
           </Button>

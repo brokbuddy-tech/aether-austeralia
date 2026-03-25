@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, MapPin, TrendingUp, History, SlidersHorizontal, Sparkles, Loader2, X } from "lucide-react";
+import { Search, MapPin, TrendingUp, History, Sparkles, Loader2, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { suggestTrendingAreas } from "@/ai/flows/ai-property-search-trending-areas";
 import { searchWithAi, type AiSearchAgentOutput } from "@/ai/flows/ai-search-agent";
 import Link from "next/link";
+import AdvancedFilters from "@/components/advanced-filters";
 
 export default function HeroSearch() {
   const [activeTab, setActiveTab] = useState("Buy");
@@ -37,7 +38,6 @@ export default function HeroSearch() {
   const handleSearch = async () => {
     if (!query.trim()) return;
     
-    // Ensure we are in AI mode if handleSearch is triggered (e.g., via Enter key)
     if (activeTab !== "AI Agent") {
       setLastNonAiTab(activeTab);
       setActiveTab("AI Agent");
@@ -62,12 +62,10 @@ export default function HeroSearch() {
       setLastNonAiTab(activeTab);
       setActiveTab("AI Agent");
       setAiResponse(null);
-      // If there's already text, trigger search immediately for better UX
       if (query.trim()) {
         handleSearch();
       }
     } else if (query.trim()) {
-      // If already in AI mode and has text, act as a search button
       handleSearch();
     }
   };
@@ -128,13 +126,10 @@ export default function HeroSearch() {
             
             <div className="flex items-center gap-2 pr-1">
               {!isAiMode && (
-                <Button 
-                  variant="outline" 
-                  className="rounded-full border-gray-300 bg-transparent text-black font-bold h-9 px-4 hover:bg-gray-100 hover:text-black transition-all text-[11px]"
-                >
-                  <SlidersHorizontal className="w-3.5 h-3.5 mr-2" />
-                  Filters
-                </Button>
+                <AdvancedFilters 
+                  onApply={(filters) => console.log('Applying filters:', filters)} 
+                  resultCount={142} 
+                />
               )}
 
               <Button

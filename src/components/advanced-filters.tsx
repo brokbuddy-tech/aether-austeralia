@@ -1,0 +1,240 @@
+"use client";
+
+import * as React from "react";
+import { X, SlidersHorizontal, Info, Car, Bed, Bath, Trees, Waves, Sun, Shield, Dog, Move, Sofa, Home as HomeIcon } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Slider } from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+
+interface AdvancedFiltersProps {
+  onApply?: (filters: any) => void;
+  resultCount?: number;
+}
+
+export default function AdvancedFilters({ onApply, resultCount = 142 }: AdvancedFiltersProps) {
+  const [open, setOpen] = React.useState(false);
+  const [beds, setBeds] = React.useState<string>("any");
+  const [baths, setBaths] = React.useState<string>("any");
+  const [cars, setCars] = React.useState<string>("any");
+  const [propertyTypes, setPropertyTypes] = React.useState<string[]>([]);
+  const [landSize, setLandSize] = React.useState([0, 5000]);
+
+  const togglePropertyType = (type: string) => {
+    setPropertyTypes(prev => 
+      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+    );
+  };
+
+  const clearAll = () => {
+    setBeds("any");
+    setBaths("any");
+    setCars("any");
+    setPropertyTypes([]);
+    setLandSize([0, 5000]);
+  };
+
+  const handleShowProperties = () => {
+    onApply?.({ beds, baths, cars, propertyTypes, landSize });
+    setOpen(false);
+  };
+
+  const FilterSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <div className="py-8 border-b border-gray-100 last:border-0">
+      <h3 className="font-headline font-bold text-sm tracking-[0.2em] uppercase mb-6 text-[#111111]">
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+
+  const ToggleGroup = ({ 
+    label, 
+    value, 
+    onChange, 
+    options,
+    icon: Icon
+  }: { 
+    label: string; 
+    value: string; 
+    onChange: (val: string) => void; 
+    options: string[];
+    icon?: any;
+  }) => (
+    <div className="mb-8">
+      <div className="flex items-center gap-2 mb-4">
+        {Icon && <Icon className="w-4 h-4 text-gray-400" />}
+        <Label className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">{label}</Label>
+      </div>
+      <div className="flex gap-2">
+        {options.map((opt) => (
+          <Button
+            key={opt}
+            variant={value === opt ? "default" : "outline"}
+            onClick={() => onChange(opt)}
+            className={cn(
+              "flex-1 rounded-none h-12 font-bold text-xs transition-all",
+              value === opt ? "bg-[#111111] text-white" : "border-gray-200 text-gray-500 hover:bg-gray-50"
+            )}
+          >
+            {opt === "any" ? "ANY" : opt === "5" ? "5+" : opt}
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button 
+          variant="outline" 
+          className="rounded-full border-gray-300 bg-transparent text-black font-bold h-9 px-4 hover:bg-gray-100 hover:text-black transition-all text-[11px]"
+        >
+          <SlidersHorizontal className="w-3.5 h-3.5 mr-2" />
+          More Filters
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-2xl h-[90vh] p-0 rounded-none border-none bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col">
+        <DialogHeader className="p-8 border-b border-gray-100 flex-shrink-0">
+          <div className="flex justify-between items-center">
+            <DialogTitle className="font-headline font-extrabold text-3xl tracking-tighter uppercase">Advanced Filters</DialogTitle>
+          </div>
+        </DialogHeader>
+
+        <ScrollArea className="flex-1 px-8">
+          <div className="pb-12">
+            {/* Property Specifications */}
+            <FilterSection title="The Essentials">
+              <ToggleGroup 
+                label="Bedrooms" 
+                value={beds} 
+                onChange={setBeds} 
+                options={["any", "1", "2", "3", "4", "5"]} 
+                icon={Bed}
+              />
+              <ToggleGroup 
+                label="Bathrooms" 
+                value={baths} 
+                onChange={setBaths} 
+                options={["any", "1", "2", "3", "4"]} 
+                icon={Bath}
+              />
+              <ToggleGroup 
+                label="Car Spaces" 
+                value={cars} 
+                onChange={setCars} 
+                options={["any", "1", "2", "3"]} 
+                icon={Car}
+              />
+              
+              <div className="mt-10">
+                <div className="flex justify-between items-end mb-6">
+                  <div className="flex items-center gap-2">
+                    <Move className="w-4 h-4 text-gray-400" />
+                    <Label className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Land Size (m²)</Label>
+                  </div>
+                  <span className="font-bold text-xs text-primary">{landSize[0]} - {landSize[1] === 5000 ? '5,000+' : landSize[1]} m²</span>
+                </div>
+                <Slider 
+                  value={landSize} 
+                  onValueChange={setLandSize} 
+                  max={5000} 
+                  step={50} 
+                  className="py-4"
+                />
+              </div>
+            </FilterSection>
+
+            {/* Property Types */}
+            <FilterSection title="Property Type">
+              <div className="flex flex-wrap gap-3">
+                {["House", "Apartment", "Townhouse", "Terrace", "Acreage", "Villa", "Duplex", "Land"].map((type) => (
+                  <button
+                    key={type}
+                    onClick={() => togglePropertyType(type)}
+                    className={cn(
+                      "px-6 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all border",
+                      propertyTypes.includes(type)
+                        ? "bg-[#111111] text-white border-[#111111]"
+                        : "bg-white text-gray-500 border-gray-200 hover:border-gray-400"
+                    )}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
+            </FilterSection>
+
+            {/* Key Features */}
+            <FilterSection title="Key Features & Amenities">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+                {[
+                  { label: "Swimming Pool", icon: Waves },
+                  { label: "Air Conditioning", icon: Sun },
+                  { label: "Solar Panels", icon: Sun, highlight: true },
+                  { label: "Waterfront", icon: Waves },
+                  { label: "Outdoor Entertaining", icon: Trees },
+                  { label: "Built-in Robes", icon: Sofa },
+                  { label: "Study / Home Office", icon: Shield },
+                  { label: "Fully Fenced", icon: Shield },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center space-x-3 group cursor-pointer">
+                    <Checkbox id={item.label} className="rounded-none border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
+                    <label 
+                      htmlFor={item.label}
+                      className="text-sm font-bold text-gray-600 cursor-pointer group-hover:text-black flex items-center gap-2 transition-colors"
+                    >
+                      {item.label}
+                      {item.highlight && <Badge variant="secondary" className="bg-primary/10 text-primary text-[8px] px-1.5 h-4 rounded-none">ECO</Badge>}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </FilterSection>
+
+            {/* Requirements */}
+            <FilterSection title="Requirements">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  { label: "Pet Friendly", icon: Dog },
+                  { label: "Wheelchair Accessible", icon: Move },
+                  { label: "Furnished", icon: Sofa },
+                  { label: "Elite School Catchment", icon: Shield, highlight: true },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center space-x-3 p-4 bg-gray-50 border border-transparent hover:border-gray-200 transition-all cursor-pointer">
+                    <Checkbox id={item.label} className="rounded-none border-gray-300 data-[state=checked]:bg-primary" />
+                    <label htmlFor={item.label} className="text-xs font-bold text-gray-500 cursor-pointer flex-1 flex items-center gap-2">
+                      {item.label}
+                      {item.highlight && <Info className="w-3 h-3 text-primary" />}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </FilterSection>
+          </div>
+        </ScrollArea>
+
+        {/* Sticky Footer */}
+        <div className="p-8 border-t border-gray-100 bg-white/95 backdrop-blur-md flex items-center justify-between flex-shrink-0">
+          <button 
+            onClick={clearAll}
+            className="text-[11px] font-bold text-gray-400 hover:text-black tracking-widest uppercase underline underline-offset-4"
+          >
+            Clear All
+          </button>
+          <Button 
+            onClick={handleShowProperties}
+            className="bg-[#111111] hover:bg-black text-white px-10 h-14 rounded-none font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-xl"
+          >
+            Show {resultCount} Properties
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}

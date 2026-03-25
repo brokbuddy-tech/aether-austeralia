@@ -32,7 +32,7 @@ export default function Navbar() {
     <nav
       className={cn(
         "fixed top-0 w-full z-[100] transition-all duration-300 px-6 py-4 flex items-center justify-between",
-        scrolled ? "bg-white/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent text-white"
+        scrolled ? "bg-white/90 shadow-sm py-3" : "bg-transparent text-white"
       )}
     >
       <Link href="/" className="z-[110]">
@@ -63,7 +63,7 @@ export default function Navbar() {
         <Link href="/portals">
           <Button variant="outline" className={cn(
             "border-2 font-bold px-6",
-            !scrolled ? "border-white text-white hover:bg-white hover:text-black" : "border-black text-black hover:bg-black hover:text-white"
+            !scrolled ? "border-white text-black hover:bg-white hover:text-black" : "border-black text-black hover:bg-black hover:text-white"
           )}>
             SIGN IN
           </Button>
@@ -81,10 +81,10 @@ export default function Navbar() {
         )}
       </button>
 
-      {/* Glassmorphic Mobile Menu */}
+      {/* Mobile Menu */}
       <div
         className={cn(
-          "fixed inset-0 bg-white/95 backdrop-blur-xl z-[105] flex flex-col items-center justify-center transition-all duration-500 ease-in-out",
+          "fixed inset-0 bg-white z-[105] flex flex-col items-center justify-center transition-all duration-500 ease-in-out",
           isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full pointer-events-none"
         )}
       >

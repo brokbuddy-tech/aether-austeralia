@@ -1,5 +1,7 @@
+
 "use client";
 
+import Image from "next/image";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,11 +21,21 @@ export default function ContactPage() {
   return (
     <div className="pt-[72px] bg-white min-h-screen">
       {/* Header */}
-      <section className="bg-secondary/10 py-24 px-6 border-b border-secondary/20">
-        <div className="max-w-7xl mx-auto text-center">
-          <span className="text-secondary font-bold text-xs tracking-[0.4em] mb-4 block uppercase">Get in Touch</span>
-          <h1 className="font-headline font-extrabold text-5xl md:text-7xl mb-6 tracking-tighter uppercase">Connect with<br /> Aether Australia</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
+      <section className="relative py-32 px-6 border-b border-[#111111]/10 overflow-hidden text-white">
+        <Image
+          src="https://picsum.photos/seed/contact-beach/1920/1080"
+          alt="Australian Coastal Header"
+          fill
+          className="object-cover z-0"
+          priority
+          data-ai-hint="Coastal Landscape"
+        />
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-10" />
+        
+        <div className="relative z-20 max-w-7xl mx-auto text-center">
+          <span className="text-white/80 font-bold text-xs tracking-[0.4em] mb-4 block uppercase">Get in Touch</span>
+          <h1 className="font-headline font-extrabold text-5xl md:text-7xl mb-6 tracking-tighter uppercase leading-none">Connect with<br /> Aether Australia</h1>
+          <p className="text-white/90 max-w-2xl mx-auto text-lg leading-relaxed font-medium">
             Experience the difference in premium service. Our specialists are ready to guide you through your luxury property journey.
           </p>
         </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import HeroSearch from "@/components/hero-search";
 import DifferenceBlock from "@/components/difference-block";
 import PropertyCard from "@/components/property-card";
+import TestimonialSlider from "@/components/testimonial-slider";
 import { Button } from "@/components/ui/button";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import {
@@ -53,7 +54,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col relative min-h-screen">
-      {/* Fixed Background Layer - Only visible through the transparent hero */}
+      {/* Fixed Background Layer */}
       <div className="fixed inset-0 w-full h-screen z-0">
         <Image
           src={heroImage?.imageUrl || "https://picsum.photos/seed/modern-building-arch/1920/1080"}
@@ -66,14 +67,14 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/30" />
       </div>
 
-      {/* Hero Content Section - Transparent background to reveal the fixed image */}
+      {/* Hero Content Section */}
       <section className="relative z-10 h-screen min-h-[700px] flex items-center justify-center bg-transparent">
         <div className="text-center px-6 w-full max-w-7xl">
           <HeroSearch />
         </div>
       </section>
 
-      {/* Main Content Container - Solid background to cover the fixed hero layer when scrolling */}
+      {/* Main Content Container */}
       <div className="relative z-20 bg-white">
         {/* Featured Residences */}
         <section className="py-24 px-6 bg-[#F5F7FA]">
@@ -122,6 +123,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Client Voice Testimonial Section */}
+        <TestimonialSlider />
+
         {/* Insights & Advice Section */}
         <section className="relative py-32 px-6 bg-white overflow-hidden border-t border-gray-100">
           {/* Parallax Background */}
@@ -141,7 +145,7 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-              {/* Featured Insight (Left - 65%) */}
+              {/* Featured Insight */}
               <div className="lg:col-span-8 group">
                 <Link href="/insights" className="block">
                   <div className="relative aspect-[16/9] overflow-hidden mb-8 shadow-2xl">
@@ -174,7 +178,7 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Secondary Feed (Right - 35%) */}
+              {/* Secondary Feed */}
               <div className="lg:col-span-4 flex flex-col gap-10">
                 {secondaryInsights.map((item, idx) => (
                   <Link 
@@ -241,7 +245,6 @@ export default function Home() {
         <section className="py-24 px-6 bg-white border-t border-gray-100">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-              {/* Image Side */}
               <div className="relative aspect-square lg:aspect-[4/5] overflow-hidden shadow-2xl group">
                 <Image
                   src="https://picsum.photos/seed/faq-concierge/800/1000"
@@ -257,7 +260,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Accordion Side */}
               <div>
                 <div className="mb-16">
                   <span className="inline-block text-[10px] font-bold text-primary tracking-[0.5em] uppercase mb-4 border-b-2 border-primary pb-1">

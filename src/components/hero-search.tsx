@@ -130,7 +130,7 @@ export default function HeroSearch() {
               {!isAiMode && (
                 <Button 
                   variant="outline" 
-                  className="rounded-full border-gray-300 bg-transparent text-black font-bold h-9 px-4 hover:bg-gray-100 transition-all text-[11px]"
+                  className="rounded-full border-gray-300 bg-transparent text-black font-bold h-9 px-4 hover:bg-gray-100 hover:text-black transition-all text-[11px]"
                 >
                   <SlidersHorizontal className="w-3.5 h-3.5 mr-2" />
                   Filters

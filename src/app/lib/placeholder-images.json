@@ -36,6 +36,12 @@
       "description": "Nearby pristine Australian beach at golden hour",
       "imageUrl": "https://picsum.photos/seed/bondi-lifestyle/800/600",
       "imageHint": "Australian Beach Lifestyle"
+    },
+    {
+      "id": "search-header",
+      "description": "Cinematic view of a luxury residential street in Australia at dusk",
+      "imageUrl": "https://picsum.photos/seed/search-street/1920/400",
+      "imageHint": "Luxury Residential Street"
     }
   ]
 }

@@ -1,9 +1,13 @@
 
+import Image from "next/image";
 import FilterBar from "@/components/filter-bar";
 import PropertyCard from "@/components/property-card";
 import { Button } from "@/components/ui/button";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default function SearchPage() {
+  const searchHeaderImage = PlaceHolderImages.find(img => img.id === 'search-header');
+
   const properties = [
     { id: "1", image: "https://picsum.photos/seed/lux-house-1/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
     { id: "2", image: "https://picsum.photos/seed/lux-apt-2/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
@@ -15,10 +19,21 @@ export default function SearchPage() {
 
   return (
     <div className="pt-[72px] bg-gray-50 min-h-screen pb-24">
-      <div className="bg-white py-12 px-6 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="font-headline font-extrabold text-4xl mb-2">Properties for Sale in Australia</h1>
-          <p className="text-gray-500 font-body">Found {properties.length} results matching your search</p>
+      {/* Header with Background Image */}
+      <div className="relative py-20 px-6 border-b border-gray-100 overflow-hidden text-white">
+        <Image
+          src={searchHeaderImage?.imageUrl || "https://picsum.photos/seed/search-header-fallback/1920/400"}
+          alt={searchHeaderImage?.description || "Search Results"}
+          fill
+          className="object-cover z-0"
+          priority
+          data-ai-hint={searchHeaderImage?.imageHint || "Luxury Street"}
+        />
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] z-10" />
+        
+        <div className="relative z-20 max-w-7xl mx-auto">
+          <h1 className="font-headline font-extrabold text-4xl md:text-5xl mb-2 tracking-tighter uppercase">Properties for Sale in Australia</h1>
+          <p className="text-gray-200 font-body text-lg">Found {properties.length} results matching your search</p>
         </div>
       </div>
       

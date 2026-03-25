@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import HeroSearch from "@/components/hero-search";
@@ -33,9 +34,6 @@ export default function Home() {
       {/* Hero Content Section - Transparent background to reveal the fixed image */}
       <section className="relative z-10 h-screen min-h-[700px] flex items-center justify-center bg-transparent">
         <div className="text-center px-6 w-full max-w-7xl">
-          <h1 className="text-white font-headline font-extrabold text-4xl md:text-6xl mb-8 tracking-tighter leading-none uppercase animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            DISCOVER THE AETHER LIFESTYLE.
-          </h1>
           <HeroSearch />
         </div>
       </section>

@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import { Button } from "@/components/ui/button";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +20,10 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const isHomePage = pathname === "/";
+  const isTransparent = isHomePage && !scrolled && !isOpen;
+  const textColor = isTransparent ? "text-white" : "text-black";
 
   const navLinks = [
     { name: "BUY", href: "/search?type=buy" },
@@ -36,7 +42,7 @@ export default function Navbar() {
       )}
     >
       <Link href="/" className="z-[110]">
-        <span className="font-headline font-extrabold text-2xl tracking-tighter text-black">
+        <span className={cn("font-headline font-extrabold text-2xl tracking-tighter transition-colors duration-300", textColor)}>
           AETHER<span className="text-primary">.</span>
         </span>
       </Link>
@@ -46,18 +52,21 @@ export default function Navbar() {
           <Link
             key={link.name}
             href={link.href}
-            className="text-xs font-bold tracking-widest text-black hover:text-primary transition-colors"
+            className={cn("text-xs font-bold tracking-widest hover:text-primary transition-colors duration-300", textColor)}
           >
             {link.name}
           </Link>
         ))}
         <Link href="/contact">
-          <Button variant="outline" className={cn(
-            "border-2 font-bold px-6",
-            !scrolled && !isOpen 
-              ? "border-black text-black bg-white hover:bg-white/90" 
-              : "border-black text-black hover:bg-black hover:text-white"
-          )}>
+          <Button 
+            variant="outline" 
+            className={cn(
+              "border-2 font-bold px-6 transition-all duration-300",
+              isTransparent 
+                ? "border-white text-white bg-transparent hover:bg-white hover:text-black" 
+                : "border-black text-black bg-transparent hover:bg-black hover:text-white"
+            )}
+          >
             CONTACT US
           </Button>
         </Link>
@@ -70,7 +79,7 @@ export default function Navbar() {
         {isOpen ? (
           <X className="w-8 h-8 text-black" />
         ) : (
-          <Menu className="w-8 h-8 text-black" />
+          <Menu className={cn("w-8 h-8 transition-colors duration-300", textColor)} />
         )}
       </button>
 

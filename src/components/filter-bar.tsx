@@ -70,6 +70,21 @@ export default function FilterBar() {
           </Select>
         </div>
 
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-bold text-gray-400 tracking-widest">BATH</span>
+          <Select defaultValue="any">
+            <SelectTrigger className="w-[100px] rounded-none border-gray-200">
+              <SelectValue placeholder="Any" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="any">Any</SelectItem>
+              <SelectItem value="1">1+</SelectItem>
+              <SelectItem value="2">2+</SelectItem>
+              <SelectItem value="3">3+</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
         <Button variant="outline" className="ml-auto rounded-none border-gray-200 flex items-center gap-2 font-bold px-6">
           <Filter className="w-4 h-4" />
           MORE FILTERS

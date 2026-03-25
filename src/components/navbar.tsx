@@ -1,9 +1,8 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Search, User } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -57,15 +56,17 @@ export default function Navbar() {
             {link.name}
           </Link>
         ))}
-        <Button variant="ghost" size="icon" className={cn(!scrolled && "text-white")}>
+        <Button variant="ghost" size="icon" className={cn(!scrolled && !isOpen && "text-white")}>
           <Search className="w-5 h-5" />
         </Button>
-        <Link href="/portals">
+        <Link href="/contact">
           <Button variant="outline" className={cn(
             "border-2 font-bold px-6",
-            !scrolled ? "border-white text-black hover:bg-white hover:text-black" : "border-black text-black hover:bg-black hover:text-white"
+            !scrolled && !isOpen 
+              ? "border-white text-black bg-white hover:bg-white/90" 
+              : "border-black text-black hover:bg-black hover:text-white"
           )}>
-            SIGN IN
+            CONTACT US
           </Button>
         </Link>
       </div>
@@ -103,9 +104,11 @@ export default function Navbar() {
             <Button className="bg-primary hover:bg-primary/90 text-white font-bold py-6 px-12 text-xl">
               FIND AN AGENT
             </Button>
-            <Button variant="outline" className="border-black text-black font-bold py-6 px-12 text-xl">
-              SIGN IN
-            </Button>
+            <Link href="/contact" onClick={() => setIsOpen(false)}>
+              <Button variant="outline" className="border-black text-black font-bold py-6 px-12 text-xl w-full">
+                CONTACT US
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

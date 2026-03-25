@@ -130,10 +130,10 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 </Badge>
                 <div className="h-px flex-1 bg-gray-100" />
               </div>
-              <h1 className="font-headline font-extrabold text-3xl md:text-5xl mb-3 tracking-tighter text-[#111111] leading-none uppercase">
+              <h1 className="font-headline font-extrabold text-2xl md:text-4xl mb-3 tracking-tighter text-[#111111] leading-none uppercase">
                 {propertyData.address}
               </h1>
-              <p className="text-base md:text-lg text-gray-400 font-bold tracking-[0.2em] uppercase mb-8 flex items-center gap-2">
+              <p className="text-sm md:text-base text-gray-400 font-bold tracking-[0.2em] uppercase mb-8 flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-primary" /> {propertyData.suburb}
               </p>
               
@@ -142,28 +142,28 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                   <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BEDROOMS</span>
                   <div className="flex items-center gap-2.5">
                     <Bed className="w-5 h-5 text-primary/40" />
-                    <span className="font-extrabold text-2xl">{propertyData.beds}</span>
+                    <span className="font-extrabold text-xl">{propertyData.beds}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BATHROOMS</span>
                   <div className="flex items-center gap-2.5">
                     <Bath className="w-5 h-5 text-primary/40" />
-                    <span className="font-extrabold text-2xl">{propertyData.baths}</span>
+                    <span className="font-extrabold text-xl">{propertyData.baths}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">CAR SPACES</span>
                   <div className="flex items-center gap-2.5">
                     <Car className="w-5 h-5 text-primary/40" />
-                    <span className="font-extrabold text-2xl">{propertyData.cars}</span>
+                    <span className="font-extrabold text-xl">{propertyData.cars}</span>
                   </div>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase block">AREA</span>
                   <div className="flex items-center gap-2.5">
                     <Maximize className="w-5 h-5 text-primary/40" />
-                    <span className="font-extrabold text-2xl">{propertyData.area}m<sup>2</sup></span>
+                    <span className="font-extrabold text-xl">{propertyData.area}m<sup>2</sup></span>
                   </div>
                 </div>
               </div>
@@ -171,8 +171,8 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
 
             {/* AI Generated Narrative Story */}
             <div className="mb-16">
-              <h2 className="font-headline font-extrabold text-xl uppercase tracking-tighter mb-6 text-primary">THE PROPERTY STORY</h2>
-              <div className="prose max-w-none text-gray-600 leading-relaxed font-body text-base whitespace-pre-wrap">
+              <h2 className="font-headline font-extrabold text-lg uppercase tracking-tighter mb-6 text-primary">THE PROPERTY STORY</h2>
+              <div className="prose max-w-none text-gray-600 leading-relaxed font-body text-sm whitespace-pre-wrap">
                 {story}
               </div>
             </div>
@@ -214,7 +214,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 </div>
                 <div className="pt-4 text-center">
                   <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">TOTAL PROJECTED INVESTMENT</p>
-                  <p className="text-4xl md:text-5xl font-headline font-extrabold tracking-tighter">
+                  <p className="text-3xl md:text-4xl font-headline font-extrabold tracking-tighter">
                     ${(propertyData.price + stampDuty).toLocaleString()} <span className="text-[10px]">AUD</span>
                   </p>
                 </div>

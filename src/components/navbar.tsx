@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -51,9 +51,6 @@ export default function Navbar() {
             {link.name}
           </Link>
         ))}
-        <Button variant="ghost" size="icon" className="text-black">
-          <Search className="w-5 h-5" />
-        </Button>
         <Link href="/contact">
           <Button variant="outline" className={cn(
             "border-2 font-bold px-6",

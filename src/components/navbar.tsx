@@ -25,7 +25,7 @@ export default function Navbar() {
     { name: "SOLD", href: "/search?type=sold" },
     { name: "INSIGHTS", href: "/insights" },
     { name: "FIND AN AGENT", href: "#" },
-    { name: "PORTALS", href: "/portals" },
+    { name: "COMMERCIAL", href: "/search?type=commercial" },
   ];
 
   return (

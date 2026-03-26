@@ -3,9 +3,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { MapPin, School, Train, ShoppingBag, ChevronRight } from "lucide-react";
+import { MapPin, School, Train, ShoppingBag, ChevronRight, Plus, Minus } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface PropertyMapProps {
   address: string;
@@ -15,6 +16,7 @@ interface PropertyMapProps {
 export default function PropertyMap({ address, suburb }: PropertyMapProps) {
   const mapPlaceholder = PlaceHolderImages.find(img => img.id === 'property-map');
   const [activeTab, setActiveTab] = useState<'school' | 'transit' | 'lifestyle'>('school');
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const neighborhoodData = {
     school: {
@@ -24,6 +26,10 @@ export default function PropertyMap({ address, suburb }: PropertyMapProps) {
         { name: "Mosman High School", type: "Secondary", distance: "800m" },
         { name: "Queenwood School for Girls", type: "Private", distance: "1.2km" },
         { name: "Only About Children Mosman", type: "Childcare", distance: "300m" },
+        { name: "Blessed Sacrament Catholic Primary", type: "Religious", distance: "950m" },
+        { name: "Beauty Point Public School", type: "Primary", distance: "2.1km" },
+        { name: "Middle Harbour Public School", type: "Primary", distance: "1.8km" },
+        { name: "St Therese's Catholic Primary", type: "Religious", distance: "1.5km" },
       ]
     },
     transit: {
@@ -33,6 +39,10 @@ export default function PropertyMap({ address, suburb }: PropertyMapProps) {
         { name: "Mosman Bay Ferry Wharf", type: "Ferry", distance: "1.5km" },
         { name: "Military Rd at Avenue Rd", type: "Bus Stop", distance: "150m" },
         { name: "Neutral Bay Station", type: "Train", distance: "3.2km" },
+        { name: "South Mosman Wharf", type: "Ferry", distance: "1.8km" },
+        { name: "Taronga Zoo Wharf", type: "Ferry", distance: "2.5km" },
+        { name: "North Sydney Station", type: "Train", distance: "4.5km" },
+        { name: "Cremorne Point Wharf", type: "Ferry", distance: "2.2km" },
       ]
     },
     lifestyle: {
@@ -42,9 +52,16 @@ export default function PropertyMap({ address, suburb }: PropertyMapProps) {
         { name: "Mosman Village", type: "Boutiques", distance: "350m" },
         { name: "Fourth Village Providore", type: "Market", distance: "500m" },
         { name: "Balmoral Beach", type: "Coastal", distance: "1.8km" },
+        { name: "Taronga Zoo", type: "Leisure", distance: "2.5km" },
+        { name: "Chinaman's Beach", type: "Coastal", distance: "2.1km" },
+        { name: "Mosman RSL", type: "Dining", distance: "600m" },
+        { name: "Rawson Park", type: "Park", distance: "1.1km" },
       ]
     }
   };
+
+  const currentItems = neighborhoodData[activeTab].items;
+  const displayedItems = isExpanded ? currentItems : currentItems.slice(0, 4);
 
   return (
     <div className="mt-16 pt-16 border-t border-gray-100">
@@ -78,7 +95,10 @@ export default function PropertyMap({ address, suburb }: PropertyMapProps) {
       {/* Neighborhood Highlights Tabs */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <button 
-          onClick={() => setActiveTab('school')}
+          onClick={() => {
+            setActiveTab('school');
+            setIsExpanded(false);
+          }}
           className={cn(
             "flex gap-4 items-center p-5 border transition-all text-left group",
             activeTab === 'school' ? "border-primary bg-primary/5 shadow-md" : "border-gray-100 bg-white hover:border-gray-200"
@@ -97,7 +117,10 @@ export default function PropertyMap({ address, suburb }: PropertyMapProps) {
         </button>
         
         <button 
-          onClick={() => setActiveTab('transit')}
+          onClick={() => {
+            setActiveTab('transit');
+            setIsExpanded(false);
+          }}
           className={cn(
             "flex gap-4 items-center p-5 border transition-all text-left group",
             activeTab === 'transit' ? "border-primary bg-primary/5 shadow-md" : "border-gray-100 bg-white hover:border-gray-200"
@@ -116,7 +139,10 @@ export default function PropertyMap({ address, suburb }: PropertyMapProps) {
         </button>
 
         <button 
-          onClick={() => setActiveTab('lifestyle')}
+          onClick={() => {
+            setActiveTab('lifestyle');
+            setIsExpanded(false);
+          }}
           className={cn(
             "flex gap-4 items-center p-5 border transition-all text-left group",
             activeTab === 'lifestyle' ? "border-primary bg-primary/5 shadow-md" : "border-gray-100 bg-white hover:border-gray-200"
@@ -141,7 +167,7 @@ export default function PropertyMap({ address, suburb }: PropertyMapProps) {
           Nearest {neighborhoodData[activeTab].title} <ChevronRight className="w-4 h-4 text-primary" />
         </h5>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-          {neighborhoodData[activeTab].items.map((item, idx) => (
+          {displayedItems.map((item, idx) => (
             <div key={idx} className="flex justify-between items-end border-b border-gray-200 pb-3 group">
               <div>
                 <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-1">{item.type}</p>
@@ -153,6 +179,22 @@ export default function PropertyMap({ address, suburb }: PropertyMapProps) {
             </div>
           ))}
         </div>
+
+        {currentItems.length > 4 && (
+          <div className="mt-8 flex justify-center">
+            <Button 
+              variant="outline" 
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="rounded-none border-gray-300 text-[9px] font-bold tracking-[0.3em] uppercase h-10 px-8 hover:bg-black hover:text-white transition-all"
+            >
+              {isExpanded ? (
+                <>SHOW LESS <Minus className="w-3 h-3 ml-2" /></>
+              ) : (
+                <>SHOW MORE <Plus className="w-3 h-3 ml-2" /></>
+              )}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

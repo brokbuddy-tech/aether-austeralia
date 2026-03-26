@@ -23,7 +23,19 @@ interface PropertyProps {
 export default function PropertyCard({ property }: { property: PropertyProps }) {
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
-  const isRent = type === 'rent';
+  
+  // Determine badge label based on search type
+  let badgeLabel = "SOLD";
+  if (type === "buy") {
+    badgeLabel = "BUY";
+  } else if (type === "rent") {
+    badgeLabel = "RENT";
+  } else if (type === "sold") {
+    badgeLabel = "SOLD";
+  } else {
+    // Default for featured properties on home page or other contexts
+    badgeLabel = "BUY"; 
+  }
 
   return (
     <Link 
@@ -43,7 +55,7 @@ export default function PropertyCard({ property }: { property: PropertyProps }) 
         {/* Top Badges */}
         <div className="absolute top-4 left-4 flex gap-2 z-10">
           <Badge className="bg-[#111111] text-white rounded-none font-bold text-[9px] tracking-[0.2em] uppercase px-3 py-1">
-            {isRent ? 'RENT' : 'SOLD'}
+            {badgeLabel}
           </Badge>
           <Badge className="bg-primary text-white rounded-none font-bold text-[9px] tracking-[0.2em] uppercase px-3 py-1">
             AETHER VERIFIED

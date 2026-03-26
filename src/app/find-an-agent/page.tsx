@@ -70,7 +70,7 @@ export default function FindAnAgentPage() {
                 placeholder="Search suburb, agent, or agency"
               />
             </div>
-            <Button className="bg-[#00A651] hover:bg-[#00A651]/90 text-white rounded-full h-14 px-10 font-bold transition-all">
+            <Button className="bg-primary hover:bg-primary/90 text-white rounded-full h-14 px-10 font-bold transition-all">
               <Search className="w-5 h-5" />
             </Button>
           </div>
@@ -81,8 +81,8 @@ export default function FindAnAgentPage() {
       <section className="py-20 px-6 max-w-7xl mx-auto -mt-20 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white p-10 rounded-none border border-gray-100 shadow-xl hover:shadow-2xl transition-all group text-center flex flex-col items-center">
-            <div className="w-16 h-16 bg-[#00A651]/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform">
-              <Home className="w-8 h-8 text-[#00A651]" />
+            <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform">
+              <Home className="w-8 h-8 text-primary" />
             </div>
             <h3 className="font-headline font-bold text-xl mb-2 text-[#111111]">Looking to sell?</h3>
             <p className="text-gray-500 text-sm font-medium">Get a free appraisal from our local specialists.</p>
@@ -97,8 +97,8 @@ export default function FindAnAgentPage() {
           </div>
 
           <div className="bg-white p-10 rounded-none border border-gray-100 shadow-xl hover:shadow-2xl transition-all group text-center flex flex-col items-center">
-            <div className="w-16 h-16 bg-[#00A651]/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform">
-              <Gavel className="w-8 h-8 text-[#00A651]" />
+            <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform">
+              <Gavel className="w-8 h-8 text-primary" />
             </div>
             <h3 className="font-headline font-bold text-xl mb-2 text-[#111111]">See recently sold</h3>
             <p className="text-gray-500 text-sm font-medium">Research local results in your immediate area.</p>
@@ -125,7 +125,7 @@ export default function FindAnAgentPage() {
                     className="object-cover"
                   />
                 </div>
-                <div className="absolute -top-2 -right-2 bg-[#00A651] text-white px-2.5 py-1 text-[8px] font-bold tracking-widest uppercase rounded-full shadow-md">
+                <div className="absolute -top-2 -right-2 bg-primary text-white px-2.5 py-1 text-[8px] font-bold tracking-widest uppercase rounded-full shadow-md">
                   {item.category}
                 </div>
                 
@@ -141,7 +141,7 @@ export default function FindAnAgentPage() {
                 <div className="flex items-center gap-2 mb-2">
                    <span className="text-[9px] font-bold text-gray-400 tracking-[0.2em] uppercase">ADVISOR</span>
                    <span className="h-1 w-1 bg-gray-300 rounded-full" />
-                   <div className="flex items-center gap-1 text-[9px] font-bold text-[#00A651] tracking-[0.2em] uppercase">
+                   <div className="flex items-center gap-1 text-[9px] font-bold text-primary tracking-[0.2em] uppercase">
                      <ShieldCheck className="w-3 h-3" /> VERIFIED
                    </div>
                 </div>

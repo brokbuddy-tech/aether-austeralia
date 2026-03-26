@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -15,7 +14,6 @@ type Advisor = {
   name: string;
   title: string;
   category: string;
-  readTime: string;
   image: string;
 };
 
@@ -28,28 +26,24 @@ export default function FindAnAgentPage() {
       name: "Marcus Thorne",
       title: "How and when to sell your home for maximum value",
       category: "Selling",
-      readTime: "2 min read",
       image: "https://picsum.photos/seed/marcus-headshot/400/400"
     },
     {
       name: "Sarah Jenkins",
       title: "Maximising rental yield in the 2026 Australian market",
       category: "Investing",
-      readTime: "3 min read",
       image: "https://picsum.photos/seed/sarah-headshot/400/400"
     },
     {
       name: "David Beck",
       title: "The structural shift: Why coastal luxury is surging",
       category: "Market",
-      readTime: "4 min read",
       image: "https://picsum.photos/seed/david-headshot/400/400"
     },
     {
       name: "Emma Wilson",
       title: "Navigating first home buyer grants across NSW & VIC",
       category: "Buying",
-      readTime: "2 min read",
       image: "https://picsum.photos/seed/emma-headshot/400/400"
     }
   ];
@@ -212,7 +206,7 @@ export default function FindAnAgentPage() {
             <div className="space-y-3">
               <Button 
                 onClick={() => handleContact('SMS')}
-                className="w-full bg-[#0047AB] hover:bg-[#0047AB]/90 text-white font-bold h-14 rounded-none uppercase tracking-[0.2em] text-[11px] shadow-lg"
+                className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-none uppercase tracking-[0.2em] text-[11px] shadow-lg"
               >
                 <MessageSquare className="w-4 h-4 mr-3" /> SEND SECURE SMS
               </Button>

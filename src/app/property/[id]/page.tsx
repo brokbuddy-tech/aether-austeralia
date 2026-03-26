@@ -3,6 +3,7 @@ import { Bed, Bath, Car, Maximize, MapPin, Share2, Heart, ShieldCheck, PlayCircl
 import { Button } from "@/components/ui/button";
 import AgentSidebar from "@/components/agent-sidebar";
 import InspectionScheduler from "@/components/inspection-scheduler";
+import AuctionBlock from "@/components/auction-block";
 import { generatePropertyStory } from "@/ai/flows/ai-generated-property-story";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
@@ -200,6 +201,9 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
             <PropertyStory story={story} />
 
             <InspectionScheduler />
+            
+            {/* Auction Details Section */}
+            <AuctionBlock />
           </div>
 
           {/* Sticky Action Sidebar */}

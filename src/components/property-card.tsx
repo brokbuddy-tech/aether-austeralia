@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Bed, Bath, Car, Maximize } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useSearchParams } from "next/navigation";
 
 interface PropertyProps {
   id: string;
@@ -20,6 +21,10 @@ interface PropertyProps {
 }
 
 export default function PropertyCard({ property }: { property: PropertyProps }) {
+  const searchParams = useSearchParams();
+  const type = searchParams.get('type');
+  const isRent = type === 'rent';
+
   return (
     <Link 
       href={`/property/${property.id}`} 
@@ -38,7 +43,7 @@ export default function PropertyCard({ property }: { property: PropertyProps }) 
         {/* Top Badges */}
         <div className="absolute top-4 left-4 flex gap-2 z-10">
           <Badge className="bg-[#111111] text-white rounded-none font-bold text-[9px] tracking-[0.2em] uppercase px-3 py-1">
-            SOLD
+            {isRent ? 'RENT' : 'SOLD'}
           </Badge>
           <Badge className="bg-primary text-white rounded-none font-bold text-[9px] tracking-[0.2em] uppercase px-3 py-1">
             AETHER VERIFIED

@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import { Bed, Bath, Car, Maximize, MapPin, Share2, Heart, ShieldCheck, PlayCircle, Info, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -215,27 +214,6 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
           <div className="lg:col-span-4 relative">
             <div className="sticky top-24 space-y-6">
               <AgentSidebar propertyId={id} />
-              
-              {/* Inspection Times Block */}
-              <div className="bg-gray-50 p-5 border border-gray-100 text-center">
-                <h4 className="font-bold text-[8px] tracking-[0.3em] uppercase mb-4 text-gray-400">OPEN FOR INSPECTION</h4>
-                <div className="space-y-2.5">
-                  <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                    <div className="text-left">
-                      <p className="font-bold text-[10px]">Saturday, 12 Oct</p>
-                      <p className="text-[7px] text-gray-500">10:00 AM - 10:45 AM</p>
-                    </div>
-                    <Button variant="link" className="text-primary p-0 text-[7px] font-bold uppercase">ADD</Button>
-                  </div>
-                  <div className="flex justify-between items-center pb-2">
-                    <div className="text-left">
-                      <p className="font-bold text-[10px]">Wednesday, 16 Oct</p>
-                      <p className="text-[7px] text-gray-500">05:00 PM - 05:30 PM</p>
-                    </div>
-                    <Button variant="link" className="text-primary p-0 text-[7px] font-bold uppercase">ADD</Button>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

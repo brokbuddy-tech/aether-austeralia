@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import { Bed, Bath, Car, Maximize, MapPin, Share2, Heart, ShieldCheck, PlayCircle, Info, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -44,8 +43,6 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
     keyFeatures: ["Premium finishes", "Architectural design", "Prime location", "Modern amenities"],
     locationDescription: `Situated in the highly sought-after enclave of ${propertyData.suburb}.`
   });
-
-  const stampDuty = Math.round(propertyData.price * 0.05);
 
   return (
     <div className="pt-[72px] bg-white min-h-screen font-body">
@@ -193,30 +190,6 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
 
             {/* AI Generated Narrative Story Component */}
             <PropertyStory story={story} />
-
-            {/* Investment Summary */}
-            <div className="mb-16 p-8 bg-[#111111] text-white shadow-2xl">
-              <div className="flex justify-between items-center mb-8">
-                <h3 className="font-headline font-bold text-base uppercase tracking-tighter text-primary">INVESTMENT SNAPSHOT</h3>
-                <Badge className="bg-white/10 text-white rounded-none border-none text-[7px] tracking-[0.2em]">EST. 2026</Badge>
-              </div>
-              <div className="space-y-5">
-                <div className="flex justify-between border-b border-white/5 pb-3">
-                  <span className="text-gray-400 text-[8px] font-bold uppercase tracking-widest">Market Price</span>
-                  <span className="font-extrabold text-base">${propertyData.price.toLocaleString()} AUD</span>
-                </div>
-                <div className="flex justify-between border-b border-white/5 pb-3">
-                  <span className="text-gray-400 text-[8px] font-bold uppercase tracking-widest">Stamp Duty (EST)</span>
-                  <span className="font-extrabold text-base text-primary">+ ${stampDuty.toLocaleString()} AUD</span>
-                </div>
-                <div className="pt-4 text-center">
-                  <p className="text-[8px] font-bold text-gray-500 uppercase tracking-widest mb-2">TOTAL PROJECTED INVESTMENT</p>
-                  <p className="text-2xl md:text-3xl font-headline font-extrabold tracking-tighter">
-                    ${(propertyData.price + stampDuty).toLocaleString()} <span className="text-[10px]">AUD</span>
-                  </p>
-                </div>
-              </div>
-            </div>
 
             <InspectionScheduler />
           </div>

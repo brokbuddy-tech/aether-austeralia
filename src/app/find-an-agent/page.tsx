@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -89,8 +88,7 @@ export default function FindAnAgentPage() {
             <p className="text-gray-500 text-sm font-medium">Get a free appraisal from our local specialists.</p>
           </div>
 
-          <div className="bg-white p-10 rounded-none border-2 border-[#0047AB] shadow-2xl transition-all group text-center flex flex-col items-center relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-[#0047AB] text-white px-3 py-1 text-[8px] font-bold tracking-[0.2em] uppercase">RECOMMENDED</div>
+          <div className="bg-white p-10 rounded-none border border-gray-100 shadow-xl hover:shadow-2xl transition-all group text-center flex flex-col items-center">
             <div className="w-16 h-16 bg-[#0047AB]/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform">
               <DollarSign className="w-8 h-8 text-[#0047AB]" />
             </div>

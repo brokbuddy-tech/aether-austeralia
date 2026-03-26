@@ -80,14 +80,14 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <Card className="rounded-none border-none bg-[#111111] text-white shadow-2xl">
+            <Card className="rounded-none border border-gray-100 bg-white text-[#111111] shadow-xl">
               <CardContent className="p-10">
                 <h3 className="font-headline font-bold text-xl mb-4 text-primary">Media & Corporate</h3>
-                <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                <p className="text-gray-500 text-sm leading-relaxed mb-6">
                   For press inquiries or corporate partnerships, please contact our strategic communications team directly at media@aetheraustralia.com.au
                 </p>
-                <div className="h-px bg-white/10 w-full mb-6" />
-                <p className="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">AETHER GLOBAL NETWORK</p>
+                <div className="h-px bg-gray-100 w-full mb-6" />
+                <p className="text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">AETHER GLOBAL NETWORK</p>
               </CardContent>
             </Card>
           </div>

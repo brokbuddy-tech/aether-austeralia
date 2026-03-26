@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -163,21 +162,21 @@ export default function BrochurePage() {
               </div>
               <div>
                 <p className="font-headline font-extrabold text-lg text-[#111111] uppercase tracking-tighter">Kieran Warriner</p>
-                <p className="text-[9px] font-bold text-[#0047AB] uppercase tracking-widest">Commercial Consultant</p>
+                <p className="text-[9px] font-bold text-primary uppercase tracking-widest">Commercial Consultant</p>
               </div>
             </div>
 
             <div className="flex items-center gap-8">
               <div className="flex flex-col gap-2">
-                <a href="tel:+61290000000" className="flex items-center gap-2 text-[10px] font-bold text-[#0047AB] tracking-widest hover:underline uppercase">
+                <a href="tel:+61290000000" className="flex items-center gap-2 text-[10px] font-bold text-primary tracking-widest hover:underline uppercase">
                   <Phone className="w-3 h-3" /> CALL +61 2 9000 0000
                 </a>
-                <button className="flex items-center gap-2 text-[10px] font-bold text-[#0047AB] tracking-widest hover:underline uppercase">
+                <button className="flex items-center gap-2 text-[10px] font-bold text-primary tracking-widest hover:underline uppercase">
                   <MessageSquare className="w-3 h-3" /> WHATSAPP AGENT
                 </button>
               </div>
               <div className="h-10 w-px bg-gray-200" />
-              <Link href={`/property/${id}`} className="flex items-center gap-2 text-[10px] font-bold text-[#0047AB] tracking-widest hover:underline uppercase">
+              <Link href={`/property/${id}`} className="flex items-center gap-2 text-[10px] font-bold text-primary tracking-widest hover:underline uppercase">
                 <Globe className="w-3 h-3" /> VIEW ON WEBSITE <ChevronRight className="w-3 h-3" />
               </Link>
             </div>

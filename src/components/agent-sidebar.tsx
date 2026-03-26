@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -58,7 +57,7 @@ export default function AgentSidebar({ propertyId }: { propertyId: string }) {
           </div>
 
           <div className="space-y-3">
-            <Button className="w-full bg-[#0047AB] hover:bg-[#0047AB]/90 text-white font-bold h-14 rounded-none uppercase tracking-[0.2em] text-[11px] shadow-xl">
+            <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-none uppercase tracking-[0.2em] text-[11px] shadow-xl">
               BOOK PRIVATE INSPECTION
             </Button>
             
@@ -79,7 +78,7 @@ export default function AgentSidebar({ propertyId }: { propertyId: string }) {
                 <Mail className="w-3.5 h-3.5 mr-2" /> EMAIL
               </Button>
             </div>
-            <button className="w-full mt-4 text-[9px] font-extrabold text-[#0047AB] uppercase tracking-[0.3em] hover:underline transition-all">
+            <button className="w-full mt-4 text-[9px] font-extrabold text-primary uppercase tracking-[0.3em] hover:underline transition-all">
               WHATSAPP AGENT →
             </button>
           </div>

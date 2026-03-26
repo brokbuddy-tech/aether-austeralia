@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import { Bed, Bath, Car, Maximize, MapPin, Heart, ShieldCheck, PlayCircle, Info, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,7 @@ import Link from "next/link";
 import PropertyStory from "@/components/property-story";
 import PropertyShare from "@/components/property-share";
 import EnergyEfficiencyRating from "@/components/energy-efficiency-rating";
+import InternetAvailability from "@/components/internet-availability";
 
 // Mock data fetcher to make the page feel connected
 const getPropertyData = (id: string) => {
@@ -204,6 +204,9 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
 
             {/* Energy Efficiency Rating Section */}
             <EnergyEfficiencyRating />
+
+            {/* Internet Availability Section */}
+            <InternetAvailability address={propertyData.address} suburb={propertyData.suburb} />
 
             <InspectionScheduler />
             

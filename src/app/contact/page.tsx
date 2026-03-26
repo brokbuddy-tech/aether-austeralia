@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -118,7 +117,7 @@ export default function ContactPage() {
                 <label className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Your Message</label>
                 <Textarea className="rounded-none min-h-[150px] bg-white border-gray-200" required />
               </div>
-              <Button type="submit" className="w-full bg-[#111111] hover:bg-black text-white font-bold h-16 rounded-none uppercase tracking-widest transition-all">
+              <Button type="submit" className="w-full bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold h-16 rounded-none uppercase tracking-widest transition-all">
                 Submit Inquiry <Send className="w-4 h-4 ml-2" />
               </Button>
             </form>

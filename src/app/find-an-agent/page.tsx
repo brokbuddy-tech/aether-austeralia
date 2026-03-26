@@ -173,7 +173,6 @@ export default function FindAnAgentPage() {
                 <p className="text-gray-600 font-medium text-base leading-tight mb-4 line-clamp-2">
                   {item.title}
                 </p>
-                <div className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">{item.readTime}</div>
               </div>
             </div>
           ))}

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -61,10 +60,10 @@ export default function Navbar() {
           <Button 
             variant="outline" 
             className={cn(
-              "border-2 font-bold px-6 transition-all duration-300",
+              "border-2 font-bold px-6 transition-all duration-300 hover:bg-primary hover:text-white hover:border-primary",
               isTransparent 
-                ? "border-white text-white bg-transparent hover:bg-white hover:text-black" 
-                : "border-black text-black bg-transparent hover:bg-black hover:text-white"
+                ? "border-white text-white bg-transparent" 
+                : "border-black text-black bg-transparent"
             )}
           >
             CONTACT US

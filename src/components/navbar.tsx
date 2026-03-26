@@ -30,7 +30,7 @@ export default function Navbar() {
     { name: "RENT", href: "/search?type=rent" },
     { name: "SOLD", href: "/search?type=sold" },
     { name: "ABOUT US", href: "/about" },
-    { name: "FIND AN AGENT", href: "#" },
+    { name: "FIND AN AGENT", href: "/find-an-agent" },
     { name: "COMMERCIAL", href: "/search?type=commercial" },
   ];
 
@@ -102,9 +102,11 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="mt-8 flex flex-col gap-4">
-            <Button className="bg-primary hover:bg-primary/90 text-white font-bold py-6 px-12 text-xl">
-              FIND AN AGENT
-            </Button>
+            <Link href="/find-an-agent" onClick={() => setIsOpen(false)}>
+              <Button className="bg-primary hover:bg-primary/90 text-white font-bold py-6 px-12 text-xl w-full">
+                FIND AN AGENT
+              </Button>
+            </Link>
             <Link href="/contact" onClick={() => setIsOpen(false)}>
               <Button variant="outline" className="border-black text-black font-bold py-6 px-12 text-xl w-full">
                 CONTACT US

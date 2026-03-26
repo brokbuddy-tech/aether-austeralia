@@ -42,6 +42,12 @@
       "description": "Minimalist map visualization of a luxury residential area in Sydney",
       "imageUrl": "https://picsum.photos/seed/map-view-sydney/1200/600",
       "imageHint": "Stylized Map"
+    },
+    {
+      "id": "find-agent-hero",
+      "description": "Blurred minimalist luxury office interior with warm natural lighting",
+      "imageUrl": "https://picsum.photos/seed/agent-hero-blur/1920/1080",
+      "imageHint": "Luxury Interior"
     }
   ]
 }

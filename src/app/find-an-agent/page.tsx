@@ -70,7 +70,7 @@ export default function FindAnAgentPage() {
                 placeholder="Search suburb, agent, or agency"
               />
             </div>
-            <Button className="bg-[#0047AB] hover:bg-[#0047AB]/90 text-white rounded-full h-14 px-10 font-bold transition-all">
+            <Button className="bg-[#00A651] hover:bg-[#00A651]/90 text-white rounded-full h-14 px-10 font-bold transition-all">
               <Search className="w-5 h-5" />
             </Button>
           </div>

@@ -188,14 +188,14 @@ export default function AboutPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 
-                <div className="absolute bottom-0 left-0 w-full p-4 bg-white/10 backdrop-blur-[8px] border-t border-white/20 transition-all duration-500 group-hover:h-full flex flex-col justify-end">
-                  <h4 className="font-headline font-extrabold text-lg text-white mb-1 tracking-widest uppercase leading-tight">{item.name}</h4>
-                  <p className="text-primary font-bold text-[10px] tracking-[0.2em] uppercase mb-1">{item.role}</p>
-                  <p className="text-white/70 text-xs font-medium uppercase tracking-tight mb-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                <div className="absolute bottom-0 left-0 w-full p-2.5 bg-white/10 backdrop-blur-[8px] border-t border-white/20 transition-all duration-500 group-hover:h-full flex flex-col justify-end">
+                  <h4 className="font-headline font-extrabold text-base text-white mb-0.5 tracking-widest uppercase leading-none">{item.name}</h4>
+                  <p className="text-primary font-bold text-[9px] tracking-[0.2em] uppercase mb-0.5 leading-none">{item.role}</p>
+                  <p className="text-white/70 text-[11px] font-medium uppercase tracking-tight mb-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100 line-clamp-2">
                     {item.desc}
                   </p>
-                  <div className="h-10 w-10 bg-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0 duration-500">
-                    <ArrowRight className="w-5 h-5 text-white" />
+                  <div className="h-8 w-8 bg-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0 duration-500">
+                    <ArrowRight className="w-4 h-4 text-white" />
                   </div>
                 </div>
               </div>

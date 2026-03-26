@@ -89,8 +89,8 @@ export default function FindAnAgentPage() {
           </div>
 
           <div className="bg-white p-10 rounded-none border border-gray-100 shadow-xl hover:shadow-2xl transition-all group text-center flex flex-col items-center">
-            <div className="w-16 h-16 bg-[#0047AB]/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform">
-              <DollarSign className="w-8 h-8 text-[#0047AB]" />
+            <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform">
+              <DollarSign className="w-8 h-8 text-primary" />
             </div>
             <h3 className="font-headline font-bold text-xl mb-2 text-[#111111]">Follow your property</h3>
             <p className="text-gray-500 text-sm font-medium">Understand your asset value in real-time.</p>
@@ -110,7 +110,7 @@ export default function FindAnAgentPage() {
       <section className="py-24 px-6 max-w-7xl mx-auto border-t border-gray-100">
         <div className="flex items-center justify-between mb-12">
           <h2 className="font-headline font-extrabold text-3xl tracking-tighter uppercase text-[#111111]">Advice, guides and tips</h2>
-          <Button variant="link" className="text-[#0047AB] font-bold text-xs tracking-widest uppercase p-0">VIEW ALL GUIDES →</Button>
+          <Button variant="link" className="text-primary font-bold text-xs tracking-widest uppercase p-0">VIEW ALL GUIDES →</Button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -131,7 +131,7 @@ export default function FindAnAgentPage() {
                 
                 {/* SMS Agent Overlay on Hover */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                   <Button size="icon" className="bg-[#0047AB] rounded-full shadow-xl">
+                   <Button size="icon" className="bg-primary rounded-full shadow-xl">
                       <MessageSquare className="w-4 h-4 text-white" />
                    </Button>
                 </div>
@@ -145,7 +145,7 @@ export default function FindAnAgentPage() {
                      <ShieldCheck className="w-3 h-3" /> VERIFIED
                    </div>
                 </div>
-                <h4 className="font-headline font-bold text-lg mb-1.5 text-[#111111] group-hover:text-[#0047AB] transition-colors">{item.name}</h4>
+                <h4 className="font-headline font-bold text-lg mb-1.5 text-[#111111] group-hover:text-primary transition-colors">{item.name}</h4>
                 <p className="text-gray-600 font-medium text-base leading-tight mb-4 line-clamp-2">
                   {item.title}
                 </p>
@@ -167,6 +167,10 @@ export default function FindAnAgentPage() {
             <p className="text-gray-500 text-xs max-w-xl font-medium leading-relaxed">
                Aether Australia specialists are licensed according to state-specific 2026 regulatory standards. All appraisals are provided as professional estimates based on hyper-local $m^2$ data.
             </p>
+            <div className="flex gap-8 text-[10px] font-bold tracking-widest uppercase text-primary">
+              <a href="tel:+61290000000" className="hover:underline">CALL +61 2 9000 0000</a>
+              <a href="#" className="hover:underline">WHATSAPP AGENT</a>
+            </div>
          </div>
       </section>
     </div>

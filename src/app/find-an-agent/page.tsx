@@ -1,18 +1,29 @@
 
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { Search, Home, DollarSign, Gavel, Sparkles, MessageSquare, ShieldCheck } from "lucide-react";
+import { Search, Home, DollarSign, Gavel, Sparkles, MessageSquare, ShieldCheck, Mail, Phone, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { toast } from "@/hooks/use-toast";
+
+type Advisor = {
+  name: string;
+  title: string;
+  category: string;
+  readTime: string;
+  image: string;
+};
 
 export default function FindAnAgentPage() {
+  const [selectedAdvisor, setSelectedAdvisor] = useState<Advisor | null>(null);
   const heroImage = PlaceHolderImages.find(img => img.id === 'find-agent-hero');
 
-  const adviceItems = [
+  const adviceItems: Advisor[] = [
     {
       name: "Marcus Thorne",
       title: "How and when to sell your home for maximum value",
@@ -43,6 +54,14 @@ export default function FindAnAgentPage() {
     }
   ];
 
+  const handleContact = (type: string) => {
+    toast({
+      title: `Contacting via ${type}`,
+      description: `Opening ${type} for ${selectedAdvisor?.name}...`,
+    });
+    setSelectedAdvisor(null);
+  };
+
   return (
     <div className="bg-white min-h-screen pt-[72px]">
       {/* Tier 1: Immersive Hero Search */}
@@ -65,7 +84,7 @@ export default function FindAnAgentPage() {
           
           <div className="bg-white/95 backdrop-blur-xl p-1.5 rounded-full flex items-center shadow-2xl border border-white/20">
             <div className="flex-1 px-6 flex items-center">
-              <Search className="w-5 h-5 text-gray-400 mr-3" />
+              <Search className="w-4 h-4 text-gray-400 mr-3" />
               <Input 
                 className="border-none focus-visible:ring-0 text-base placeholder:text-gray-400 bg-transparent h-14" 
                 placeholder="Search suburb, agent, or agency"
@@ -82,24 +101,24 @@ export default function FindAnAgentPage() {
       <section className="py-20 px-6 max-w-7xl mx-auto -mt-20 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white p-10 rounded-none border border-gray-100 shadow-xl hover:shadow-2xl transition-all group text-center flex flex-col items-center">
-            <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform">
-              <Home className="w-8 h-8 text-primary" />
+            <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform text-primary">
+              <Home className="w-8 h-8" />
             </div>
             <h3 className="font-headline font-bold text-xl mb-2 text-[#111111]">Looking to sell?</h3>
             <p className="text-gray-500 text-sm font-medium">Get a free appraisal from our local specialists.</p>
           </div>
 
           <div className="bg-white p-10 rounded-none border border-gray-100 shadow-xl hover:shadow-2xl transition-all group text-center flex flex-col items-center">
-            <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform">
-              <DollarSign className="w-8 h-8 text-primary" />
+            <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform text-primary">
+              <DollarSign className="w-8 h-8" />
             </div>
             <h3 className="font-headline font-bold text-xl mb-2 text-[#111111]">Follow your property</h3>
             <p className="text-gray-500 text-sm font-medium">Understand your asset value in real-time.</p>
           </div>
 
           <div className="bg-white p-10 rounded-none border border-gray-100 shadow-xl hover:shadow-2xl transition-all group text-center flex flex-col items-center">
-            <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform">
-              <Gavel className="w-8 h-8 text-primary" />
+            <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mb-6 rounded-full group-hover:scale-110 transition-transform text-primary">
+              <Gavel className="w-8 h-8" />
             </div>
             <h3 className="font-headline font-bold text-xl mb-2 text-[#111111]">See recently sold</h3>
             <p className="text-gray-500 text-sm font-medium">Research local results in your immediate area.</p>
@@ -116,7 +135,11 @@ export default function FindAnAgentPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {adviceItems.map((item, idx) => (
-            <div key={idx} className="group relative bg-white border border-gray-100 p-6 flex gap-8 items-start hover:bg-[#F7F6F2]/50 transition-all duration-300">
+            <div 
+              key={idx} 
+              onClick={() => setSelectedAdvisor(item)}
+              className="group relative bg-white border border-gray-100 p-6 flex gap-8 items-start hover:bg-[#F7F6F2]/50 transition-all duration-300 cursor-pointer"
+            >
               <div className="relative flex-shrink-0">
                 <div className="relative h-28 w-28 rounded-full overflow-hidden border-4 border-white shadow-lg">
                   <Image
@@ -156,6 +179,69 @@ export default function FindAnAgentPage() {
           ))}
         </div>
       </section>
+
+      {/* Advisor Contact Modal */}
+      <Dialog open={!!selectedAdvisor} onOpenChange={(open) => !open && setSelectedAdvisor(null)}>
+        <DialogContent className="max-w-md p-0 rounded-none border-none bg-white shadow-2xl overflow-hidden">
+          <div className="relative h-48 bg-[#111111] flex flex-col items-center justify-center">
+            <Button 
+              variant="ghost" 
+              onClick={() => setSelectedAdvisor(null)}
+              className="absolute top-4 right-4 text-white hover:bg-white/10 rounded-full p-2 h-auto"
+            >
+              <X className="w-5 h-5" />
+            </Button>
+            <div className="relative w-24 h-24 rounded-full border-4 border-white/10 shadow-2xl overflow-hidden mb-3">
+              <Image 
+                src={selectedAdvisor?.image || ""} 
+                alt={selectedAdvisor?.name || ""} 
+                fill 
+                className="object-cover"
+              />
+            </div>
+            <div className="text-center text-white">
+              <h3 className="font-headline font-extrabold text-xl tracking-tighter uppercase leading-none">{selectedAdvisor?.name}</h3>
+              <p className="text-[8px] font-bold uppercase tracking-[0.4em] text-primary mt-1">Licensed Advisor</p>
+            </div>
+          </div>
+          
+          <div className="p-8">
+            <DialogHeader className="mb-6 text-center">
+              <DialogTitle className="font-headline font-bold text-sm uppercase tracking-widest text-gray-400">Connect with Specialist</DialogTitle>
+            </DialogHeader>
+            
+            <div className="space-y-3">
+              <Button 
+                onClick={() => handleContact('SMS')}
+                className="w-full bg-[#0047AB] hover:bg-[#0047AB]/90 text-white font-bold h-14 rounded-none uppercase tracking-[0.2em] text-[11px] shadow-lg"
+              >
+                <MessageSquare className="w-4 h-4 mr-3" /> SEND SECURE SMS
+              </Button>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <Button 
+                  variant="outline" 
+                  onClick={() => handleContact('Email')}
+                  className="border-gray-200 text-gray-600 hover:text-black hover:border-black rounded-none h-14 font-bold text-[10px] tracking-widest uppercase transition-all"
+                >
+                  <Mail className="w-4 h-4 mr-2" /> EMAIL
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={() => handleContact('WhatsApp')}
+                  className="border-gray-200 text-gray-600 hover:text-black hover:border-black rounded-none h-14 font-bold text-[10px] tracking-widest uppercase transition-all"
+                >
+                  <Phone className="w-4 h-4 mr-2" /> WHATSAPP
+                </Button>
+              </div>
+            </div>
+            
+            <p className="mt-8 text-[9px] text-gray-400 text-center leading-relaxed font-medium uppercase tracking-tighter">
+              Aether Australia advisors are REIA certified and licensed according to 2026 state regulations.
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Localized Footer Branding */}
       <section className="bg-[#111111] py-16 px-6 text-center border-t border-white/5">

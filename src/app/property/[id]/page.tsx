@@ -129,6 +129,14 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 </Badge>
                 <div className="h-px flex-1 bg-gray-100" />
               </div>
+
+              {/* Price Details */}
+              <div className="mb-6">
+                <p className="text-3xl font-headline font-extrabold text-[#B8860B] tracking-tighter leading-none">
+                  ${propertyData.price.toLocaleString()} <span className="text-[10px] text-gray-400 tracking-widest ml-1">AUD</span>
+                </p>
+              </div>
+
               <h1 className="font-headline font-extrabold text-lg md:text-xl mb-2 tracking-tighter text-[#111111] leading-none uppercase">
                 {propertyData.address}
               </h1>

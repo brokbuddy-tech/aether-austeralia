@@ -113,7 +113,7 @@ export default function AboutPage() {
             style={{ transform: 'scale(1.1)' }}
             fill="currentColor"
           >
-            <path d="M834.4,264.4c-4.4-3.3-8.8-6.6-13.3-9.8c-12.2-8.8-24.5-17.5-36.8-26.3c-1.8-1.2-3.5-2.5-5.3-3.7c-5-3.5-10-6.9-15.1-10.4 c-2.9-2-5.9-4-8.8-6c-13.9-9.5-27.8-18.9-41.8-28.3c-2.8-1.9-5.6-3.8-8.4-5.7c-5.7-3.9-11.4-7.8-17.1-11.6c-4.1-2.8-8.2-5.5-12.2-8.3 c-16.7-11.3-33.3-22.5-50.1-33.6c-2.3-1.5-4.5-3-6.8-4.5c-4.5-3-9.1-6-13.6-9c-2.2-1.5-4.5-2.9-6.7-4.4 c-17.5-11.5-35.1-22.9-52.7-34.3c-1.9-1.2-3.7-2.5-5.6-3.7c-5.7-3.7-11.5-7.4-17.2-11c-2.7-1.7-5.4-3.5-8.1-5.2 c-15.7-10.1-31.4-20.1-47.2-30.1c-3.1-2-6.2-3.9-9.3-5.9c-4.7-3-9.4-5.9-14.1-8.9c-2.6-1.6-5.2-3.3-7.7-4.9c-0.1-0.1-0.2-0.1-0.3-0.2 L411.5,0l-16.2,10.2L150.9,165.7l-41,26.4L16.2,274.9L0,285.4l24.9,23.3l124.5,116.5l24.9,23.3l13.5-8.7l217.4-140.2l203.9-131.5 l184,118.7l30.3,19.5l14.7,9.5L834.4,264.4z" />
+            <path d="M834.4,264.4c-4.4-3.3-8.8-6.6-13.3-9.8c-12.2-8.8-24.5-17.5-36.8-26.3c-1.8-1.2-3.5-2.5-5.3-3.7c-5-3.5-10-6.9-15.1-10.4 c-2.9-2-5.9-4-8.8-6c-13.9-9.5-27.8-18.9-41.8-28.3c-2.8-1.9-5.6-3.8-8.4-5.7c-5.7-3.9-11.4-7.8-17.1-11.6c-4.1-2.8-8.2-5.5-12.2-8.3 c-16.7-11.3-33.3-22.5-50.1-33.6c-2.3-1.5-4.5-3-6.8-4.5c-4.5-3-9.1-6-13.6-9c-2.2-1.5-4.5-2.9-6.7-4.4 c-17.5-11.5-35.1-22.9-52.7-34.3c-1.9-1.2-3.7-2.5-5.6-3.7c-5.7-3.7-11.5-7.4-17.2-11--2.7-1.7-5.4-3.5-8.1-5.2 c-15.7-10.1-31.4-20.1-47.2-30.1c-3.1-2-6.2-3.9-9.3-5.9c-4.7-3-9.4-5.9-14.1-8.9c-2.6-1.6-5.2-3.3-7.7-4.9c-0.1-0.1-0.2-0.1-0.3-0.2 L411.5,0l-16.2,10.2L150.9,165.7l-41,26.4L16.2,274.9L0,285.4l24.9,23.3l124.5,116.5l24.9,23.3l13.5-8.7l217.4-140.2l203.9-131.5 l184,118.7l30.3,19.5l14.7,9.5L834.4,264.4z" />
           </svg>
         </div>
 
@@ -160,49 +160,54 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Section: The Aether Network (Community & Partners) */}
+      {/* Section: Meet Our Team */}
       <section className="py-24 px-6 bg-[#F9F9F9]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
             <h2 className="font-headline font-extrabold text-3xl md:text-4xl tracking-tighter uppercase text-[#111111]">
-              The Aether <br /><span className="text-gray-300">Network.</span>
+              Meet Our <br /><span className="text-gray-300">Team.</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { 
-                title: "FINANCE", 
-                desc: "Strategic asset wealth and mortgage advisory.", 
-                img: "https://picsum.photos/seed/net-fin/600/800" 
+                name: "KIERAN WARRINER", 
+                role: "MANAGING DIRECTOR", 
+                desc: "Strategic visionary with 20+ years in Australian real estate.", 
+                img: "https://picsum.photos/seed/kieran-team/600/800" 
               },
               { 
-                title: "MANAGEMENT", 
-                desc: "Full-lifecycle 6-star property management.", 
-                img: "https://picsum.photos/seed/net-man/600/800" 
+                name: "MARCUS THORNE", 
+                role: "SENIOR SALES EXECUTIVE", 
+                desc: "Specialist in luxury Sydney residential and coastal assets.", 
+                img: "https://picsum.photos/seed/marcus-team/600/800" 
               },
               { 
-                title: "PROJECTS", 
-                desc: "Specialized off-plan marketing and sales.", 
-                img: "https://picsum.photos/seed/net-proj/600/800" 
+                name: "SARAH JENKINS", 
+                role: "INVESTMENT SPECIALIST", 
+                desc: "Expert in rental yield optimization and asset management.", 
+                img: "https://picsum.photos/seed/sarah-team/600/800" 
               },
               { 
-                title: "CONCIERGE", 
-                desc: "24/7 dedicated proprietor support desk.", 
-                img: "https://picsum.photos/seed/net-conc/600/800" 
+                name: "DAVID BECK", 
+                role: "PROJECT MARKETING", 
+                desc: "Leading high-end off-plan developments across the East Coast.", 
+                img: "https://picsum.photos/seed/david-team/600/800" 
               }
             ].map((item, idx) => (
               <div key={idx} className="group relative aspect-[3/4] overflow-hidden shadow-xl">
                 <Image 
                   src={item.img} 
-                  alt={item.title} 
+                  alt={item.name} 
                   fill 
                   className="object-cover transition-transform duration-[1.5s] group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 
                 <div className="absolute bottom-0 left-0 w-full p-8 bg-white/10 backdrop-blur-[12px] border-t border-white/20 transition-all duration-500 group-hover:h-full flex flex-col justify-end">
-                  <h4 className="font-headline font-extrabold text-xl text-white mb-2 tracking-widest uppercase">{item.title}</h4>
+                  <h4 className="font-headline font-extrabold text-xl text-white mb-1 tracking-widest uppercase leading-tight">{item.name}</h4>
+                  <p className="text-primary font-bold text-[10px] tracking-[0.2em] uppercase mb-4">{item.role}</p>
                   <p className="text-white/70 text-xs font-medium uppercase tracking-tight mb-6 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
                     {item.desc}
                   </p>

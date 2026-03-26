@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Bed, Bath, Car, Maximize, MapPin, Share2, Heart, ShieldCheck, PlayCircle, Info, ArrowLeft } from "lucide-react";
+import { Bed, Bath, Car, Maximize, MapPin, Heart, ShieldCheck, PlayCircle, Info, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AgentSidebar from "@/components/agent-sidebar";
 import InspectionScheduler from "@/components/inspection-scheduler";
@@ -9,6 +9,7 @@ import { generatePropertyStory } from "@/ai/flows/ai-generated-property-story";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import PropertyStory from "@/components/property-story";
+import PropertyShare from "@/components/property-share";
 
 // Mock data fetcher to make the page feel connected
 const getPropertyData = (id: string) => {
@@ -57,9 +58,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
             </Button>
           </Link>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" className="rounded-none border-gray-200 text-[8px] font-bold tracking-widest uppercase h-7 px-3">
-              <Share2 className="w-2.5 h-2.5 mr-1.5" /> SHARE
-            </Button>
+            <PropertyShare address={`${propertyData.address}, ${propertyData.suburb}`} />
             <Button variant="outline" size="sm" className="rounded-none border-gray-200 text-[8px] font-bold tracking-widest uppercase h-7 px-3">
               <Heart className="w-2.5 h-2.5 mr-1.5" /> SAVE
             </Button>

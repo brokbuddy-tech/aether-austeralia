@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -43,7 +44,7 @@ export default function FindAnAgentPage() {
   ];
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen pt-[72px]">
       {/* Tier 1: Immersive Hero Search */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">

@@ -38,7 +38,7 @@ export default function Navbar() {
     <nav
       className={cn(
         "fixed top-0 w-full z-[100] transition-all duration-300 px-6 py-4 flex items-center justify-between",
-        scrolled ? "bg-white/90 shadow-sm py-3" : "bg-transparent"
+        (scrolled || !isHomePage) ? "bg-white/90 shadow-sm py-3" : "bg-transparent"
       )}
     >
       <Link href="/" className="z-[110]">

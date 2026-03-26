@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { Bed, Bath, Car, Maximize, MapPin, Heart, ShieldCheck, PlayCircle, Info, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import PropertyStory from "@/components/property-story";
 import PropertyShare from "@/components/property-share";
+import EnergyEfficiencyRating from "@/components/energy-efficiency-rating";
 
 // Mock data fetcher to make the page feel connected
 const getPropertyData = (id: string) => {
@@ -199,6 +201,9 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
 
             {/* AI Generated Narrative Story Component */}
             <PropertyStory story={story} />
+
+            {/* Energy Efficiency Rating Section */}
+            <EnergyEfficiencyRating />
 
             <InspectionScheduler />
             

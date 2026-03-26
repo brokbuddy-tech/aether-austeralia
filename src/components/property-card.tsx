@@ -38,7 +38,7 @@ export default function PropertyCard({ property }: { property: PropertyProps }) 
         {/* Top Badges */}
         <div className="absolute top-4 left-4 flex gap-2 z-10">
           <Badge className="bg-[#111111] text-white rounded-none font-bold text-[9px] tracking-[0.2em] uppercase px-3 py-1">
-            NEW LISTING
+            SOLD
           </Badge>
           <Badge className="bg-primary text-white rounded-none font-bold text-[9px] tracking-[0.2em] uppercase px-3 py-1">
             AETHER VERIFIED

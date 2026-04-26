@@ -7,7 +7,7 @@
  * - SuggestTrendingAreasOutput - The return type for the suggestTrendingAreas function.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai, hasGoogleAiKey} from '@/ai/genkit';
 import {z} from 'genkit';
 
 // 1. Define Input Schema
@@ -30,6 +30,15 @@ const SuggestTrendingAreasOutputSchema = z.object({
 export type SuggestTrendingAreasOutput = z.infer<
   typeof SuggestTrendingAreasOutputSchema
 >;
+
+const fallbackAreas = [
+  'Paddington',
+  'Noosa Heads',
+  'Bondi Beach',
+  'Burleigh Heads',
+  'Byron Bay',
+  'Newcastle East',
+];
 
 // 3. Define the Prompt
 const suggestTrendingAreasPrompt = ai.definePrompt({
@@ -70,5 +79,19 @@ const suggestTrendingAreasFlow = ai.defineFlow(
 export async function suggestTrendingAreas(
   input: SuggestTrendingAreasInput = {} // Make input optional for the wrapper
 ): Promise<SuggestTrendingAreasOutput> {
-  return suggestTrendingAreasFlow(input);
+  const numberOfAreas = input.numberOfAreas || 5;
+
+  if (!hasGoogleAiKey) {
+    return {areas: fallbackAreas.slice(0, numberOfAreas)};
+  }
+
+  try {
+    return await suggestTrendingAreasFlow(input);
+  } catch (error) {
+    console.warn(
+      '[suggestTrendingAreas] Falling back to static suburb suggestions.',
+      error
+    );
+    return {areas: fallbackAreas.slice(0, numberOfAreas)};
+  }
 }

@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { generateMarketInsight } from "@/ai/flows/ai-powered-market-insights";
 
+export const dynamic = "force-dynamic";
+
 export default async function InsightsPage() {
   const topics = [
     "Sydney property market trends for 2026",

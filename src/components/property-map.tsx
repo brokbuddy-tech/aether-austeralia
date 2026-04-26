@@ -1,20 +1,30 @@
 
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import Image from "next/image";
-import { MapPin, School, Train, ShoppingBag, ChevronRight, Plus, Minus } from "lucide-react";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { School, Train, ShoppingBag, ChevronRight, Plus, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+
+const DynamicLocationMap = dynamic(
+  () => import("@/components/location-map").then((mod) => ({ default: mod.LocationMap })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="leaflet-property-map relative h-96 w-full overflow-hidden rounded-3xl border border-border bg-muted/35 animate-pulse" />
+    ),
+  }
+);
 
 interface PropertyMapProps {
   address: string;
   suburb: string;
+  latitude?: number | null;
+  longitude?: number | null;
 }
 
-export default function PropertyMap({ address, suburb }: PropertyMapProps) {
-  const mapPlaceholder = PlaceHolderImages.find(img => img.id === 'property-map');
+export default function PropertyMap({ address, suburb, latitude, longitude }: PropertyMapProps) {
   const [activeTab, setActiveTab] = useState<'school' | 'transit' | 'lifestyle'>('school');
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -72,24 +82,13 @@ export default function PropertyMap({ address, suburb }: PropertyMapProps) {
         <p className="text-xl font-medium text-gray-700">{address}, {suburb}</p>
       </div>
 
-      <div className="relative w-full aspect-[21/9] overflow-hidden bg-gray-100 shadow-sm border border-gray-100 mb-12">
-        <Image
-          src={mapPlaceholder?.imageUrl || "https://picsum.photos/seed/map-fallback/1200/600"}
-          alt="Property Location Map"
-          fill
-          className="object-cover grayscale-[0.6] contrast-[1.1] opacity-80"
-          data-ai-hint={mapPlaceholder?.imageHint || "City Map"}
+      <div className="mb-12">
+        <DynamicLocationMap
+          latitude={latitude}
+          longitude={longitude}
+          locationLabel={suburb}
+          addressLabel={address}
         />
-        <div className="absolute inset-0 bg-primary/5 pointer-events-none" />
-        
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-          <div className="relative">
-            <div className="absolute inset-0 bg-primary animate-ping rounded-full opacity-30" />
-            <div className="relative bg-white p-2.5 rounded-full shadow-2xl border border-primary/20">
-              <MapPin className="w-6 h-6 text-primary fill-primary/10" />
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Neighborhood Highlights Tabs */}

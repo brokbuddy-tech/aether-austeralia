@@ -197,7 +197,12 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
             <AuctionBlock />
 
             {/* Location Map Section */}
-            <PropertyMap address={propertyData.address} suburb={propertyData.suburb} />
+            <PropertyMap
+              address={propertyData.address}
+              suburb={propertyData.suburb}
+              latitude={propertyData.latitude}
+              longitude={propertyData.longitude}
+            />
           </div>
 
           {/* Sticky Action Sidebar */}

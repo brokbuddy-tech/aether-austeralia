@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import FilterBar from "@/components/filter-bar";
 import PropertyCard from "@/components/property-card";
 import { Button } from "@/components/ui/button";
@@ -83,7 +84,15 @@ export default async function SearchPage({
         </div>
       </div>
       
-      <FilterBar total={total} />
+      <Suspense
+        fallback={
+          <div className="sticky top-[72px] z-40 bg-white border-b border-gray-100 shadow-sm py-3 px-6">
+            <div className="max-w-7xl mx-auto h-10" />
+          </div>
+        }
+      >
+        <FilterBar total={total} />
+      </Suspense>
 
       <div className="max-w-7xl mx-auto px-6 mt-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

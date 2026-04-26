@@ -1,11 +1,7 @@
-
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { Bed, Bath, Car, Maximize } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useSearchParams } from "next/navigation";
 
 interface PropertyProps {
   id: string;
@@ -25,15 +21,12 @@ interface PropertyProps {
 }
 
 export default function PropertyCard({ property }: { property: PropertyProps }) {
-  const searchParams = useSearchParams();
-  const type = searchParams.get('type');
-  
   // Determine badge label based on search type
   let badgeLabel = property.badgeLabel || "BUY";
   if (!property.badgeLabel) {
-    if (type === "rent" || property.transactionType === "RENT") {
+    if (property.transactionType === "RENT") {
       badgeLabel = "RENT";
-    } else if (type === "sold" || property.status?.toUpperCase() === "SOLD") {
+    } else if (property.status?.toUpperCase() === "SOLD") {
       badgeLabel = "SOLD";
     }
   }

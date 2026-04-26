@@ -49,6 +49,28 @@ function getNumberValue(...values: unknown[]) {
   return undefined;
 }
 
+function normalizeListingDescription(description?: string) {
+  const plainText = (description || '')
+    .replace(/<\s*br\s*\/?>/gi, '\n')
+    .replace(/<\/\s*(div|p|section|article|h[1-6])\s*>/gi, '\n\n')
+    .replace(/<\/\s*li\s*>/gi, '\n')
+    .replace(/<\s*li\b[^>]*>/gi, '- ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/\r/g, '')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim();
+
+  return plainText || 'Property details coming soon.';
+}
+
 type ListingImage = {
   id?: string | null;
   url?: string | null;
@@ -211,7 +233,7 @@ export function mapListingToAetherProperty(listing: RawListing): AetherProperty 
     image: imageUrls[0] || 'https://picsum.photos/seed/aether-fallback/1200/800',
     images: imageUrls,
     agent: agentName,
-    description: listing.description || 'Property details coming soon.',
+    description: normalizeListingDescription(listing.description),
     transactionType,
     status,
     readiness,

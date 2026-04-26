@@ -57,6 +57,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.brokbuddy.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

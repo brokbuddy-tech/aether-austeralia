@@ -1,29 +1,65 @@
 import Image from "next/image";
+import Link from "next/link";
 import FilterBar from "@/components/filter-bar";
 import PropertyCard from "@/components/property-card";
 import { Button } from "@/components/ui/button";
+import { getListings } from "@/lib/api";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; type?: string }>;
+  searchParams: Promise<{
+    q?: string;
+    type?: string;
+    category?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    bedrooms?: string;
+    bathrooms?: string;
+    minArea?: string;
+    maxArea?: string;
+    page?: string;
+  }>;
 }) {
   const params = await searchParams;
   const searchQuery = params.q || "";
   const searchType = params.type || "buy";
 
   const searchHeaderImage = PlaceHolderImages.find(img => img.id === 'search-header');
+  const apiParams: Record<string, string> = {
+    q: searchQuery,
+    category: params.category || "",
+    minPrice: params.minPrice || "",
+    maxPrice: params.maxPrice || "",
+    bedrooms: params.bedrooms || "",
+    bathrooms: params.bathrooms || "",
+    minArea: params.minArea || "",
+    maxArea: params.maxArea || "",
+    page: params.page || "1",
+    limit: "12",
+  };
 
-  // In a real app, we would filter based on searchQuery and searchType
-  const properties = [
-    { id: "1", image: "https://picsum.photos/seed/lux-house-1/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
-    { id: "2", image: "https://picsum.photos/seed/lux-apt-2/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
-    { id: "3", image: "https://picsum.photos/seed/lux-estate-3/800/600", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: "8,900,000", beds: 5, baths: 4, cars: 4, area: 1200, agent: "David Beck" },
-    { id: "4", image: "https://picsum.photos/seed/lux-villa-4/800/600", address: "55 The Esplanade", suburb: "GOLD COAST, QLD", price: "1,850,000", beds: 3, baths: 2, cars: 2, area: 180, agent: "Sarah Jenkins" },
-    { id: "5", image: "https://picsum.photos/seed/lux-terrace-5/800/600", address: "10 Terrace St", suburb: "PADDINGTON, NSW", price: "3,400,000", beds: 3, baths: 2, cars: 0, area: 150, agent: "Marcus Thorne" },
-    { id: "6", image: "https://picsum.photos/seed/lux-acreage-6/800/600", address: "Acreage Lot 9", suburb: "MALENY, QLD", price: "2,750,000", beds: 4, baths: 3, cars: 6, area: 4500, agent: "David Beck" },
-  ];
+  if (searchType === "rent") {
+    apiParams.transactionType = "RENT";
+    apiParams.status = "ACTIVE";
+  } else if (searchType === "sold") {
+    apiParams.status = "SOLD";
+  } else {
+    apiParams.transactionType = "SALE";
+    apiParams.status = "ACTIVE";
+  }
+
+  if (searchType === "new-homes") {
+    apiParams.readiness = "OFFPLAN";
+  }
+
+  const { properties, total, page, totalPages } = await getListings(apiParams);
+  const nextPageParams = new URLSearchParams(
+    Object.entries({ ...params, page: String(page + 1) })
+      .filter(([, value]) => Boolean(value))
+      .map(([key, value]) => [key, value as string])
+  );
 
   return (
     <div className="pt-[72px] bg-gray-50 min-h-screen pb-20">
@@ -43,11 +79,11 @@ export default async function SearchPage({
           <h1 className="font-headline font-extrabold text-3xl md:text-4xl mb-2 tracking-tighter uppercase">
             Properties for {searchType.toUpperCase()} {searchQuery && `in ${searchQuery}`}
           </h1>
-          <p className="text-gray-200 font-body text-base">Found {properties.length} results matching your search</p>
+          <p className="text-gray-200 font-body text-base">Found {total} results matching your search</p>
         </div>
       </div>
       
-      <FilterBar />
+      <FilterBar total={total} />
 
       <div className="max-w-7xl mx-auto px-6 mt-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -56,11 +92,15 @@ export default async function SearchPage({
           ))}
         </div>
 
-        <div className="mt-12 flex justify-center">
-          <Button variant="outline" className="border-2 border-black rounded-none px-10 h-12 text-[11px] font-bold tracking-widest hover:bg-black hover:text-white transition-all">
-            LOAD MORE PROPERTIES
-          </Button>
-        </div>
+        {page < totalPages && (
+          <div className="mt-12 flex justify-center">
+            <Link href={`/search?${nextPageParams.toString()}`}>
+              <Button variant="outline" className="border-2 border-black rounded-none px-10 h-12 text-[11px] font-bold tracking-widest hover:bg-black hover:text-white transition-all">
+                LOAD MORE PROPERTIES
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

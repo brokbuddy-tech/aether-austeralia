@@ -11,6 +11,7 @@ interface PropertyProps {
   id: string;
   image: string;
   address: string;
+  title?: string;
   suburb: string;
   price: string;
   beds: number;
@@ -18,6 +19,9 @@ interface PropertyProps {
   cars: number;
   area: number;
   agent: string;
+  badgeLabel?: string;
+  transactionType?: string;
+  status?: string;
 }
 
 export default function PropertyCard({ property }: { property: PropertyProps }) {
@@ -25,16 +29,13 @@ export default function PropertyCard({ property }: { property: PropertyProps }) 
   const type = searchParams.get('type');
   
   // Determine badge label based on search type
-  let badgeLabel = "SOLD";
-  if (type === "buy") {
-    badgeLabel = "BUY";
-  } else if (type === "rent") {
-    badgeLabel = "RENT";
-  } else if (type === "sold") {
-    badgeLabel = "SOLD";
-  } else {
-    // Default for featured properties on home page or other contexts
-    badgeLabel = "BUY"; 
+  let badgeLabel = property.badgeLabel || "BUY";
+  if (!property.badgeLabel) {
+    if (type === "rent" || property.transactionType === "RENT") {
+      badgeLabel = "RENT";
+    } else if (type === "sold" || property.status?.toUpperCase() === "SOLD") {
+      badgeLabel = "SOLD";
+    }
   }
 
   return (
@@ -45,7 +46,7 @@ export default function PropertyCard({ property }: { property: PropertyProps }) 
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image
           src={property.image}
-          alt={property.address}
+          alt={property.title || property.address}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105 group-hover:brightness-105"
           data-ai-hint="Luxury Australian Property"
@@ -92,7 +93,7 @@ export default function PropertyCard({ property }: { property: PropertyProps }) 
 
       <div className="p-8">
         <h4 className="font-headline font-bold text-xl mb-1 group-hover:text-primary transition-colors leading-tight">
-          {property.address}
+          {property.title || property.address}
         </h4>
         <p className="text-gray-400 text-[11px] mb-6 uppercase tracking-[0.2em] font-bold">
           {property.suburb}

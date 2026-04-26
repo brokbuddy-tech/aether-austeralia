@@ -5,56 +5,39 @@ import AgentSidebar from "@/components/agent-sidebar";
 import InspectionScheduler from "@/components/inspection-scheduler";
 import AuctionBlock from "@/components/auction-block";
 import PropertyMap from "@/components/property-map";
-import { generatePropertyStory } from "@/ai/flows/ai-generated-property-story";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import PropertyStory from "@/components/property-story";
 import PropertyShare from "@/components/property-share";
 import EnergyEfficiencyRating from "@/components/energy-efficiency-rating";
 import InternetAvailability from "@/components/internet-availability";
-
-// Mock data fetcher to make the page feel connected
-const getPropertyData = (id: string) => {
-  const properties = [
-    { id: "1", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: 4250000, beds: 4, baths: 3, cars: 2, area: 420, type: "House" as const },
-    { id: "2", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: 2100000, beds: 2, baths: 2, cars: 1, area: 110, type: "Apartment" as const },
-    { id: "3", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: 8900000, beds: 5, baths: 4, cars: 4, area: 1200, type: "House" as const },
-    { id: "4", address: "55 The Esplanade", suburb: "GOLD COAST, QLD", price: 1850000, beds: 3, baths: 2, cars: 2, area: 180, type: "Villa" as const },
-    { id: "5", address: "10 Terrace St", suburb: "PADDINGTON, NSW", price: 3400000, beds: 3, baths: 2, cars: 0, area: 150, type: "Townhouse" as const },
-    { id: "6", address: "Acreage Lot 9", suburb: "MALENY, QLD", price: 2750000, beds: 4, baths: 3, cars: 6, area: 4500, type: "Acreage" as const },
-  ];
-  return properties.find(p => p.id === id) || properties[0];
-};
+import { getPropertyById } from "@/lib/api";
+import { notFound } from "next/navigation";
 
 export default async function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const propertyData = getPropertyData(id);
+  const propertyData = await getPropertyById(id);
+  if (!propertyData) {
+    notFound();
+  }
 
-  const images = [
-    `https://picsum.photos/seed/prop-${id}-1/1200/800`,
-    `https://picsum.photos/seed/prop-${id}-2/800/800`,
-    `https://picsum.photos/seed/prop-${id}-3/800/800`,
-    `https://picsum.photos/seed/prop-${id}-4/800/800`,
-    `https://picsum.photos/seed/prop-${id}-5/800/800`,
-  ];
+  const images = propertyData.images.length > 0
+    ? propertyData.images
+    : [
+        `https://picsum.photos/seed/prop-${id}-1/1200/800`,
+        `https://picsum.photos/seed/prop-${id}-2/800/800`,
+        `https://picsum.photos/seed/prop-${id}-3/800/800`,
+        `https://picsum.photos/seed/prop-${id}-4/800/800`,
+      ];
 
-  const { story } = await generatePropertyStory({
-    address: `${propertyData.address}, ${propertyData.suburb}`,
-    propertyType: propertyData.type,
-    bedrooms: propertyData.beds,
-    bathrooms: propertyData.baths,
-    carSpaces: propertyData.cars,
-    areaM2: propertyData.area,
-    keyFeatures: ["Premium finishes", "Architectural design", "Prime location", "Modern amenities"],
-    locationDescription: `Situated in the highly sought-after enclave of ${propertyData.suburb}.`
-  });
+  const story = propertyData.description;
 
   return (
     <div className="pt-[72px] bg-white min-h-screen font-body text-[13px]">
       {/* Navigation Header */}
       <div className="sticky top-[72px] z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 py-2 px-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link href="/search">
+          <Link href={`/search?type=${propertyData.transactionType === "RENT" ? "rent" : propertyData.status === "SOLD" ? "sold" : "buy"}`}>
             <Button variant="ghost" className="text-[8px] font-bold tracking-widest uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary p-0">
               <ArrowLeft className="w-3 h-3" /> BACK TO SEARCH
             </Button>

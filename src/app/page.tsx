@@ -5,6 +5,7 @@ import DifferenceBlock from "@/components/difference-block";
 import PropertyCard from "@/components/property-card";
 import TestimonialSlider from "@/components/testimonial-slider";
 import { Button } from "@/components/ui/button";
+import { getListings } from "@/lib/api";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import {
   Accordion,
@@ -13,20 +14,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-export default function Home() {
+export default async function Home() {
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-home');
-  
-  const featuredProperties = [
-    { id: "1", image: "https://picsum.photos/seed/lux-house-sydney/800/600", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: "4,250,000", beds: 4, baths: 3, cars: 2, area: 420, agent: "Marcus Thorne" },
-    { id: "2", image: "https://picsum.photos/seed/lux-apt-melbourne/800/600", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: "2,100,000", beds: 2, baths: 2, cars: 1, area: 110, agent: "Sarah Jenkins" },
-    { id: "3", image: "https://picsum.photos/seed/lux-estate-byron/800/600", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: "8,900,000", beds: 5, baths: 4, cars: 4, area: 1200, agent: "David Beck" },
-  ];
 
-  const developments = [
-    { id: "4", image: "https://picsum.photos/seed/new-listing-1/800/600", address: "42 High Street", suburb: "PRAHRAN, VIC", price: "1,250,000", beds: 2, baths: 1, cars: 1, area: 85, agent: "Marcus Thorne" },
-    { id: "5", image: "https://picsum.photos/seed/new-listing-2/800/600", address: "5/20 Bondi Rd", suburb: "BONDI, NSW", price: "950,000", beds: 1, baths: 1, cars: 0, area: 55, agent: "Sarah Jenkins" },
-    { id: "6", image: "https://picsum.photos/seed/new-listing-3/800/600", address: "12 Riverina Ct", suburb: "NOOSA, QLD", price: "3,450,000", beds: 4, baths: 3, cars: 3, area: 600, agent: "David Beck" },
-  ];
+  const [featuredResult, developmentResult] = await Promise.all([
+    getListings({ transactionType: "SALE", status: "ACTIVE", limit: 3 }),
+    getListings({ transactionType: "SALE", readiness: "OFFPLAN", status: "ACTIVE", limit: 3 }),
+  ]);
+
+  const featuredProperties = featuredResult.properties;
+  const developments = developmentResult.properties.length > 0
+    ? developmentResult.properties
+    : featuredResult.properties;
 
   const secondaryInsights = [
     {
@@ -84,7 +83,7 @@ export default function Home() {
                 <h2 className="font-headline font-extrabold text-3xl mb-3 text-[#111111] uppercase tracking-tighter">FEATURED RESIDENCES</h2>
                 <p className="text-muted-foreground font-body text-sm">Exceptional living spaces across Australia's most coveted suburbs.</p>
               </div>
-              <Link href="/search">
+              <Link href="/search?type=buy">
                 <Button variant="link" className="font-bold text-primary tracking-widest text-[10px] p-0">
                   VIEW ALL PROPERTIES →
                 </Button>
@@ -109,7 +108,7 @@ export default function Home() {
                 <h2 className="font-headline font-extrabold text-3xl mb-3 text-[#111111] uppercase tracking-tighter">NEW DEVELOPMENTS</h2>
                 <p className="text-muted-foreground font-body text-sm">Pioneering luxury living with Australia's most exclusive off-plan opportunities.</p>
               </div>
-              <Link href="/search">
+              <Link href="/search?type=new-homes">
                 <Button variant="link" className="font-bold text-primary tracking-widest text-[10px] p-0">
                   VIEW ALL NEW DEVELOPMENTS →
                 </Button>
@@ -232,7 +231,7 @@ export default function Home() {
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold px-10 h-14 text-base rounded-none uppercase tracking-[0.2em]">
                 LIST YOUR PROPERTY
               </Button>
-              <Link href="/search">
+              <Link href="/search?type=buy">
                 <Button size="lg" variant="outline" className="bg-white border-white text-black hover:bg-white/90 font-bold px-10 h-14 text-base rounded-none uppercase tracking-[0.2em]">
                   FIND A RESIDENCE
                 </Button>

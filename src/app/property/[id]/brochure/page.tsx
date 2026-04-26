@@ -1,34 +1,24 @@
-"use client";
-
 import Image from "next/image";
-import { useParams } from "next/navigation";
 import { Bed, Bath, Car, Maximize, MapPin, Phone, MessageSquare, Globe, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { getPropertyById } from "@/lib/api";
+import { notFound } from "next/navigation";
+import PrintPageButton from "@/components/print-page-button";
+export default async function BrochurePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const property = await getPropertyById(id);
+  if (!property) {
+    notFound();
+  }
 
-// Mock data fetcher (aligned with PDP)
-const getPropertyData = (id: string) => {
-  const properties = [
-    { id: "1", address: "14 Marine Drive", suburb: "MOSMAN, NSW", price: 4250000, beds: 4, baths: 3, cars: 2, area: 420, type: "House" as const },
-    { id: "2", address: "88 Collins Street", suburb: "MELBOURNE, VIC", price: 2100000, beds: 2, baths: 2, cars: 1, area: 110, type: "Apartment" as const },
-    { id: "3", address: "22 Ocean View Pde", suburb: "BYRON BAY, NSW", price: 8900000, beds: 5, baths: 4, cars: 4, area: 1200, type: "House" as const },
-    { id: "4", address: "55 The Esplanade", suburb: "GOLD COAST, QLD", price: 1850000, beds: 3, baths: 2, cars: 2, area: 180, type: "Villa" as const },
-    { id: "5", address: "10 Terrace St", suburb: "PADDINGTON, NSW", price: 3400000, beds: 3, baths: 2, cars: 0, area: 150, type: "Townhouse" as const },
-    { id: "6", address: "Acreage Lot 9", suburb: "MALENY, QLD", price: 2750000, beds: 4, baths: 3, cars: 6, area: 4500, type: "Acreage" as const },
-  ];
-  return properties.find(p => p.id === id) || properties[0];
-};
-
-export default function BrochurePage() {
-  const params = useParams();
-  const id = params.id as string;
-  const property = getPropertyData(id);
-
-  const images = [
-    `https://picsum.photos/seed/prop-${id}-1/1600/900`,
-    `https://picsum.photos/seed/prop-${id}-2/800/800`,
-    `https://picsum.photos/seed/prop-${id}-3/800/800`,
-    `https://picsum.photos/seed/prop-${id}-4/800/800`,
-  ];
+  const images = property.images.length > 0
+    ? property.images
+    : [
+        `https://picsum.photos/seed/prop-${id}-1/1600/900`,
+        `https://picsum.photos/seed/prop-${id}-2/800/800`,
+        `https://picsum.photos/seed/prop-${id}-3/800/800`,
+        `https://picsum.photos/seed/prop-${id}-4/800/800`,
+      ];
 
   return (
     <div className="bg-white min-h-screen flex flex-col items-center py-10">
@@ -186,12 +176,7 @@ export default function BrochurePage() {
       
       {/* Utility Print Action */}
       <div className="mt-8">
-        <button 
-          onClick={() => window.print()}
-          className="bg-primary text-white px-8 h-12 font-bold text-[10px] tracking-widest uppercase rounded-none shadow-xl hover:opacity-90 transition-all"
-        >
-          Print to PDF
-        </button>
+        <PrintPageButton />
       </div>
     </div>
   );

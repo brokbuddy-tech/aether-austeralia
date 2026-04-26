@@ -12,21 +12,48 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
 interface AdvancedFiltersProps {
-  onApply?: (filters: any) => void;
+  initialFilters?: {
+    bedrooms?: string;
+    bathrooms?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    minArea?: string;
+    maxArea?: string;
+    categories?: string[];
+  };
+  onApply?: (filters: {
+    bedrooms?: string;
+    bathrooms?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    minArea?: string;
+    maxArea?: string;
+    categories?: string[];
+  }) => void;
   resultCount?: number;
 }
 
-export default function AdvancedFilters({ onApply, resultCount = 142 }: AdvancedFiltersProps) {
+export default function AdvancedFilters({ initialFilters, onApply, resultCount = 142 }: AdvancedFiltersProps) {
   const [open, setOpen] = React.useState(false);
-  const [beds, setBeds] = React.useState<string>("any");
-  const [baths, setBaths] = React.useState<string>("any");
+  const [beds, setBeds] = React.useState<string>(initialFilters?.bedrooms || "any");
+  const [baths, setBaths] = React.useState<string>(initialFilters?.bathrooms || "any");
   const [cars, setCars] = React.useState<string>("any");
-  const [propertyTypes, setPropertyTypes] = React.useState<string[]>([]);
+  const [propertyTypes, setPropertyTypes] = React.useState<string[]>(initialFilters?.categories || []);
   
-  const [minPrice, setMinPrice] = React.useState("");
-  const [maxPrice, setMaxPrice] = React.useState("");
-  const [minLand, setMinLand] = React.useState("");
-  const [maxLand, setMaxLand] = React.useState("");
+  const [minPrice, setMinPrice] = React.useState(initialFilters?.minPrice || "");
+  const [maxPrice, setMaxPrice] = React.useState(initialFilters?.maxPrice || "");
+  const [minLand, setMinLand] = React.useState(initialFilters?.minArea || "");
+  const [maxLand, setMaxLand] = React.useState(initialFilters?.maxArea || "");
+
+  React.useEffect(() => {
+    setBeds(initialFilters?.bedrooms || "any");
+    setBaths(initialFilters?.bathrooms || "any");
+    setPropertyTypes(initialFilters?.categories || []);
+    setMinPrice(initialFilters?.minPrice || "");
+    setMaxPrice(initialFilters?.maxPrice || "");
+    setMinLand(initialFilters?.minArea || "");
+    setMaxLand(initialFilters?.maxArea || "");
+  }, [initialFilters]);
 
   const togglePropertyType = (type: string) => {
     setPropertyTypes(prev => 
@@ -47,14 +74,13 @@ export default function AdvancedFilters({ onApply, resultCount = 142 }: Advanced
 
   const handleShowProperties = () => {
     onApply?.({ 
-      beds, 
-      baths, 
-      cars, 
-      propertyTypes, 
-      minPrice, 
-      maxPrice, 
-      minLand, 
-      maxLand 
+      bedrooms: beds !== "any" ? beds : undefined,
+      bathrooms: baths !== "any" ? baths : undefined,
+      categories: propertyTypes.length > 0 ? propertyTypes : undefined,
+      minPrice: minPrice || undefined,
+      maxPrice: maxPrice || undefined,
+      minArea: minLand || undefined,
+      maxArea: maxLand || undefined,
     });
     setOpen(false);
   };

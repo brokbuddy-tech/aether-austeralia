@@ -1,7 +1,6 @@
 const publicEnv = {
   NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   NEXT_PUBLIC_ORG_SLUG: process.env.NEXT_PUBLIC_ORG_SLUG,
-  NEXT_PUBLIC_TEMPLATE_HEX_CODE: process.env.NEXT_PUBLIC_TEMPLATE_HEX_CODE,
 } as const;
 
 function getRequiredPublicEnv(name: string) {
@@ -27,11 +26,24 @@ const API_BASE_URL = normalizeApiBaseUrl(
   publicEnv.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
 );
 const API_ORIGIN = API_BASE_URL.replace(/\/api$/i, '');
-const TEMPLATE_HEX_CODE = getRequiredPublicEnv('NEXT_PUBLIC_TEMPLATE_HEX_CODE').toLowerCase();
+const PUBLIC_TEMPLATE_PROXY_BASE_PATH = '/api/public-template';
 
 function getPublicTemplateUrl(path = '') {
   const normalizedPath = path ? (path.startsWith('/') ? path : `/${path}`) : '';
-  const publicTemplatePath = ['public', 'templates', ORG_SLUG, TEMPLATE_HEX_CODE]
+  return `${PUBLIC_TEMPLATE_PROXY_BASE_PATH}${normalizedPath}`;
+}
+
+function getRequiredServerTemplateHexCode() {
+  const value = (process.env.TEMPLATE_HEX_CODE || '').trim();
+  if (!value) {
+    throw new Error('Missing required server env variable: TEMPLATE_HEX_CODE');
+  }
+  return value.toLowerCase();
+}
+
+function getUpstreamPublicTemplateUrl(path = '') {
+  const normalizedPath = path ? (path.startsWith('/') ? path : `/${path}`) : '';
+  const publicTemplatePath = ['public', 'templates', ORG_SLUG, getRequiredServerTemplateHexCode()]
     .filter(Boolean)
     .join('/');
   return `${API_BASE_URL}/${publicTemplatePath}${normalizedPath}`;
@@ -147,6 +159,12 @@ type RawListing = {
       slug?: string | null;
     } | null;
   } | null;
+  agent?: {
+    name?: string | null;
+    phone?: string | null;
+    email?: string | null;
+    whatsapp?: string | null;
+  } | null;
   organization?: {
     name?: string;
     slug?: string;
@@ -231,6 +249,7 @@ export function mapListingToAetherProperty(listing: RawListing): AetherProperty 
     getNumberValue(listing.areaM2, listing.builtUpArea, listing.landSize, listing.size) || 0;
   const agentName =
     getStringValue(
+      listing.agent?.name,
       listing.broker?.brokerProfile?.displayName,
       [listing.broker?.firstName, listing.broker?.lastName].filter(Boolean).join(' ')
     ) || 'Aether Advisor';
@@ -278,7 +297,9 @@ export async function getListings(params: Record<string, string | number | undef
   });
 
   const response = await safeFetch(
-    `${getPublicTemplateUrl('/listings')}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`,
+    typeof window !== 'undefined'
+      ? `/api/listings${searchParams.toString() ? `?${searchParams.toString()}` : ''}`
+      : `${getUpstreamPublicTemplateUrl('/listings')}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`,
     { next: { revalidate: 120 } } as any
   );
 
@@ -298,7 +319,10 @@ export async function getListings(params: Record<string, string | number | undef
 }
 
 export async function getPropertyById(id: string): Promise<AetherProperty | null> {
-  const response = await safeFetch(getPublicTemplateUrl(`/listings/${id}`), { next: { revalidate: 120 } } as any);
+  const response = await safeFetch(
+    typeof window !== 'undefined' ? `/api/listings/${id}` : getUpstreamPublicTemplateUrl(`/listings/${id}`),
+    { next: { revalidate: 120 } } as any
+  );
 
   if (!response.ok) {
     return null;

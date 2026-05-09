@@ -2,11 +2,13 @@ import Image from "next/image";
 import { Bed, Bath, Car, Maximize, MapPin, Phone, MessageSquare, Globe, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { getPropertyById } from "@/lib/api";
+import { getRequestAgencySlug } from "@/lib/server-agency";
 import { notFound } from "next/navigation";
 import PrintPageButton from "@/components/print-page-button";
 export default async function BrochurePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const property = await getPropertyById(id);
+  const agencySlug = await getRequestAgencySlug();
+  const property = await getPropertyById(id, agencySlug);
   if (!property) {
     notFound();
   }

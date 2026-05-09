@@ -1,52 +1,17 @@
-const publicEnv = {
-  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-  NEXT_PUBLIC_ORG_SLUG: process.env.NEXT_PUBLIC_ORG_SLUG,
-} as const;
+import {
+  API_BASE_URLS,
+  PUBLIC_API_BASE_URLS,
+  PUBLIC_TEMPLATE_PROXY_BASE_PATH,
+  getClientTemplateFetchUrl,
+  shouldRetryApiRequest,
+} from './api-base';
+import { getDefaultAgencySlug, getEffectiveAgencySlug } from './agency-routing';
 
-function getRequiredPublicEnv(name: string) {
-  const value = publicEnv[name as keyof typeof publicEnv] || '';
-  const normalized = value.trim();
-  if (!normalized) {
-    throw new Error(`Missing required public env variable: ${name}`);
-  }
-  return normalized;
-}
-
-export const ORG_SLUG = getRequiredPublicEnv('NEXT_PUBLIC_ORG_SLUG');
-
-function normalizeApiBaseUrl(value: string) {
-  const normalized = value.trim().replace(/\/+$/, '');
-  if (!normalized) return '';
-  if (/\/api$/i.test(normalized)) return normalized;
-  if (/\/api\/public$/i.test(normalized)) return normalized.replace(/\/public$/i, '');
-  return `${normalized}/api`;
-}
-
-const API_BASE_URL = normalizeApiBaseUrl(
-  publicEnv.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-);
+const API_BASE_URL = API_BASE_URLS[0] || 'http://localhost:4000/api';
 const API_ORIGIN = API_BASE_URL.replace(/\/api$/i, '');
-const PUBLIC_TEMPLATE_PROXY_BASE_PATH = '/api/public-template';
 
-function getPublicTemplateUrl(path = '') {
-  const normalizedPath = path ? (path.startsWith('/') ? path : `/${path}`) : '';
-  return `${PUBLIC_TEMPLATE_PROXY_BASE_PATH}${normalizedPath}`;
-}
-
-function getRequiredServerTemplateHexCode() {
-  const value = (process.env.TEMPLATE_HEX_CODE || '').trim();
-  if (!value) {
-    throw new Error('Missing required server env variable: TEMPLATE_HEX_CODE');
-  }
-  return value.toLowerCase();
-}
-
-function getUpstreamPublicTemplateUrl(path = '') {
-  const normalizedPath = path ? (path.startsWith('/') ? path : `/${path}`) : '';
-  const publicTemplatePath = ['public', 'templates', ORG_SLUG, getRequiredServerTemplateHexCode()]
-    .filter(Boolean)
-    .join('/');
-  return `${API_BASE_URL}/${publicTemplatePath}${normalizedPath}`;
+export function getPublicTemplateUrl(path = '', agencySlug?: string | null) {
+  return getClientTemplateFetchUrl(path, agencySlug);
 }
 
 async function safeFetch(url: string, extraOpts?: RequestInit & { next?: any }, timeoutMs = 10000): Promise<Response> {
@@ -65,6 +30,125 @@ async function safeFetch(url: string, extraOpts?: RequestInit & { next?: any }, 
   } finally {
     clearTimeout(timer);
   }
+}
+
+type ResolvedAgencyContext = {
+  organization?: {
+    slug?: string;
+    hexCode?: string;
+  };
+};
+
+function appendHexToSearch(search: string, hexCode: string) {
+  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search);
+  params.set('hex', hexCode);
+  const serialized = params.toString();
+  return serialized ? `?${serialized}` : '';
+}
+
+function buildBackendPublicUrl(
+  publicApiBaseUrl: string,
+  agencySlug: string,
+  hexCode: string,
+  path = '',
+) {
+  const normalizedPath = path ? (path.startsWith('/') ? path : `/${path}`) : '';
+  const [pathname, search = ''] = normalizedPath.split('?');
+  const segments = pathname.split('/').filter(Boolean);
+
+  if (segments.length === 0) {
+    return `${publicApiBaseUrl}/organization${appendHexToSearch(search ? `?${search}` : '', hexCode)}`;
+  }
+
+  if (segments[0] === 'listings') {
+    if (segments[1]) {
+      return `${publicApiBaseUrl}/listings/${encodeURIComponent(segments[1])}${appendHexToSearch(search ? `?${search}` : '', hexCode)}`;
+    }
+    return `${publicApiBaseUrl}/listings${appendHexToSearch(search ? `?${search}` : '', hexCode)}`;
+  }
+
+  if (segments[0] === 'agents') {
+    if (segments[1]) {
+      return `${publicApiBaseUrl}/agent/${encodeURIComponent(segments[1])}${appendHexToSearch(search ? `?${search}` : '', hexCode)}`;
+    }
+    return `${publicApiBaseUrl}/agents${appendHexToSearch(search ? `?${search}` : '', hexCode)}`;
+  }
+
+  if (segments[0] === 'inquiry') {
+    return `${publicApiBaseUrl}/inquiries${appendHexToSearch(search ? `?${search}` : '', hexCode)}`;
+  }
+
+  if (segments[0] === 'logo' && segments[1] === 'view') {
+    return `${publicApiBaseUrl}/templates/${encodeURIComponent(agencySlug)}/${encodeURIComponent(hexCode)}/logo/view${search ? `?${search}` : ''}`;
+  }
+
+  if (segments[0] === 'images' && segments[1]) {
+    const trailing = segments.slice(2).map(encodeURIComponent).join('/');
+    return `${publicApiBaseUrl}/templates/${encodeURIComponent(agencySlug)}/${encodeURIComponent(hexCode)}/images/${encodeURIComponent(segments[1])}/${trailing}${search ? `?${search}` : ''}`;
+  }
+
+  const joinedPath = segments.map(encodeURIComponent).join('/');
+  return `${publicApiBaseUrl}/templates/${encodeURIComponent(agencySlug)}/${encodeURIComponent(hexCode)}/${joinedPath}${search ? `?${search}` : ''}`;
+}
+
+async function resolveAgencyContext(agencySlug?: string | null) {
+  const resolvedAgencySlug = getEffectiveAgencySlug(agencySlug);
+  if (!resolvedAgencySlug) return null;
+
+  for (const publicApiBaseUrl of PUBLIC_API_BASE_URLS) {
+    try {
+      const response = await safeFetch(`${publicApiBaseUrl}/agency/${encodeURIComponent(resolvedAgencySlug)}/resolve`, {
+        cache: 'no-store',
+      }, 4000);
+
+      if (!response.ok) {
+        continue;
+      }
+
+      const data = await response.json() as ResolvedAgencyContext;
+      if (data?.organization?.hexCode) {
+        return data;
+      }
+    } catch {
+      continue;
+    }
+  }
+
+  return null;
+}
+
+async function fetchTemplateResponse(
+  path = '',
+  options?: RequestInit,
+  timeout = 10000,
+  agencySlug?: string | null,
+) {
+  const resolvedAgencySlug = getEffectiveAgencySlug(agencySlug) || getDefaultAgencySlug();
+  if (!resolvedAgencySlug) {
+    return new Response(null, { status: 404, statusText: 'Agency Not Found' });
+  }
+
+  if (typeof window !== 'undefined') {
+    return safeFetch(getClientTemplateFetchUrl(path, resolvedAgencySlug), options as RequestInit & { next?: any }, timeout);
+  }
+
+  const resolvedContext = await resolveAgencyContext(resolvedAgencySlug);
+  const hexCode = resolvedContext?.organization?.hexCode;
+  if (!hexCode) {
+    return new Response(null, { status: 404, statusText: 'Agency Not Found' });
+  }
+
+  let lastResponse: Response | null = null;
+  for (const publicApiBaseUrl of PUBLIC_API_BASE_URLS) {
+    const backendUrl = buildBackendPublicUrl(publicApiBaseUrl, resolvedAgencySlug, hexCode, path);
+    const response = await safeFetch(backendUrl, options as RequestInit & { next?: any }, timeout);
+    lastResponse = response;
+    if (response.ok || !(await shouldRetryApiRequest(response))) {
+      return response;
+    }
+  }
+
+  return lastResponse || new Response(null, { status: 502, statusText: 'Service Unavailable' });
 }
 
 function getStringValue(...values: unknown[]) {
@@ -214,15 +298,16 @@ function toAbsoluteImageUrl(path: string) {
 
 function getPublicListingMediaUrl(
   image?: ListingImage | null,
-  variant: 'thumbnail' | 'medium' | 'compressed' | 'original' = 'compressed'
+  variant: 'thumbnail' | 'medium' | 'compressed' | 'original' = 'compressed',
+  agencySlug?: string | null,
 ) {
   if (!image?.id) return '';
-  return getPublicTemplateUrl(`/images/${image.id}/view?variant=${variant}`);
+  return getPublicTemplateUrl(`/images/${image.id}/view?variant=${variant}`, agencySlug);
 }
 
-function getListingImageUrl(image?: ListingImage | null) {
+function getListingImageUrl(image?: ListingImage | null, agencySlug?: string | null) {
   if (!image) return '';
-  const publicImageUrl = getPublicListingMediaUrl(image, 'compressed');
+  const publicImageUrl = getPublicListingMediaUrl(image, 'compressed', agencySlug);
   if (publicImageUrl) return publicImageUrl;
 
   return toAbsoluteImageUrl(
@@ -236,9 +321,9 @@ function getListingImageUrl(image?: ListingImage | null) {
   );
 }
 
-export function mapListingToAetherProperty(listing: RawListing): AetherProperty {
+export function mapListingToAetherProperty(listing: RawListing, agencySlug?: string | null): AetherProperty {
   const priceNumeric = getNumberValue(listing.price) || 0;
-  const imageUrls = (listing.images || []).map(getListingImageUrl).filter(Boolean);
+  const imageUrls = (listing.images || []).map((image) => getListingImageUrl(image, agencySlug)).filter(Boolean);
   const transactionType = listing.transactionType?.toUpperCase() === 'RENT' ? 'RENT' : 'SALE';
   const address = getStringValue(listing.streetAddress, listing.address, listing.title) || 'Address on request';
   const suburb = [listing.area, listing.emirate].filter(Boolean).join(', ') || 'Australia';
@@ -288,7 +373,10 @@ export function mapListingToAetherProperty(listing: RawListing): AetherProperty 
   };
 }
 
-export async function getListings(params: Record<string, string | number | undefined> = {}): Promise<AetherPropertyResults> {
+export async function getListings(
+  params: Record<string, string | number | undefined> = {},
+  agencySlug?: string | null,
+): Promise<AetherPropertyResults> {
   const searchParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
@@ -297,11 +385,11 @@ export async function getListings(params: Record<string, string | number | undef
     }
   });
 
-  const response = await safeFetch(
-    typeof window !== 'undefined'
-      ? `/api/listings${searchParams.toString() ? `?${searchParams.toString()}` : ''}`
-      : `${getUpstreamPublicTemplateUrl('/listings')}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`,
-    { next: { revalidate: 120 } } as any
+  const response = await fetchTemplateResponse(
+    `/listings${searchParams.toString() ? `?${searchParams.toString()}` : ''}`,
+    { next: { revalidate: 120 } } as any,
+    10000,
+    agencySlug,
   );
 
   if (!response.ok) {
@@ -312,22 +400,24 @@ export async function getListings(params: Record<string, string | number | undef
   const rawListings = Array.isArray(data) ? data : (data.listings || []);
 
   return {
-    properties: rawListings.map(mapListingToAetherProperty),
+    properties: rawListings.map((listing: RawListing) => mapListingToAetherProperty(listing, agencySlug)),
     total: data.total || rawListings.length,
     page: data.page || 1,
     totalPages: data.totalPages || 1,
   };
 }
 
-export async function getPropertyById(id: string): Promise<AetherProperty | null> {
-  const response = await safeFetch(
-    typeof window !== 'undefined' ? `/api/listings/${id}` : getUpstreamPublicTemplateUrl(`/listings/${id}`),
-    { next: { revalidate: 120 } } as any
+export async function getPropertyById(id: string, agencySlug?: string | null): Promise<AetherProperty | null> {
+  const response = await fetchTemplateResponse(
+    `/listings/${id}`,
+    { next: { revalidate: 120 } } as any,
+    10000,
+    agencySlug,
   );
 
   if (!response.ok) {
     return null;
   }
 
-  return mapListingToAetherProperty(await response.json());
+  return mapListingToAetherProperty(await response.json(), agencySlug);
 }

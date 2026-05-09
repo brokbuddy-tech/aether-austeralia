@@ -6,11 +6,16 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { getSiteConfig } from "@/lib/public-site";
+import { prefixAgencyPath, resolveAgencySlugFromPathname } from "@/lib/agency-routing";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [brandName, setBrandName] = useState("AETHER");
   const pathname = usePathname();
+  const agencySlug = resolveAgencySlugFromPathname(pathname);
+  const currentPath = agencySlug ? pathname.replace(`/${agencySlug}`, "") || "/" : pathname;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,7 +25,22 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isHomePage = pathname === "/";
+  useEffect(() => {
+    let active = true;
+
+    async function loadSiteConfig() {
+      const siteConfig = await getSiteConfig(agencySlug);
+      if (!active) return;
+      setBrandName(siteConfig.branding?.displayName || siteConfig.organization.name || "AETHER");
+    }
+
+    void loadSiteConfig();
+    return () => {
+      active = false;
+    };
+  }, [agencySlug]);
+
+  const isHomePage = currentPath === "/";
   const isTransparent = isHomePage && !scrolled && !isOpen;
   const textColor = isTransparent ? "text-white" : "text-black";
 
@@ -29,7 +49,7 @@ export default function Navbar() {
     { name: "RENT", href: "/search?type=rent" },
     { name: "SOLD", href: "/search?type=sold" },
     { name: "ABOUT US", href: "/about" },
-    { name: "FIND AN AGENT", href: "/find-an-agent" },
+    { name: "AGENTS", href: "/agents" },
     { name: "COMMERCIAL", href: "/search?type=commercial" },
   ];
 
@@ -40,9 +60,10 @@ export default function Navbar() {
         (scrolled || !isHomePage) ? "bg-white/90 shadow-sm py-3" : "bg-transparent"
       )}
     >
-      <Link href="/" className="z-[110]">
+      <Link href={prefixAgencyPath("/", agencySlug)} className="z-[110] flex items-center gap-3">
+        <span className="h-3 w-3 rounded-full bg-primary" />
         <span className={cn("font-headline font-extrabold text-2xl tracking-tighter transition-colors duration-300", textColor)}>
-          AETHER<span className="text-primary">.</span>
+          {brandName}<span className="text-primary">.</span>
         </span>
       </Link>
 
@@ -50,13 +71,13 @@ export default function Navbar() {
         {navLinks.map((link) => (
           <Link
             key={link.name}
-            href={link.href}
+            href={prefixAgencyPath(link.href, agencySlug)}
             className={cn("text-xs font-bold tracking-widest hover:text-primary transition-colors duration-300", textColor)}
           >
             {link.name}
           </Link>
         ))}
-        <Link href="/contact">
+        <Link href={prefixAgencyPath("/contact", agencySlug)}>
           <Button 
             variant="outline" 
             className={cn(
@@ -93,7 +114,7 @@ export default function Navbar() {
           {navLinks.map((link) => (
             <Link
               key={link.name}
-              href={link.href}
+              href={prefixAgencyPath(link.href, agencySlug)}
               onClick={() => setIsOpen(false)}
               className="text-4xl font-headline font-bold text-black hover:text-primary transition-all"
             >
@@ -101,12 +122,12 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="mt-8 flex flex-col gap-4">
-            <Link href="/find-an-agent" onClick={() => setIsOpen(false)}>
+            <Link href={prefixAgencyPath("/agents", agencySlug)} onClick={() => setIsOpen(false)}>
               <Button className="bg-primary hover:bg-primary/90 text-white font-bold py-6 px-12 text-xl w-full rounded-none">
-                FIND AN AGENT
+                AGENTS
               </Button>
             </Link>
-            <Link href="/contact" onClick={() => setIsOpen(false)}>
+            <Link href={prefixAgencyPath("/contact", agencySlug)} onClick={() => setIsOpen(false)}>
               <Button 
                 variant="outline" 
                 className="border-black text-black font-bold py-6 px-12 text-xl w-full rounded-none hover:bg-primary hover:text-white hover:border-primary transition-all"

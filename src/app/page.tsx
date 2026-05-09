@@ -6,6 +6,7 @@ import PropertyCard from "@/components/property-card";
 import TestimonialSlider from "@/components/testimonial-slider";
 import { Button } from "@/components/ui/button";
 import { getListings } from "@/lib/api";
+import { getRequestAgencySlug } from "@/lib/server-agency";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import {
   Accordion,
@@ -15,11 +16,12 @@ import {
 } from "@/components/ui/accordion";
 
 export default async function Home() {
+  const agencySlug = await getRequestAgencySlug();
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-home');
 
   const [featuredResult, developmentResult] = await Promise.all([
-    getListings({ transactionType: "SALE", status: "ACTIVE", limit: 3 }),
-    getListings({ transactionType: "SALE", readiness: "OFFPLAN", status: "ACTIVE", limit: 3 }),
+    getListings({ transactionType: "SALE", status: "ACTIVE", limit: 3 }, agencySlug),
+    getListings({ transactionType: "SALE", readiness: "OFFPLAN", status: "ACTIVE", limit: 3 }, agencySlug),
   ]);
 
   const featuredProperties = featuredResult.properties;

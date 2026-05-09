@@ -6,6 +6,7 @@ import PropertyCard from "@/components/property-card";
 import { Button } from "@/components/ui/button";
 import { getListings } from "@/lib/api";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { getRequestAgencySlug } from "@/lib/server-agency";
 
 export default async function SearchPage({
   searchParams,
@@ -24,6 +25,7 @@ export default async function SearchPage({
   }>;
 }) {
   const params = await searchParams;
+  const agencySlug = await getRequestAgencySlug();
   const searchQuery = params.q || "";
   const searchType = params.type || "buy";
 
@@ -55,7 +57,7 @@ export default async function SearchPage({
     apiParams.readiness = "OFFPLAN";
   }
 
-  const { properties, total, page, totalPages } = await getListings(apiParams);
+  const { properties, total, page, totalPages } = await getListings(apiParams, agencySlug);
   const nextPageParams = new URLSearchParams(
     Object.entries({ ...params, page: String(page + 1) })
       .filter(([, value]) => Boolean(value))

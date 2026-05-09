@@ -7,8 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
+import { AetherContactPageContent } from "@/components/public/agency-contact-page";
 
 export default function ContactPage() {
+  return <AetherContactPageContent />;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({

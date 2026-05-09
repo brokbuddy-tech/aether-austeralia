@@ -1,15 +1,12 @@
-"use client";
+"use client"; // legacy
 
 import Image from "next/image";
 import { ShieldCheck, Target, Users, Globe, ArrowRight, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { AetherAboutPageContent } from "@/components/public/agency-about-page";
 
 export default function AboutPage() {
-  return <AetherAboutPageContent />;
-
   return (
     <div className="pt-[72px] bg-white min-h-screen">
       {/* Hero Section */}

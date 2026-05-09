@@ -12,11 +12,13 @@ import PropertyShare from "@/components/property-share";
 import EnergyEfficiencyRating from "@/components/energy-efficiency-rating";
 import InternetAvailability from "@/components/internet-availability";
 import { getPropertyById } from "@/lib/api";
+import { getRequestAgencySlug } from "@/lib/server-agency";
 import { notFound } from "next/navigation";
 
 export default async function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const propertyData = await getPropertyById(id);
+  const agencySlug = await getRequestAgencySlug();
+  const propertyData = await getPropertyById(id, agencySlug);
   if (!propertyData) {
     notFound();
   }

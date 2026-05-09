@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { toast } from "@/hooks/use-toast";
+import { AetherAgentsPageContent } from "@/components/public/agency-agents-page";
 
 type Advisor = {
   name: string;
@@ -18,6 +19,8 @@ type Advisor = {
 };
 
 export default function FindAnAgentPage() {
+  return <AetherAgentsPageContent />;
+
   const [selectedAdvisor, setSelectedAdvisor] = useState<Advisor | null>(null);
   const heroImage = PlaceHolderImages.find(img => img.id === 'find-agent-hero');
 

@@ -210,7 +210,15 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
           {/* Sticky Action Sidebar */}
           <div className="lg:col-span-4 relative">
             <div className="sticky top-24 space-y-6">
-              <AgentSidebar propertyId={id} />
+              <AgentSidebar
+                propertyId={id}
+                agentName={propertyData.agent}
+                agentAvatar={propertyData.agentAvatar}
+                agentTitle={propertyData.agentTitle}
+                agentPhone={propertyData.agentPhone}
+                agentEmail={propertyData.agentEmail}
+                agentWhatsapp={propertyData.agentWhatsapp}
+              />
             </div>
           </div>
         </div>

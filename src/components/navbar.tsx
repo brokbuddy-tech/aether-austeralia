@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,6 +14,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [brandName, setBrandName] = useState("AETHER");
+  const [brandLogo, setBrandLogo] = useState<string | null>(null);
   const pathname = usePathname();
   const agencySlug = resolveAgencySlugFromPathname(pathname);
   const currentPath = agencySlug ? pathname.replace(`/${agencySlug}`, "") || "/" : pathname;
@@ -32,6 +34,7 @@ export default function Navbar() {
       const siteConfig = await getSiteConfig(agencySlug);
       if (!active) return;
       setBrandName(siteConfig.branding?.displayName || siteConfig.organization.name || "AETHER");
+      setBrandLogo(siteConfig.profile?.logo || null);
     }
 
     void loadSiteConfig();
@@ -61,7 +64,19 @@ export default function Navbar() {
       )}
     >
       <Link href={prefixAgencyPath("/", agencySlug)} className="z-[110] flex items-center gap-3">
-        <span className="h-3 w-3 rounded-full bg-primary" />
+        {brandLogo ? (
+          <span className="relative h-10 w-10 overflow-hidden rounded-full border border-black/10 bg-white">
+            <Image
+              src={brandLogo}
+              alt={`${brandName} logo`}
+              fill
+              className="object-contain p-1.5"
+              sizes="40px"
+            />
+          </span>
+        ) : (
+          <span className="h-3 w-3 rounded-full bg-primary" />
+        )}
         <span className={cn("font-headline font-extrabold text-2xl tracking-tighter transition-colors duration-300", textColor)}>
           {brandName}<span className="text-primary">.</span>
         </span>

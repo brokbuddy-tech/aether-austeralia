@@ -21,6 +21,9 @@ export default async function BrochurePage({ params }: { params: Promise<{ id: s
         `https://picsum.photos/seed/prop-${id}-3/800/800`,
         `https://picsum.photos/seed/prop-${id}-4/800/800`,
       ];
+  const whatsappHref = property.agentWhatsapp
+    ? `https://wa.me/${property.agentWhatsapp.replace(/\D/g, "")}`
+    : null;
 
   return (
     <div className="bg-white min-h-screen flex flex-col items-center py-10">
@@ -145,27 +148,43 @@ export default async function BrochurePage({ params }: { params: Promise<{ id: s
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-6">
               <div className="relative h-16 w-16 rounded-full overflow-hidden border-2 border-white shadow-md">
-                <Image
-                  src="https://picsum.photos/seed/kieran-agent/100/100"
-                  alt="Kieran Warriner"
-                  fill
-                  className="object-cover"
-                />
+                {property.agentAvatar ? (
+                  <Image
+                    src={property.agentAvatar}
+                    alt={property.agent}
+                    fill
+                    className="object-cover"
+                    sizes="64px"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-[#111111] text-sm font-extrabold text-white">
+                    {property.agent
+                      .split(/\s+/)
+                      .filter(Boolean)
+                      .slice(0, 2)
+                      .map((part) => part.charAt(0).toUpperCase())
+                      .join("")}
+                  </div>
+                )}
               </div>
               <div>
-                <p className="font-headline font-extrabold text-lg text-[#111111] uppercase tracking-tighter">Kieran Warriner</p>
-                <p className="text-[9px] font-bold text-primary uppercase tracking-widest">Commercial Consultant</p>
+                <p className="font-headline font-extrabold text-lg text-[#111111] uppercase tracking-tighter">{property.agent}</p>
+                <p className="text-[9px] font-bold text-primary uppercase tracking-widest">{property.agentTitle || "Property Consultant"}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-8">
               <div className="flex flex-col gap-2">
-                <a href="tel:+61290000000" className="flex items-center gap-2 text-[10px] font-bold text-primary tracking-widest hover:underline uppercase">
-                  <Phone className="w-3 h-3" /> CALL +61 2 9000 0000
-                </a>
-                <button className="flex items-center gap-2 text-[10px] font-bold text-primary tracking-widest hover:underline uppercase">
-                  <MessageSquare className="w-3 h-3" /> WHATSAPP AGENT
-                </button>
+                {property.agentPhone ? (
+                  <a href={`tel:${property.agentPhone}`} className="flex items-center gap-2 text-[10px] font-bold text-primary tracking-widest hover:underline uppercase">
+                    <Phone className="w-3 h-3" /> CALL {property.agentPhone}
+                  </a>
+                ) : null}
+                {whatsappHref ? (
+                  <a href={whatsappHref} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[10px] font-bold text-primary tracking-widest hover:underline uppercase">
+                    <MessageSquare className="w-3 h-3" /> WHATSAPP AGENT
+                  </a>
+                ) : null}
               </div>
               <div className="h-10 w-px bg-gray-200" />
               <Link href={`/property/${id}`} className="flex items-center gap-2 text-[10px] font-bold text-primary tracking-widest hover:underline uppercase">

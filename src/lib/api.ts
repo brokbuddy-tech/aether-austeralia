@@ -3,6 +3,7 @@ import {
   PUBLIC_API_BASE_URLS,
   PUBLIC_TEMPLATE_PROXY_BASE_PATH,
   getClientTemplateFetchUrl,
+  normalizePublicTemplateAssetUrl,
   shouldRetryApiRequest,
 } from './api-base';
 import { getDefaultAgencySlug, getEffectiveAgencySlug } from './agency-routing';
@@ -154,16 +155,11 @@ async function fetchTemplateResponse(
   }
 
   if (typeof window !== 'undefined') {
-    const proxyResponse = await safeFetch(
+    return safeFetch(
       getClientTemplateFetchUrl(path, resolvedAgencySlug),
       options as RequestInit & { next?: any },
       timeout,
     );
-    if (proxyResponse.ok) {
-      return proxyResponse;
-    }
-
-    return fetchDirectTemplateResponse(resolvedAgencySlug, path, options, timeout);
   }
 
   return fetchDirectTemplateResponse(resolvedAgencySlug, path, options, timeout);
@@ -257,12 +253,17 @@ type RawListing = {
     brokerProfile?: {
       displayName?: string | null;
       tagline?: string | null;
+      publicPhone?: string | null;
+      publicEmail?: string | null;
       whatsapp?: string | null;
       slug?: string | null;
     } | null;
   } | null;
   agent?: {
     name?: string | null;
+    avatar?: string | null;
+    avatarUrl?: string | null;
+    title?: string | null;
     phone?: string | null;
     email?: string | null;
     whatsapp?: string | null;
@@ -290,6 +291,11 @@ export type AetherProperty = {
   image: string;
   images: string[];
   agent: string;
+  agentAvatar?: string;
+  agentTitle?: string;
+  agentPhone?: string;
+  agentEmail?: string;
+  agentWhatsapp?: string;
   description: string;
   transactionType: 'SALE' | 'RENT';
   status: string;
@@ -309,9 +315,10 @@ export type AetherPropertyResults = {
 
 function toAbsoluteImageUrl(path: string) {
   if (!path) return path;
-  if (/^https?:\/\//i.test(path)) return path;
-  if (path.startsWith(PUBLIC_TEMPLATE_PROXY_BASE_PATH)) return path;
-  return `${API_ORIGIN}${path.startsWith('/') ? path : `/${path}`}`;
+  const normalizedProxyPath = normalizePublicTemplateAssetUrl(path) || path;
+  if (/^https?:\/\//i.test(normalizedProxyPath)) return normalizedProxyPath;
+  if (normalizedProxyPath.startsWith(PUBLIC_TEMPLATE_PROXY_BASE_PATH)) return normalizedProxyPath;
+  return `${API_ORIGIN}${normalizedProxyPath.startsWith('/') ? normalizedProxyPath : `/${normalizedProxyPath}`}`;
 }
 
 function getPublicListingMediaUrl(
@@ -357,6 +364,28 @@ export function mapListingToAetherProperty(listing: RawListing, agencySlug?: str
       listing.broker?.brokerProfile?.displayName,
       [listing.broker?.firstName, listing.broker?.lastName].filter(Boolean).join(' ')
     ) || 'Aether Advisor';
+  const agentAvatar = getStringValue(
+    listing.agent?.avatarUrl,
+    listing.agent?.avatar,
+    listing.broker?.avatar,
+  ) || '';
+  const agentTitle =
+    getStringValue(listing.agent?.title, listing.broker?.brokerProfile?.tagline) || 'Property Consultant';
+  const agentPhone = getStringValue(
+    listing.agent?.phone,
+    listing.broker?.brokerProfile?.publicPhone,
+    listing.broker?.phone,
+  );
+  const agentEmail = getStringValue(
+    listing.agent?.email,
+    listing.broker?.brokerProfile?.publicEmail,
+    listing.broker?.email,
+  );
+  const agentWhatsapp = getStringValue(
+    listing.agent?.whatsapp,
+    listing.broker?.brokerProfile?.whatsapp,
+    agentPhone,
+  );
   const status = listing.status || 'ACTIVE';
   const readiness = listing.readiness || 'READY';
 
@@ -380,6 +409,11 @@ export function mapListingToAetherProperty(listing: RawListing, agencySlug?: str
     image: imageUrls[0] || 'https://picsum.photos/seed/aether-fallback/1200/800',
     images: imageUrls,
     agent: agentName,
+    agentAvatar,
+    agentTitle,
+    agentPhone,
+    agentEmail,
+    agentWhatsapp,
     description: normalizeListingDescription(listing.description),
     transactionType,
     status,

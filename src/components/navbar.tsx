@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { getSiteConfig, type SiteConfig } from "@/lib/public-site";
+import { getSiteConfig, hasMeaningfulSiteConfig, type SiteConfig } from "@/lib/public-site";
 import { prefixAgencyPath, resolveAgencySlugFromPathname } from "@/lib/agency-routing";
 
 function getDisplayName(siteConfig?: SiteConfig | null) {
@@ -43,6 +43,7 @@ export default function Navbar({ initialSiteConfig }: { initialSiteConfig?: Site
       try {
         const siteConfig = await getSiteConfig(agencySlug);
         if (!active) return;
+        if (!hasMeaningfulSiteConfig(siteConfig)) return;
         setBrandName(getDisplayName(siteConfig));
         setBrandLogo(siteConfig.profile?.logo || null);
       } catch {

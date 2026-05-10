@@ -6,7 +6,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Globe, MapPin, Phone, ShieldCheck, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getAgents, getSiteConfig, type SiteAgent, type SiteConfig } from "@/lib/public-site";
+import {
+  getAgents,
+  getSiteConfig,
+  hasMeaningfulSiteConfig,
+  type SiteAgent,
+  type SiteConfig,
+} from "@/lib/public-site";
 import { prefixAgencyPath, resolveAgencySlugFromPathname } from "@/lib/agency-routing";
 
 function getDisplayName(siteConfig: SiteConfig | null) {
@@ -25,11 +31,22 @@ function getAgentImage(seed: string, avatar?: string | null) {
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 
-export function AetherAboutPageContent() {
+export function AetherAboutPageContent({
+  initialSiteConfig = null,
+  initialAgents = [],
+}: {
+  initialSiteConfig?: SiteConfig | null;
+  initialAgents?: SiteAgent[];
+}) {
   const pathname = usePathname();
   const agencySlug = resolveAgencySlugFromPathname(pathname);
-  const [siteConfig, setSiteConfig] = useState<SiteConfig | null>(null);
-  const [agents, setAgents] = useState<SiteAgent[]>([]);
+  const [siteConfig, setSiteConfig] = useState<SiteConfig | null>(initialSiteConfig);
+  const [agents, setAgents] = useState<SiteAgent[]>(initialAgents);
+
+  useEffect(() => {
+    setSiteConfig(initialSiteConfig);
+    setAgents(initialAgents);
+  }, [initialAgents, initialSiteConfig]);
 
   useEffect(() => {
     let active = true;
@@ -41,8 +58,12 @@ export function AetherAboutPageContent() {
       ]);
 
       if (!active) return;
-      setSiteConfig(nextSiteConfig);
-      setAgents(nextAgents.agents);
+      setSiteConfig((current) =>
+        hasMeaningfulSiteConfig(nextSiteConfig) ? nextSiteConfig : current,
+      );
+      setAgents((current) =>
+        nextAgents.agents.length > 0 || current.length === 0 ? nextAgents.agents : current,
+      );
     }
 
     void load();

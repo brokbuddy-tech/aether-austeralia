@@ -80,20 +80,37 @@ function ListingPreview({
   );
 }
 
-export function AetherAgentProfilePageContent({ agentSlug }: { agentSlug: string }) {
+export function AetherAgentProfilePageContent({
+  agentSlug,
+  initialProfile = null,
+}: {
+  agentSlug: string;
+  initialProfile?: Awaited<ReturnType<typeof getAgentProfile>> | null;
+}) {
   const pathname = usePathname();
   const agencySlug = resolveAgencySlugFromPathname(pathname);
-  const [loading, setLoading] = useState(true);
-  const [profile, setProfile] = useState<Awaited<ReturnType<typeof getAgentProfile>> | null>(null);
+  const [loading, setLoading] = useState(!initialProfile);
+  const [profile, setProfile] = useState<Awaited<ReturnType<typeof getAgentProfile>> | null>(initialProfile);
+
+  useEffect(() => {
+    setProfile(initialProfile);
+    setLoading(!initialProfile);
+  }, [initialProfile]);
 
   useEffect(() => {
     let active = true;
 
     async function load() {
-      setLoading(true);
+      if (!initialProfile) {
+        setLoading(true);
+      }
       const nextProfile = await getAgentProfile(agentSlug, agencySlug);
       if (!active) return;
-      setProfile(nextProfile);
+      if (nextProfile?.agent) {
+        setProfile(nextProfile);
+      } else if (!initialProfile) {
+        setProfile(nextProfile);
+      }
       setLoading(false);
     }
 
@@ -101,7 +118,7 @@ export function AetherAgentProfilePageContent({ agentSlug }: { agentSlug: string
     return () => {
       active = false;
     };
-  }, [agentSlug, agencySlug]);
+  }, [agentSlug, agencySlug, initialProfile]);
 
   if (loading) {
     return (

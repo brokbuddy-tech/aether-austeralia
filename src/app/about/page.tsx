@@ -1,14 +1,25 @@
-"use client";
-
 import Image from "next/image";
 import { ShieldCheck, Target, Users, Globe, ArrowRight, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { AetherAboutPageContent } from "@/components/public/agency-about-page";
+import { getAgents, getSiteConfig } from "@/lib/public-site";
+import { getRequestAgencySlug } from "@/lib/server-agency";
 
-export default function AboutPage() {
-  return <AetherAboutPageContent />;
+export default async function AboutPage() {
+  const agencySlug = await getRequestAgencySlug();
+  const [siteConfig, agentsResponse] = await Promise.all([
+    getSiteConfig(agencySlug),
+    getAgents(agencySlug),
+  ]);
+
+  return (
+    <AetherAboutPageContent
+      initialSiteConfig={siteConfig}
+      initialAgents={agentsResponse.agents}
+    />
+  );
 
   return (
     <div className="pt-[72px] bg-white min-h-screen">

@@ -13,14 +13,29 @@ import EnergyEfficiencyRating from "@/components/energy-efficiency-rating";
 import InternetAvailability from "@/components/internet-availability";
 import { getPropertyById } from "@/lib/api";
 import { getRequestAgencySlug } from "@/lib/server-agency";
-import { notFound } from "next/navigation";
 
 export default async function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const agencySlug = await getRequestAgencySlug();
   const propertyData = await getPropertyById(id, agencySlug);
   if (!propertyData) {
-    notFound();
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-white px-6 pt-[72px]">
+        <div className="max-w-xl text-center">
+          <h1 className="font-headline text-4xl font-extrabold uppercase tracking-tight text-[#111111]">
+            Listing unavailable
+          </h1>
+          <p className="mt-4 text-gray-500">
+            This property could not be loaded from the live public feed right now.
+          </p>
+          <Link href="/search" className="mt-8 inline-flex">
+            <Button className="rounded-none bg-primary px-8 font-bold uppercase tracking-[0.25em] text-white">
+              Back to search
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   const images = propertyData.images.length > 0

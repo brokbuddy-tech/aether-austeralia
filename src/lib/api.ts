@@ -338,6 +338,7 @@ export type AetherPropertyResults = {
 
 function toAbsoluteImageUrl(path: string) {
   if (!path) return path;
+  if (/^view(?:\?|$)/i.test(path.trim())) return '';
   const normalizedProxyPath = normalizePublicTemplateAssetUrl(path) || path;
   if (/^https?:\/\//i.test(normalizedProxyPath)) return normalizedProxyPath;
   if (normalizedProxyPath.startsWith(PUBLIC_TEMPLATE_PROXY_BASE_PATH)) return normalizedProxyPath;
@@ -355,18 +356,26 @@ function getPublicListingMediaUrl(
 
 function getListingImageUrl(image?: ListingImage | null, agencySlug?: string | null) {
   if (!image) return '';
-  const publicImageUrl = getPublicListingMediaUrl(image, 'compressed', agencySlug);
-  if (publicImageUrl) return publicImageUrl;
+  for (const variant of ['compressed', 'medium', 'thumbnail', 'original'] as const) {
+    const publicImageUrl = getPublicListingMediaUrl(image, variant, agencySlug);
+    if (publicImageUrl) return publicImageUrl;
+  }
 
-  return toAbsoluteImageUrl(
-    image.mediumUrl
-      || image.thumbnailUrl
-      || image.url
-      || image.cdnUrl
-      || image.variants?.medium
-      || image.variants?.original
-      || ''
-  );
+  const directCandidates = [
+    image.url,
+    image.cdnUrl,
+    image.variants?.original,
+    image.variants?.medium,
+    image.mediumUrl,
+    image.thumbnailUrl,
+  ];
+
+  for (const candidate of directCandidates) {
+    const absoluteUrl = toAbsoluteImageUrl(candidate || '');
+    if (absoluteUrl) return absoluteUrl;
+  }
+
+  return '';
 }
 
 export function mapListingToAetherProperty(listing: RawListing, agencySlug?: string | null): AetherProperty {
@@ -490,9 +499,10 @@ export async function getPropertyById(id: string, agencySlug?: string | null): P
     agencySlug,
   );
 
-  if (!response.ok) {
-    return null;
+  if (response.ok) {
+    return mapListingToAetherProperty(await response.json(), agencySlug);
   }
 
-  return mapListingToAetherProperty(await response.json(), agencySlug);
+  const fallbackResults = await getListings({ limit: 200 }, agencySlug);
+  return fallbackResults.properties.find((property) => property.id === id) || null;
 }

@@ -7,14 +7,18 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { getSiteConfig } from "@/lib/public-site";
+import { getSiteConfig, type SiteConfig } from "@/lib/public-site";
 import { prefixAgencyPath, resolveAgencySlugFromPathname } from "@/lib/agency-routing";
 
-export default function Navbar() {
+function getDisplayName(siteConfig?: SiteConfig | null) {
+  return siteConfig?.branding?.displayName || siteConfig?.organization.name || "Agency Website";
+}
+
+export default function Navbar({ initialSiteConfig }: { initialSiteConfig?: SiteConfig | null }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [brandName, setBrandName] = useState("AETHER");
-  const [brandLogo, setBrandLogo] = useState<string | null>(null);
+  const [brandName, setBrandName] = useState(() => getDisplayName(initialSiteConfig));
+  const [brandLogo, setBrandLogo] = useState<string | null>(initialSiteConfig?.profile?.logo || null);
   const pathname = usePathname();
   const agencySlug = resolveAgencySlugFromPathname(pathname);
   const currentPath = agencySlug ? pathname.replace(`/${agencySlug}`, "") || "/" : pathname;
@@ -28,20 +32,31 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    setBrandName(getDisplayName(initialSiteConfig));
+    setBrandLogo(initialSiteConfig?.profile?.logo || null);
+  }, [initialSiteConfig]);
+
+  useEffect(() => {
     let active = true;
 
     async function loadSiteConfig() {
-      const siteConfig = await getSiteConfig(agencySlug);
-      if (!active) return;
-      setBrandName(siteConfig.branding?.displayName || siteConfig.organization.name || "AETHER");
-      setBrandLogo(siteConfig.profile?.logo || null);
+      try {
+        const siteConfig = await getSiteConfig(agencySlug);
+        if (!active) return;
+        setBrandName(getDisplayName(siteConfig));
+        setBrandLogo(siteConfig.profile?.logo || null);
+      } catch {
+        if (!active) return;
+        setBrandName((current) => current || getDisplayName(initialSiteConfig));
+        setBrandLogo((current) => current ?? initialSiteConfig?.profile?.logo ?? null);
+      }
     }
 
     void loadSiteConfig();
     return () => {
       active = false;
     };
-  }, [agencySlug]);
+  }, [agencySlug, initialSiteConfig]);
 
   const isHomePage = currentPath === "/";
   const isTransparent = isHomePage && !scrolled && !isOpen;

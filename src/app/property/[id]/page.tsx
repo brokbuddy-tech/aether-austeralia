@@ -11,6 +11,7 @@ import PropertyStory from "@/components/property-story";
 import PropertyShare from "@/components/property-share";
 import EnergyEfficiencyRating from "@/components/energy-efficiency-rating";
 import InternetAvailability from "@/components/internet-availability";
+import { PropertyHeroGallery } from "@/components/property-hero-gallery";
 import { getPropertyById } from "@/lib/api";
 import { getRequestAgencySlug } from "@/lib/server-agency";
 
@@ -68,7 +69,9 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
         </div>
       </div>
 
-      {/* Hero Bento Gallery */}
+      <PropertyHeroGallery images={images} />
+
+      {false && (
       <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-1 px-1 md:h-[65vh] min-h-[450px]">
         {/* Parallax Hero shot */}
         <div className="md:col-span-8 relative group overflow-hidden bg-gray-100">
@@ -120,6 +123,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
           </div>
         </div>
       </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">

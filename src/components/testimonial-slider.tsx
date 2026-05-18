@@ -12,10 +12,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Quote } from "lucide-react";
+import { replaceTemplateBranding } from "@/lib/public-site";
 
-const testimonials = [
+const TESTIMONIALS = [
   {
-    quote: "The Aether team didn't just sell our house; they curated an experience. Their local knowledge of the Northern Beaches is unparalleled in the 2026 market.",
+    quote: "The {{agencyName}} team didn't just sell our house; they curated an experience. Their local knowledge of the Northern Beaches is unparalleled in the 2026 market.",
     author: "Sarah & James Miller",
     suburb: "MOSMAN, NSW",
     avatar: "https://picsum.photos/seed/testimonial-1/100/100"
@@ -27,17 +28,21 @@ const testimonials = [
     avatar: "https://picsum.photos/seed/testimonial-2/100/100"
   },
   {
-    quote: "Aether Australia redefined what premium real estate management looks like. Their proprietor portal provides clarity we've never had with other agencies.",
+    quote: "{{agencyName}} redefined what premium real estate management looks like. Their proprietor portal provides clarity we've never had with other agencies.",
     author: "Elizabeth Sterling",
     suburb: "BRIGHTON, SA",
     avatar: "https://picsum.photos/seed/testimonial-3/100/100"
   }
 ];
 
-export default function TestimonialSlider() {
+export default function TestimonialSlider({ agencyName = "Agency Website" }: { agencyName?: string }) {
   const plugin = React.useRef(
     Autoplay({ delay: 2500, stopOnInteraction: true })
   );
+  const testimonials = TESTIMONIALS.map((testimonial) => ({
+    ...testimonial,
+    quote: replaceTemplateBranding(testimonial.quote, agencyName),
+  }));
 
   return (
     <section className="relative py-20 px-6 overflow-hidden bg-white border-t border-gray-50">

@@ -26,7 +26,7 @@ const aiSearchAgentPrompt = ai.definePrompt({
   name: 'aiSearchAgentPrompt',
   input: { schema: AiSearchAgentInputSchema },
   output: { schema: AiSearchAgentOutputSchema },
-  prompt: `You are the Aether Australia AI Property Specialist. Your goal is to provide sophisticated, helpful, and localized insights into the Australian real estate market to help users find their ideal property.
+  prompt: `You are an AI property specialist for a premium Australian real estate agency. Your goal is to provide sophisticated, helpful, and localized insights into the Australian real estate market to help users find their ideal property.
 
 A user has asked: "{{{query}}}"
 

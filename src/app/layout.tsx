@@ -4,13 +4,21 @@ import './globals.css';
 import Navbar from '@/components/navbar';
 import { SiteFooter } from '@/components/site-footer';
 import { Toaster } from '@/components/ui/toaster';
-import { getSiteConfig } from '@/lib/public-site';
+import { getAgencyDisplayName, getSiteConfig } from '@/lib/public-site';
 import { getRequestAgencySlug } from '@/lib/server-agency';
 
-export const metadata: Metadata = {
-  title: 'Aether Australia | Australian Real Estate Experts',
-  description: 'Premium Australian real estate platform featuring modern coastal, hamptons, and urban terrace homes. Experience the difference in luxury living.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const agencySlug = await getRequestAgencySlug();
+  const siteConfig = await getSiteConfig(agencySlug);
+  const agencyName = getAgencyDisplayName(siteConfig);
+
+  return {
+    title: siteConfig.branding?.metaTitle?.trim() || `${agencyName} | Australian Real Estate Experts`,
+    description:
+      siteConfig.branding?.metaDescription?.trim()
+      || `Premium Australian real estate platform featuring modern coastal, hamptons, and urban terrace homes through ${agencyName}.`,
+  };
+}
 
 export default async function RootLayout({
   children,

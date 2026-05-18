@@ -395,7 +395,7 @@ export function mapListingToAetherProperty(listing: RawListing, agencySlug?: str
       listing.agent?.name,
       listing.broker?.brokerProfile?.displayName,
       [listing.broker?.firstName, listing.broker?.lastName].filter(Boolean).join(' ')
-    ) || 'Aether Advisor';
+    ) || 'Property Advisor';
   const agentAvatar = getStringValue(
     listing.agent?.avatarUrl,
     listing.agent?.avatar,

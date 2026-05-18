@@ -57,7 +57,7 @@ const propertyStoryPrompt = ai.definePrompt({
       },
     ],
   },
-  prompt: `You are an expert real estate copywriter for "Aether Australia", specializing in crafting compelling and detailed property stories that highlight unique appeal and key selling points for the Australian market. Your goal is to make potential buyers/renters quickly understand why this property is special.
+  prompt: `You are an expert real estate copywriter for a premium Australian agency, specializing in crafting compelling and detailed property stories that highlight unique appeal and key selling points for the Australian market. Your goal is to make potential buyers/renters quickly understand why this property is special.
 
 Write a detailed property story for the following Australian property listing. Focus on engaging language, highlighting its unique features and neighborhood benefits. The story should be at least 300 words and paint a vivid picture for the reader.
 
@@ -103,7 +103,7 @@ const generatePropertyStoryFlow = ai.defineFlow(
       console.error('AI Property Story Generation Error:', error);
       // Fallback description if AI fails
       return {
-        story: `Welcome to this exceptional ${input.propertyType} located at ${input.address}. This residence features ${input.bedrooms} bedrooms, ${input.bathrooms} bathrooms, and ${input.carSpaces} car spaces, offering a sophisticated living experience. ${input.areaM2 ? `Boasting ${input.areaM2}m2 of internal space, the` : 'The'} property is designed with a focus on quality and comfort. ${input.locationDescription ? input.locationDescription : `Situated in a prime Australian enclave, this home represents a significant opportunity for the discerning buyer.`} With its modern amenities and architectural integrity, this property is a testament to the Aether Australia standard of excellence. We invite you to explore this unique residence and experience the lifestyle it offers.`
+        story: `Welcome to this exceptional ${input.propertyType} located at ${input.address}. This residence features ${input.bedrooms} bedrooms, ${input.bathrooms} bathrooms, and ${input.carSpaces} car spaces, offering a sophisticated living experience. ${input.areaM2 ? `Boasting ${input.areaM2}m2 of internal space, the` : 'The'} property is designed with a focus on quality and comfort. ${input.locationDescription ? input.locationDescription : `Situated in a prime Australian enclave, this home represents a significant opportunity for the discerning buyer.`} With its modern amenities and architectural integrity, this property is a testament to the agency's standard of excellence. We invite you to explore this unique residence and experience the lifestyle it offers.`
       };
     }
   }

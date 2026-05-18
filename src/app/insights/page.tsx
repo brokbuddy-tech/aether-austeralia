@@ -2,10 +2,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { generateMarketInsight } from "@/ai/flows/ai-powered-market-insights";
+import { getAgencyDisplayName, getSiteConfig, replaceTemplateBranding } from "@/lib/public-site";
+import { getRequestAgencySlug } from "@/lib/server-agency";
 
 export const dynamic = "force-dynamic";
 
 export default async function InsightsPage() {
+  const agencySlug = await getRequestAgencySlug();
+  const siteConfig = await getSiteConfig(agencySlug);
+  const agencyName = getAgencyDisplayName(siteConfig);
   const topics = [
     "Sydney property market trends for 2026",
     "First-home buyer tips for the Melbourne market",
@@ -33,7 +38,10 @@ export default async function InsightsPage() {
           <span className="text-secondary font-bold text-xs tracking-[0.4em] mb-4 block">THE INSIGHTS CENTRE</span>
           <h1 className="font-headline font-extrabold text-5xl md:text-7xl mb-6 tracking-tighter">EXPERT VOICES. <br /> LOCAL DATA.</h1>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
-            Stay ahead of the market with exclusive analysis from Aether Australia's top strategists and industry experts.
+            {replaceTemplateBranding(
+              "Stay ahead of the market with exclusive analysis from {{agencyName}}'s top strategists and industry experts.",
+              agencyName,
+            )}
           </p>
         </div>
       </section>
@@ -66,8 +74,8 @@ export default async function InsightsPage() {
                    <Image src={`https://picsum.photos/seed/auth${idx}/100/100`} alt="Author" width={40} height={40} />
                 </div>
                 <div>
-                  <p className="text-xs font-bold">John Aether</p>
-                  <p className="text-[10px] text-gray-400">Managing Director</p>
+                  <p className="text-xs font-bold">{agencyName} Research Desk</p>
+                  <p className="text-[10px] text-gray-400">Editorial Team</p>
                 </div>
               </div>
             </Link>

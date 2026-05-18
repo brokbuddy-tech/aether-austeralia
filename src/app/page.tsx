@@ -6,6 +6,7 @@ import PropertyCard from "@/components/property-card";
 import TestimonialSlider from "@/components/testimonial-slider";
 import { Button } from "@/components/ui/button";
 import { getListings } from "@/lib/api";
+import { getAgencyDisplayName, getSiteConfig, replaceTemplateBranding } from "@/lib/public-site";
 import { getRequestAgencySlug } from "@/lib/server-agency";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import {
@@ -19,10 +20,12 @@ export default async function Home() {
   const agencySlug = await getRequestAgencySlug();
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-home');
 
-  const [featuredResult, developmentResult] = await Promise.all([
+  const [siteConfig, featuredResult, developmentResult] = await Promise.all([
+    getSiteConfig(agencySlug),
     getListings({ transactionType: "SALE", status: "ACTIVE", limit: 3 }, agencySlug),
     getListings({ transactionType: "SALE", readiness: "OFFPLAN", status: "ACTIVE", limit: 3 }, agencySlug),
   ]);
+  const agencyName = getAgencyDisplayName(siteConfig);
 
   const featuredProperties = featuredResult.properties;
   const developments = developmentResult.properties.length > 0
@@ -125,7 +128,7 @@ export default async function Home() {
         </section>
 
         {/* Client Voice Testimonial Section */}
-        <TestimonialSlider />
+        <TestimonialSlider agencyName={agencyName} />
 
         {/* Insights & Advice Section */}
         <section className="relative py-32 px-6 bg-white overflow-hidden border-t border-gray-100">
@@ -249,7 +252,7 @@ export default async function Home() {
               <div className="relative aspect-square lg:aspect-[4/5] overflow-hidden shadow-2xl group">
                 <Image
                   src="https://picsum.photos/seed/faq-concierge/800/1000"
-                  alt="Aether Australia Specialist"
+                  alt={`${agencyName} Specialist`}
                   fill
                   className="object-cover transition-transform duration-1000 group-hover:scale-105"
                   data-ai-hint="Luxury Interior Office"
@@ -274,7 +277,7 @@ export default async function Home() {
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="item-1" className="border-b border-gray-100 py-5">
                     <AccordionTrigger className="font-headline font-bold text-lg hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
-                      How does Aether verify property listings?
+                      {replaceTemplateBranding("How does {{agencyName}} verify property listings?", agencyName)}
                     </AccordionTrigger>
                     <AccordionContent className="text-gray-500 font-body leading-relaxed pt-3 text-base">
                       Every residence in our portfolio undergoes a rigorous 6-star audit. Our specialists verify structural integrity, metadata accuracy, and compliance with REIA 2026 standards before any property is presented to our clients.
@@ -282,7 +285,7 @@ export default async function Home() {
                   </AccordionItem>
                   <AccordionItem value="item-2" className="border-b border-gray-100 py-5">
                     <AccordionTrigger className="font-headline font-bold text-lg hover:text-primary transition-colors text-left uppercase tracking-tight hover:no-underline">
-                      What is the "Aether Difference" in management?
+                      {replaceTemplateBranding('What is the "{{agencyName}} Difference" in management?', agencyName)}
                     </AccordionTrigger>
                     <AccordionContent className="text-gray-500 font-body leading-relaxed pt-3 text-base">
                       We combine hyper-local data with global heritage. Our landlords benefit from real-time performance metrics via our proprietary Proprietor Portals and a dedicated 24/7 concierge for all management inquiries.
@@ -301,7 +304,10 @@ export default async function Home() {
                       What Australian states do you operate in?
                     </AccordionTrigger>
                     <AccordionContent className="text-gray-500 font-body leading-relaxed pt-3 text-base">
-                      Aether Australia operates nationally, with fully licensed specialist teams in NSW, VIC, QLD, WA, SA, TAS, ACT, and NT. We specialize in Australia's most coveted urban and coastal residential enclaves.
+                      {replaceTemplateBranding(
+                        "{{agencyName}} operates nationally, with fully licensed specialist teams in NSW, VIC, QLD, WA, SA, TAS, ACT, and NT. We specialize in Australia's most coveted urban and coastal residential enclaves.",
+                        agencyName,
+                      )}
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>

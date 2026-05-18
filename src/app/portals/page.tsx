@@ -1,19 +1,27 @@
-
-"use client";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LayoutDashboard, Receipt, LineChart, Building2 } from "lucide-react";
+import { getAgencyDisplayName, getSiteConfig, replaceTemplateBranding } from "@/lib/public-site";
+import { getRequestAgencySlug } from "@/lib/server-agency";
 
-export default function PortalsPage() {
+export default async function PortalsPage() {
+  const agencySlug = await getRequestAgencySlug();
+  const siteConfig = await getSiteConfig(agencySlug);
+  const agencyName = getAgencyDisplayName(siteConfig);
+
   return (
     <div className="pt-[72px] bg-gray-50 min-h-screen flex items-center justify-center py-20 px-6">
       <div className="w-full max-w-5xl">
         <div className="text-center mb-12">
           <h1 className="font-headline font-extrabold text-5xl mb-4 tracking-tighter uppercase">PROPRIETOR PORTALS</h1>
-          <p className="text-gray-500 font-body text-lg">Real-time reporting and portfolio management for Aether Australia clients.</p>
+          <p className="text-gray-500 font-body text-lg">
+            {replaceTemplateBranding(
+              "Real-time reporting and portfolio management for {{agencyName}} clients.",
+              agencyName,
+            )}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">

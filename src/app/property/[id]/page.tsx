@@ -42,11 +42,11 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
   const images = propertyData.images.length > 0
     ? propertyData.images
     : [
-        `https://picsum.photos/seed/prop-${id}-1/1200/800`,
-        `https://picsum.photos/seed/prop-${id}-2/800/800`,
-        `https://picsum.photos/seed/prop-${id}-3/800/800`,
-        `https://picsum.photos/seed/prop-${id}-4/800/800`,
-      ];
+      `https://picsum.photos/seed/prop-${id}-1/1200/800`,
+      `https://picsum.photos/seed/prop-${id}-2/800/800`,
+      `https://picsum.photos/seed/prop-${id}-3/800/800`,
+      `https://picsum.photos/seed/prop-${id}-4/800/800`,
+    ];
 
   const story = propertyData.description;
 
@@ -54,7 +54,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
     <div className="pt-[72px] bg-white min-h-screen font-body text-[13px]">
       {/* Navigation Header */}
       <div className="sticky top-[72px] z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 py-2 px-6">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <div className="w-full flex justify-between items-center">
           <Link href={`/search?type=${propertyData.transactionType === "RENT" ? "rent" : propertyData.status === "SOLD" ? "sold" : "buy"}`}>
             <Button variant="ghost" className="text-[8px] font-bold tracking-widest uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary p-0">
               <ArrowLeft className="w-3 h-3" /> BACK TO SEARCH
@@ -62,9 +62,6 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
           </Link>
           <div className="flex gap-2">
             <PropertyShare address={`${propertyData.address}, ${propertyData.suburb}`} />
-            <Button variant="outline" size="sm" className="rounded-none border-gray-200 text-[8px] font-bold tracking-widest uppercase h-7 px-3">
-              <Heart className="w-2.5 h-2.5 mr-1.5" /> SAVE
-            </Button>
           </div>
         </div>
       </div>
@@ -72,57 +69,57 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
       <PropertyHeroGallery images={images} virtualTourUrl={propertyData.virtualTourUrl} />
 
       {false && (
-      <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-1 px-1 md:h-[65vh] min-h-[450px]">
-        {/* Parallax Hero shot */}
-        <div className="md:col-span-8 relative group overflow-hidden bg-gray-100">
-          <div className="absolute inset-0 z-0">
-            <Image 
-              src={images[0]} 
-              alt="Main Hero Shot" 
-              fill 
-              className="object-cover transition-transform duration-[10000ms] ease-linear scale-110 group-hover:scale-100" 
-              priority
-              data-ai-hint="Luxury Australian Architecture"
-            />
-          </div>
-          <div className="absolute inset-0 bg-black/5 transition-opacity group-hover:opacity-0" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Button 
-              className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white hover:text-black font-bold rounded-full px-6 h-11 text-xs shadow-2xl transition-all"
-            >
-              <PlayCircle className="w-4 h-4 mr-2.5" /> 360° VIRTUAL TOUR
-            </Button>
-          </div>
-          <div className="absolute top-4 left-4 flex gap-2">
-            <Badge className="bg-primary text-white rounded-none px-2 py-0.5 font-bold text-[7px] tracking-widest border-none shadow-lg uppercase">AETHER EXCLUSIVE</Badge>
-          </div>
-        </div>
-
-        {/* Vertical Detail Stack */}
-        <div className="hidden md:grid md:col-span-4 grid-rows-2 gap-1">
-          <div className="relative group overflow-hidden bg-gray-100">
-            <Image 
-              src={images[1]} 
-              alt="Interior View" 
-              fill 
-              className="object-cover transition-transform duration-700 group-hover:scale-105" 
-            />
-          </div>
-          <div className="relative group overflow-hidden bg-gray-100">
-            <Image 
-              src={images[2]} 
-              alt="Master Bedroom" 
-              fill 
-              className="object-cover transition-transform duration-700 group-hover:scale-105" 
-            />
-            <div className="absolute bottom-3 right-3 z-10">
-              <Button className="bg-white/80 backdrop-blur-md text-black border-none font-bold text-[8px] tracking-widest rounded-none hover:bg-white h-8 px-4 shadow-lg">
-                VIEW ALL 24 PHOTOS
+        <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-1 px-1 md:h-[65vh] min-h-[450px]">
+          {/* Parallax Hero shot */}
+          <div className="md:col-span-8 relative group overflow-hidden bg-gray-100">
+            <div className="absolute inset-0 z-0">
+              <Image
+                src={images[0]}
+                alt="Main Hero Shot"
+                fill
+                className="object-cover transition-transform duration-[10000ms] ease-linear scale-110 group-hover:scale-100"
+                priority
+                data-ai-hint="Luxury Australian Architecture"
+              />
+            </div>
+            <div className="absolute inset-0 bg-black/5 transition-opacity group-hover:opacity-0" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Button
+                className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white hover:text-black font-bold rounded-full px-6 h-11 text-xs shadow-2xl transition-all"
+              >
+                <PlayCircle className="w-4 h-4 mr-2.5" /> 360° VIRTUAL TOUR
               </Button>
+            </div>
+            <div className="absolute top-4 left-4 flex gap-2">
+              <Badge className="bg-primary text-white rounded-none px-2 py-0.5 font-bold text-[7px] tracking-widest border-none shadow-lg uppercase">AETHER EXCLUSIVE</Badge>
+            </div>
+          </div>
+
+          {/* Vertical Detail Stack */}
+          <div className="hidden md:grid md:col-span-4 grid-rows-2 gap-1">
+            <div className="relative group overflow-hidden bg-gray-100">
+              <Image
+                src={images[1]}
+                alt="Interior View"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+            <div className="relative group overflow-hidden bg-gray-100">
+              <Image
+                src={images[2]}
+                alt="Master Bedroom"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute bottom-3 right-3 z-10">
+                <Button className="bg-white/80 backdrop-blur-md text-black border-none font-bold text-[8px] tracking-widest rounded-none hover:bg-white h-8 px-4 shadow-lg">
+                  VIEW ALL 24 PHOTOS
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       )}
 
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -150,7 +147,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
               <p className="text-[8px] md:text-[9px] text-gray-400 font-bold tracking-[0.2em] uppercase mb-6 flex items-center gap-1.5">
                 <MapPin className="w-3 h-3 text-primary" /> {propertyData.suburb}
               </p>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6 border-y border-gray-100">
                 <div className="space-y-1">
                   <span className="text-[6px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BEDROOMS</span>
@@ -213,7 +210,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
             <InternetAvailability address={propertyData.address} suburb={propertyData.suburb} />
 
             <InspectionScheduler />
-            
+
             {/* Auction Details Section */}
             <AuctionBlock />
 

@@ -69,7 +69,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
         </div>
       </div>
 
-      <PropertyHeroGallery images={images} />
+      <PropertyHeroGallery images={images} virtualTourUrl={propertyData.virtualTourUrl} />
 
       {false && (
       <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-1 px-1 md:h-[65vh] min-h-[450px]">

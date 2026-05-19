@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, PlayCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -17,9 +17,13 @@ import {
 
 interface PropertyHeroGalleryProps {
   images: string[];
+  virtualTourUrl?: string | null;
 }
 
-export function PropertyHeroGallery({ images }: PropertyHeroGalleryProps) {
+export function PropertyHeroGallery({
+  images,
+  virtualTourUrl,
+}: PropertyHeroGalleryProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -61,17 +65,24 @@ export function PropertyHeroGallery({ images }: PropertyHeroGalleryProps) {
             />
           </div>
           <div className="absolute inset-0 bg-black/5 transition-opacity group-hover:opacity-0" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Button
-              type="button"
-              onClick={(event) => event.stopPropagation()}
-              className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white hover:text-black font-bold rounded-full px-6 h-11 text-xs shadow-2xl transition-all"
-            >
-              <PlayCircle className="w-4 h-4 mr-2.5" /> 360° VIRTUAL TOUR
-            </Button>
-          </div>
+          {virtualTourUrl ? (
+            <div className="absolute bottom-4 left-4 z-10">
+              <Button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  window.open(virtualTourUrl, "_blank", "noopener,noreferrer");
+                }}
+                className="bg-white text-slate-900 hover:bg-white/90 font-semibold rounded-full px-5 h-12 text-sm shadow-xl border border-white/80"
+              >
+                <Video className="w-4 h-4 mr-2" /> Virtual Tour
+              </Button>
+            </div>
+          ) : null}
           <div className="absolute top-4 left-4 flex gap-2">
-            <Badge className="bg-primary text-white rounded-none px-2 py-0.5 font-bold text-[7px] tracking-widest border-none shadow-lg uppercase">AETHER EXCLUSIVE</Badge>
+            <Badge className="bg-primary text-white rounded-none px-2 py-0.5 font-bold text-[7px] tracking-widest border-none shadow-lg uppercase">
+              AETHER EXCLUSIVE
+            </Badge>
           </div>
         </div>
 
@@ -155,11 +166,15 @@ export function PropertyHeroGallery({ images }: PropertyHeroGalleryProps) {
                 />
               </div>
 
-              {images.length > 1 && (
+              {images.length > 1 ? (
                 <>
                   <button
                     type="button"
-                    onClick={() => setActiveIndex((prev) => (prev - 1 + images.length) % images.length)}
+                    onClick={() =>
+                      setActiveIndex(
+                        (prev) => (prev - 1 + images.length) % images.length,
+                      )
+                    }
                     aria-label="Show previous image"
                     className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-4 rounded-full text-white transition-colors backdrop-blur-sm z-[101]"
                   >
@@ -167,14 +182,16 @@ export function PropertyHeroGallery({ images }: PropertyHeroGalleryProps) {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setActiveIndex((prev) => (prev + 1) % images.length)}
+                    onClick={() =>
+                      setActiveIndex((prev) => (prev + 1) % images.length)
+                    }
                     aria-label="Show next image"
                     className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-4 rounded-full text-white transition-colors backdrop-blur-sm z-[101]"
                   >
                     <ChevronRight size={32} />
                   </button>
                 </>
-              )}
+              ) : null}
             </div>
 
             <div className="absolute bottom-6 right-6 text-white bg-black/50 px-4 py-2 rounded-lg backdrop-blur-md text-sm font-medium z-[101]">

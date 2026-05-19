@@ -255,6 +255,16 @@ type RawListing = {
   address?: string;
   latitude?: number | string | null;
   longitude?: number | string | null;
+  virtualTourUrl?: string | null;
+  videoTourUrl?: string | null;
+  fields?: {
+    virtualTourUrl?: string | null;
+    virtualTour?: string | null;
+    virtualTourLink?: string | null;
+    tourUrl?: string | null;
+    videoTourUrl?: string | null;
+    matterportUrl?: string | null;
+  } | null;
   bedrooms?: number | string | null;
   bathrooms?: number | string | null;
   builtUpArea?: number | string | null;
@@ -325,6 +335,7 @@ export type AetherProperty = {
   readiness: string;
   badgeLabel: string;
   amenities: string[];
+  virtualTourUrl?: string | null;
   latitude: number | null;
   longitude: number | null;
 };
@@ -418,6 +429,16 @@ export function mapListingToAetherProperty(listing: RawListing, agencySlug?: str
     listing.broker?.brokerProfile?.whatsapp,
     agentPhone,
   );
+  const virtualTourUrl = getStringValue(
+    listing.virtualTourUrl,
+    listing.videoTourUrl,
+    listing.fields?.virtualTourUrl,
+    listing.fields?.virtualTour,
+    listing.fields?.virtualTourLink,
+    listing.fields?.tourUrl,
+    listing.fields?.videoTourUrl,
+    listing.fields?.matterportUrl,
+  ) || null;
   const status = listing.status || 'ACTIVE';
   const readiness = listing.readiness || 'READY';
 
@@ -452,6 +473,7 @@ export function mapListingToAetherProperty(listing: RawListing, agencySlug?: str
     readiness,
     badgeLabel,
     amenities: Array.isArray(listing.amenities) ? listing.amenities : [],
+    virtualTourUrl,
     latitude: getNumberValue(listing.latitude) ?? null,
     longitude: getNumberValue(listing.longitude) ?? null,
   };

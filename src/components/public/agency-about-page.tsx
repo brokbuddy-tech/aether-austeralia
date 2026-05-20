@@ -77,6 +77,12 @@ export function AetherAboutPageContent({
     siteConfig?.profile?.aboutCompany?.trim() ||
     siteConfig?.branding?.bio?.trim() ||
     `${displayName} publishes live organization data, active agents, and current listings directly from Broker OS so the public experience always reflects the latest office updates.`;
+  const mission =
+    siteConfig?.profile?.mission?.trim() ||
+    `${displayName} exists to guide clients with clarity, diligence, and dependable local expertise across every property move.`;
+  const vision =
+    siteConfig?.profile?.vision?.trim() ||
+    `Our vision is for ${displayName} to be the agency clients trust first for transparent advice, current listings, and a polished public experience.`;
   const officeAddress = siteConfig?.profile?.officeAddress?.trim() || "Address shared on request";
   const officeTimings = siteConfig?.profile?.officeTimings?.trim() || "Available by appointment";
   const officePhone =
@@ -138,24 +144,18 @@ export function AetherAboutPageContent({
 
           <div className="grid gap-6 md:grid-cols-2">
             <div className="border border-gray-100 bg-[#F7F8FA] p-8 shadow-sm">
-              <MapPin className="mb-4 h-6 w-6 text-primary" />
-              <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-gray-400">
-                Office
-              </p>
-              <p className="mt-3 text-lg font-semibold text-[#111111]">{officeAddress}</p>
-              <p className="mt-2 text-sm text-gray-500">{officeTimings}</p>
-            </div>
-            <div className="border border-gray-100 bg-[#F7F8FA] p-8 shadow-sm">
               <ShieldCheck className="mb-4 h-6 w-6 text-primary" />
               <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-gray-400">
-                Public sync
+                Our mission
               </p>
-              <p className="mt-3 text-lg font-semibold text-[#111111]">
-                Slug aware. Hex secured.
+              <p className="mt-3 text-lg font-semibold text-[#111111]">{mission}</p>
+            </div>
+            <div className="border border-gray-100 bg-[#F7F8FA] p-8 shadow-sm">
+              <Globe className="mb-4 h-6 w-6 text-primary" />
+              <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-gray-400">
+                Our vision
               </p>
-              <p className="mt-2 text-sm text-gray-500">
-                Listings, agents, branding, and organization data are all pulled dynamically.
-              </p>
+              <p className="mt-3 text-lg font-semibold text-[#111111]">{vision}</p>
             </div>
           </div>
         </div>

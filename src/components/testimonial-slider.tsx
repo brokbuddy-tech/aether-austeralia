@@ -20,31 +20,15 @@ type TestimonialSlide = {
   author: string;
   meta: string;
   avatar?: string | null;
+  badgeLabel?: string | null;
+  message?: string | null;
+  clientName?: string | null;
+  name?: string | null;
+  location?: string | null;
+  property?: string | null;
+  image?: string | null;
+  imageUrl?: string | null;
 };
-
-const DEFAULT_TESTIMONIALS: TestimonialSlide[] = [
-  {
-    id: "sarah-james-miller",
-    quote: "The {{agencyName}} team didn't just sell our house; they curated an experience. Their local knowledge of the Northern Beaches is unparalleled in the 2026 market.",
-    author: "Sarah & James Miller",
-    meta: "MOSMAN, NSW",
-    avatar: "https://picsum.photos/seed/testimonial-1/100/100"
-  },
-  {
-    id: "david-chen",
-    quote: "Exceptional service from start to finish. The digital tour and virtual staging were world-class, attracting international interest we never expected.",
-    author: "David Chen",
-    meta: "TOORAK, VIC",
-    avatar: "https://picsum.photos/seed/testimonial-2/100/100"
-  },
-  {
-    id: "elizabeth-sterling",
-    quote: "{{agencyName}} redefined what premium real estate management looks like. Their proprietor portal provides clarity we've never had with other agencies.",
-    author: "Elizabeth Sterling",
-    meta: "BRIGHTON, SA",
-    avatar: "https://picsum.photos/seed/testimonial-3/100/100"
-  }
-];
 
 function getInitials(name: string) {
   return (
@@ -67,14 +51,25 @@ export default function TestimonialSlider({
   const plugin = React.useRef(
     Autoplay({ delay: 2500, stopOnInteraction: true })
   );
-  const fallbackTestimonials = DEFAULT_TESTIMONIALS.map((testimonial) => ({
-    ...testimonial,
-    quote: replaceTemplateBranding(testimonial.quote, agencyName),
-  }));
-  const resolvedTestimonials = (testimonials.length > 0 ? testimonials : fallbackTestimonials).map((testimonial) => ({
-    ...testimonial,
-    quote: replaceTemplateBranding(testimonial.quote, agencyName),
-  }));
+  const normalizedTestimonials = testimonials
+    .map<TestimonialSlide | null>((testimonial, index) => {
+      const quote = testimonial.message?.trim() || testimonial.quote?.trim();
+      const author = testimonial.clientName?.trim() || testimonial.author?.trim() || testimonial.name?.trim();
+
+      if (!quote || !author) return null;
+
+      return {
+        id: testimonial.id || `${author}-${index}`,
+        quote: replaceTemplateBranding(quote, agencyName),
+        author,
+        meta: testimonial.badgeLabel?.trim() || testimonial.location?.trim() || testimonial.property?.trim() || testimonial.meta || "Client Testimonial",
+        avatar: testimonial.imageUrl || testimonial.avatar || testimonial.image || null,
+      };
+    })
+    .filter((testimonial): testimonial is TestimonialSlide => Boolean(testimonial));
+  const resolvedTestimonials = normalizedTestimonials;
+
+  if (!resolvedTestimonials.length) return null;
 
   return (
     <section className="relative py-20 px-6 overflow-hidden bg-white border-t border-gray-50">

@@ -47,6 +47,7 @@ function normalizeTestimonials(input: unknown[]): AboutTestimonial[] {
   input.forEach((item, index) => {
     const testimonial = item as {
       id?: string;
+      message?: string | null;
       quote?: string | null;
       content?: string | null;
       author?: string | null;
@@ -54,11 +55,17 @@ function normalizeTestimonials(input: unknown[]): AboutTestimonial[] {
       clientName?: string | null;
       location?: string | null;
       property?: string | null;
+      badgeLabel?: string | null;
       avatar?: string | null;
       image?: string | null;
+      imageUrl?: string | null;
     };
 
-    const quote = testimonial.quote?.trim() || testimonial.content?.trim() || "";
+    const quote =
+      testimonial.message?.trim() ||
+      testimonial.quote?.trim() ||
+      testimonial.content?.trim() ||
+      "";
     if (!quote) return;
 
     const author =
@@ -71,8 +78,16 @@ function normalizeTestimonials(input: unknown[]): AboutTestimonial[] {
       id: testimonial.id || `${author}-${index}`,
       quote,
       author,
-      meta: testimonial.location?.trim() || testimonial.property?.trim() || "Verified client",
-      avatar: testimonial.avatar?.trim() || testimonial.image?.trim() || null,
+      meta:
+        testimonial.badgeLabel?.trim() ||
+        testimonial.location?.trim() ||
+        testimonial.property?.trim() ||
+        "Client testimonial",
+      avatar:
+        testimonial.imageUrl?.trim() ||
+        testimonial.avatar?.trim() ||
+        testimonial.image?.trim() ||
+        null,
     });
   });
 

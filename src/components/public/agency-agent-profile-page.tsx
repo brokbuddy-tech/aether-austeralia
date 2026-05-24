@@ -154,6 +154,7 @@ export function AetherAgentProfilePageContent({
     profile.agent.whatsapp || profile.agent.phone || profile.profile?.contact?.whatsappNumber,
     `Hi ${profile.agent.name}, I'm interested in your active listings with ${displayName}.`
   );
+  const brokerRegistrationNumber = profile.agent.brn || profile.agent.licenseNumber;
 
   return (
     <div className="min-h-screen bg-white pt-[72px]">
@@ -193,6 +194,11 @@ export function AetherAgentProfilePageContent({
                   <p className="mt-3 text-lg font-semibold" style={{ color: accentColor }}>
                     {profile.agent.jobTitle || profile.agent.title || profile.agent.tagline || "Property Consultant"}
                   </p>
+                  {brokerRegistrationNumber ? (
+                    <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
+                      BRN {brokerRegistrationNumber}
+                    </p>
+                  ) : null}
                   <p className="mt-4 max-w-3xl text-base leading-7 text-gray-500">
                     {profile.agent.bio || `${profile.agent.name} is part of the public-facing agent roster for ${displayName}.`}
                   </p>

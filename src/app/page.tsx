@@ -6,7 +6,7 @@ import PropertyCard from "@/components/property-card";
 import TestimonialSlider from "@/components/testimonial-slider";
 import { Button } from "@/components/ui/button";
 import { getListings } from "@/lib/api";
-import { getAgencyDisplayName, getSiteConfig, replaceTemplateBranding } from "@/lib/public-site";
+import { getAgencyDisplayName, getSiteConfig, getTestimonials, replaceTemplateBranding } from "@/lib/public-site";
 import { getRequestAgencySlug } from "@/lib/server-agency";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import {
@@ -20,10 +20,11 @@ export default async function Home() {
   const agencySlug = await getRequestAgencySlug();
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-home');
 
-  const [siteConfig, featuredResult, developmentResult] = await Promise.all([
+  const [siteConfig, featuredResult, developmentResult, testimonials] = await Promise.all([
     getSiteConfig(agencySlug),
     getListings({ transactionType: "SALE", status: "ACTIVE", limit: 3 }, agencySlug),
     getListings({ transactionType: "SALE", readiness: "OFFPLAN", status: "ACTIVE", limit: 3 }, agencySlug),
+    getTestimonials(agencySlug),
   ]);
   const agencyName = getAgencyDisplayName(siteConfig);
 
@@ -128,7 +129,7 @@ export default async function Home() {
         </section>
 
         {/* Client Voice Testimonial Section */}
-        <TestimonialSlider agencyName={agencyName} />
+        <TestimonialSlider agencyName={agencyName} testimonials={testimonials} />
 
         {/* Insights & Advice Section */}
         <section className="relative py-32 px-6 bg-white overflow-hidden border-t border-gray-100">

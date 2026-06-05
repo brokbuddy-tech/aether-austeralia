@@ -5,6 +5,7 @@ import { getPropertyById } from "@/lib/api";
 import { getRequestAgencySlug } from "@/lib/server-agency";
 import { notFound } from "next/navigation";
 import PrintPageButton from "@/components/print-page-button";
+import { AmenityIcon } from "@/components/amenity-icon";
 export default async function BrochurePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const agencySlug = await getRequestAgencySlug();
@@ -125,16 +126,16 @@ export default async function BrochurePage({ params }: { params: Promise<{ id: s
             <div>
               <h2 className="text-[10px] font-bold text-gray-400 tracking-[0.3em] uppercase mb-6">AMENITIES & DETAILS</h2>
               <div className="grid grid-cols-2 gap-y-3">
-                {[
+                {(property.amenities.length > 0 ? property.amenities.slice(0, 6) : [
                   "Private Beach Access",
                   "Smart Home Integrated",
                   "Designer Miele Kitchen",
                   "Wine Cellar",
                   "Infinity Pool",
                   "Solar Energy System"
-                ].map((item, idx) => (
+                ]).map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-[#B8860B] rounded-full" />
+                    <AmenityIcon name={item} className="h-3 w-3" />
                     <span className="text-[11px] font-bold text-gray-800 uppercase tracking-tight">{item}</span>
                   </div>
                 ))}

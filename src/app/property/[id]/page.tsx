@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Bed, Bath, Car, Maximize, MapPin, Heart, ShieldCheck, PlayCircle, Info, ArrowLeft } from "lucide-react";
+import { Bed, Bath, Car, Maximize, MapPin, Heart, ShieldCheck, PlayCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AgentSidebar from "@/components/agent-sidebar";
 import InspectionScheduler from "@/components/inspection-scheduler";
@@ -14,6 +14,7 @@ import InternetAvailability from "@/components/internet-availability";
 import { PropertyHeroGallery } from "@/components/property-hero-gallery";
 import { getPropertyById } from "@/lib/api";
 import { getRequestAgencySlug } from "@/lib/server-agency";
+import { AmenityIcon } from "@/components/amenity-icon";
 
 export default async function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -184,17 +185,17 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
             <div className="mb-12">
               <h3 className="text-[8px] font-bold text-gray-400 tracking-[0.4em] uppercase mb-5">PREMIUM FEATURES</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {[
-                  { label: "Solar Energy System", icon: <Info className="w-3 h-3" /> },
-                  { label: "Designer Kitchen", icon: <Info className="w-3 h-3" /> },
-                  { label: "Infinity Pool", icon: <Info className="w-3 h-3" /> },
-                  { label: "Smart Home Tech", icon: <Info className="w-3 h-3" /> },
-                  { label: "Wine Cellar", icon: <Info className="w-3 h-3" /> },
-                  { label: "High-Key Lighting", icon: <Info className="w-3 h-3" /> },
-                ].map((item, idx) => (
+                {(propertyData.amenities.length > 0 ? propertyData.amenities : [
+                  "Solar Energy System",
+                  "Designer Kitchen",
+                  "Infinity Pool",
+                  "Smart Home Tech",
+                  "Wine Cellar",
+                  "High-Key Lighting",
+                ]).map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2 p-3 bg-gray-50 border border-gray-100">
-                    <div className="text-primary">{item.icon}</div>
-                    <span className="text-[11px] font-bold tracking-tight uppercase">{item.label}</span>
+                    <AmenityIcon name={item} className="h-3 w-3" />
+                    <span className="text-[11px] font-bold tracking-tight uppercase">{item}</span>
                   </div>
                 ))}
               </div>

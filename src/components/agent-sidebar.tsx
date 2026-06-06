@@ -114,7 +114,7 @@ export default function AgentSidebar({
             <Link href={`/property/${propertyId}/brochure`} target="_blank">
               <Button 
                 variant="outline" 
-                className="w-full border-black text-black hover:bg-black hover:text-white transition-all font-bold h-12 rounded-none uppercase tracking-[0.2em] text-[10px]"
+                className="w-full border-black text-black hover:bg-black/5 hover:text-black transition-all font-bold h-12 rounded-none uppercase tracking-[0.2em] text-[10px]"
               >
                 <FileDown className="w-3.5 h-3.5 mr-2" /> VIEW DIGITAL BROCHURE
               </Button>

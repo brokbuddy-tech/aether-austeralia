@@ -167,7 +167,7 @@ export function AetherAgentProfilePageContent({
           background: `radial-gradient(circle at top right, ${accentColor}22, transparent 34%), linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%)`,
         }}
       >
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-[1600px]">
           <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
             <Link href={prefixAgencyPath("/", agencySlug)} className="hover:text-[#111111]">Home</Link>
             <ArrowRight className="h-4 w-4" />
@@ -176,84 +176,57 @@ export function AetherAgentProfilePageContent({
             <span className="text-[#111111]">{profile.agent.name}</span>
           </div>
 
-          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_340px]">
-            <div className="space-y-8">
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-                <div className="relative h-36 w-36 overflow-hidden rounded-[32px] border border-gray-100 bg-white shadow-md">
-                  <Image
-                    src={getAgentImage(profile.agent.slug || profile.agent.name, profile.agent.avatar)}
-                    alt={profile.agent.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="inline-flex rounded-full bg-black/5 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
-                    {displayName}
-                  </p>
-                  <h1 className="mt-4 font-headline text-4xl font-extrabold uppercase tracking-tight text-[#111111] md:text-5xl">
-                    {profile.agent.name}
-                  </h1>
-                  <p className="mt-3 text-lg font-semibold" style={{ color: accentColor }}>
-                    {profile.agent.jobTitle || profile.agent.title || profile.agent.tagline || "Property Consultant"}
-                  </p>
-                  {brokerRegistrationNumber ? (
-                    <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
-                      BRN {brokerRegistrationNumber}
-                    </p>
-                  ) : null}
-                  <p className="mt-4 max-w-3xl text-base leading-7 text-gray-500">
-                    {profile.agent.bio || `${profile.agent.name} is part of the public-facing agent roster for ${displayName}.`}
-                  </p>
-                </div>
+          <div className="mt-10 grid grid-cols-1 items-end gap-12 lg:grid-cols-[280px_minmax(0,1fr)]">
+            <div className="relative aspect-square w-full max-w-[280px] overflow-hidden border border-gray-100 bg-white shadow-md">
+              <Image
+                src={getAgentImage(profile.agent.slug || profile.agent.name, profile.agent.avatar)}
+                alt={profile.agent.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <p className="inline-flex rounded-full bg-black/5 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
+                  {displayName}
+                </p>
+                <h1 className="mt-4 font-headline text-4xl font-extrabold uppercase tracking-tight text-[#111111] md:text-5xl">
+                  {profile.agent.name}
+                </h1>
+                <p className="mt-3 text-lg font-semibold" style={{ color: accentColor }}>
+                  {profile.agent.jobTitle || profile.agent.title || profile.agent.tagline || "Property Consultant"}
+                </p>
+                <p className="mt-4 max-w-3xl text-base leading-7 text-gray-500">
+                  {profile.agent.bio || `${profile.agent.name} is part of the public-facing agent roster for ${displayName}.`}
+                </p>
               </div>
 
-              <div className="flex flex-wrap gap-3">
-                {profile.agent.phone ? (
-                  <a href={`tel:${profile.agent.phone}`}>
-                    <Button className="rounded-none bg-[#111111] text-white hover:bg-primary">
-                      <Phone className="mr-2 h-4 w-4" />
-                      Call
-                    </Button>
-                  </a>
+              <div className="flex flex-wrap gap-6 text-sm text-gray-500">
+                {brokerRegistrationNumber ? (
+                  <span className="flex items-center gap-2">
+                    <span className="font-bold text-primary">BRN</span>
+                    {brokerRegistrationNumber}
+                  </span>
                 ) : null}
                 {profile.agent.email ? (
-                  <a href={`mailto:${profile.agent.email}`}>
-                    <Button variant="outline" className="rounded-none border-primary text-primary hover:bg-primary hover:text-white">
-                      <Mail className="mr-2 h-4 w-4" />
-                      Email
-                    </Button>
+                  <a href={`mailto:${profile.agent.email}`} className="flex items-center gap-2 hover:text-primary">
+                    <Mail className="h-4 w-4 text-primary" />
+                    {profile.agent.email}
+                  </a>
+                ) : null}
+                {profile.agent.phone ? (
+                  <a href={`tel:${profile.agent.phone}`} className="flex items-center gap-2 hover:text-primary">
+                    <Phone className="h-4 w-4 text-primary" />
+                    {profile.agent.phone}
                   </a>
                 ) : null}
                 {whatsappHref ? (
-                  <a href={whatsappHref} target="_blank" rel="noreferrer">
-                    <Button variant="outline" className="rounded-none border-primary text-primary hover:bg-primary hover:text-white">
-                      <MessageSquare className="mr-2 h-4 w-4" />
-                      WhatsApp
-                    </Button>
+                  <a href={whatsappHref} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary">
+                    <MessageSquare className="h-4 w-4 text-primary" />
+                    WhatsApp
                   </a>
                 ) : null}
-              </div>
-            </div>
-
-            <div className="border border-gray-100 bg-white p-6 shadow-sm">
-              <h2 className="text-lg font-semibold text-[#111111]">Profile snapshot</h2>
-              <div className="mt-5 grid grid-cols-2 gap-4">
-                {[
-                  { label: "Active listings", value: profile.stats.activeListings },
-                  { label: "Sold properties", value: profile.stats.soldListings },
-                  { label: "Rented properties", value: profile.stats.rentedListings },
-                  { label: "Years experience", value: profile.agent.yearsExperience || 0 },
-                  { label: "Deals closed", value: profile.agent.totalDeals || 0 },
-                  { label: "Languages", value: (profile.agent.languages || []).length },
-                ].map((item) => (
-                  <div key={item.label} className="border border-gray-100 bg-[#F7F8FA] p-4">
-                    <p className="text-2xl font-headline font-extrabold text-[#111111]">{item.value}</p>
-                    <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400">
-                      {item.label}
-                    </p>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
@@ -261,7 +234,29 @@ export function AetherAgentProfilePageContent({
       </section>
 
       <section className="px-6 py-14">
-        <div className="mx-auto max-w-7xl space-y-12">
+        <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-16 lg:grid-cols-[320px_minmax(0,1fr)]">
+          <aside className="border border-gray-100 bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-[#111111]">Profile snapshot</h2>
+            <div className="mt-5 grid grid-cols-2 gap-4">
+              {[
+                { label: "Active listings", value: profile.stats.activeListings },
+                { label: "Sold properties", value: profile.stats.soldListings },
+                { label: "Rented properties", value: profile.stats.rentedListings },
+                { label: "Years experience", value: profile.agent.yearsExperience || 0 },
+                { label: "Deals closed", value: profile.agent.totalDeals || 0 },
+                { label: "Languages", value: (profile.agent.languages || []).length },
+              ].map((item) => (
+                <div key={item.label} className="border border-gray-100 bg-[#F7F8FA] p-4">
+                  <p className="text-2xl font-headline font-extrabold text-[#111111]">{item.value}</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400">
+                    {item.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </aside>
+
+          <div className="space-y-12">
           {(profile.agent.specializations?.length || profile.agent.languages?.length) ? (
             <div className="grid gap-6 lg:grid-cols-2">
               <div className="border border-gray-100 bg-white p-6 shadow-sm">
@@ -304,7 +299,7 @@ export function AetherAgentProfilePageContent({
             </div>
 
             {profile.activeListings.length > 0 ? (
-              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
                 {profile.activeListings.map((listing: any) => (
                   <ListingPreview key={listing.id} listing={listing} agencySlug={agencySlug} />
                 ))}
@@ -314,6 +309,7 @@ export function AetherAgentProfilePageContent({
                 No active public listings are available for this agent yet.
               </div>
             )}
+          </div>
           </div>
         </div>
       </section>

@@ -18,6 +18,8 @@ interface PropertyProps {
   badgeLabel?: string;
   transactionType?: string;
   status?: string;
+  featured?: boolean;
+  recentlyListed?: boolean;
 }
 
 export default function PropertyCard({ property }: { property: PropertyProps }) {
@@ -55,6 +57,20 @@ export default function PropertyCard({ property }: { property: PropertyProps }) 
             AETHER VERIFIED
           </Badge>
         </div>
+        {(property.featured || property.recentlyListed) && (
+          <div className="absolute right-4 top-4 z-10 flex flex-col items-end gap-2">
+            {property.featured && (
+              <Badge className="rounded-none bg-primary px-3 py-1 text-[9px] font-bold tracking-[0.16em] text-white">
+                Featured
+              </Badge>
+            )}
+            {property.recentlyListed && (
+              <Badge className="rounded-none bg-[#111111]/85 px-3 py-1 text-[9px] font-bold tracking-[0.16em] text-white backdrop-blur-sm">
+                Recently Listed
+              </Badge>
+            )}
+          </div>
+        )}
 
         {/* Minimalist Metadata Overlay (Bottom-Left) */}
         <div className="absolute bottom-4 left-4 flex items-center gap-4 bg-[#111111]/90 backdrop-blur-md px-4 py-2.5 text-white border border-white/10 shadow-xl">

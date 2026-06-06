@@ -246,6 +246,9 @@ type RawListing = {
   transactionType?: string;
   readiness?: string;
   status?: string;
+  isFeatured?: boolean | string | number | null;
+  featured?: boolean | string | number | null;
+  createdAt?: string | Date | null;
   price?: number | string;
   currency?: string;
   area?: string;
@@ -258,6 +261,8 @@ type RawListing = {
   virtualTourUrl?: string | null;
   videoTourUrl?: string | null;
   fields?: {
+    isFeatured?: boolean | string | number | null;
+    featured?: boolean | string | number | null;
     virtualTourUrl?: string | null;
     virtualTour?: string | null;
     virtualTourLink?: string | null;
@@ -336,6 +341,9 @@ export type AetherProperty = {
   badgeLabel: string;
   amenities: string[];
   virtualTourUrl?: string | null;
+  featured?: boolean;
+  createdAt?: string;
+  recentlyListed?: boolean;
   latitude: number | null;
   longitude: number | null;
 };
@@ -387,6 +395,40 @@ function getListingImageUrl(image?: ListingImage | null, agencySlug?: string | n
   }
 
   return '';
+}
+
+const RECENTLY_LISTED_WINDOW_MS = 15 * 24 * 60 * 60 * 1000;
+
+function isTruthyListingFlag(value: unknown) {
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'number') return value !== 0;
+  if (typeof value === 'string') {
+    return ['true', '1', 'yes', 'y', 'on'].includes(value.trim().toLowerCase());
+  }
+  return Boolean(value);
+}
+
+function isFeaturedListing(listing: RawListing) {
+  return [
+    listing.isFeatured,
+    listing.featured,
+    listing.fields?.isFeatured,
+    listing.fields?.featured,
+  ].some(isTruthyListingFlag);
+}
+
+function getCreatedAtIso(value: unknown) {
+  if (!value) return undefined;
+  const date = value instanceof Date ? value : new Date(String(value));
+  return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+}
+
+function isRecentlyListed(createdAt?: string) {
+  if (!createdAt) return false;
+  const createdTime = Date.parse(createdAt);
+  if (!Number.isFinite(createdTime)) return false;
+  const ageMs = Date.now() - createdTime;
+  return ageMs >= 0 && ageMs <= RECENTLY_LISTED_WINDOW_MS;
 }
 
 export function mapListingToAetherProperty(listing: RawListing, agencySlug?: string | null): AetherProperty {
@@ -441,6 +483,8 @@ export function mapListingToAetherProperty(listing: RawListing, agencySlug?: str
   ) || null;
   const status = listing.status || 'ACTIVE';
   const readiness = listing.readiness || 'READY';
+  const createdAt = getCreatedAtIso(listing.createdAt);
+  const featured = isFeaturedListing(listing);
 
   let badgeLabel = transactionType === 'RENT' ? 'RENT' : 'BUY';
   if (status.toUpperCase() === 'SOLD') badgeLabel = 'SOLD';
@@ -474,6 +518,9 @@ export function mapListingToAetherProperty(listing: RawListing, agencySlug?: str
     badgeLabel,
     amenities: Array.isArray(listing.amenities) ? listing.amenities : [],
     virtualTourUrl,
+    featured,
+    createdAt,
+    recentlyListed: isRecentlyListed(createdAt),
     latitude: getNumberValue(listing.latitude) ?? null,
     longitude: getNumberValue(listing.longitude) ?? null,
   };

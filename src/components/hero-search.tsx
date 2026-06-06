@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Search, MapPin, TrendingUp, History, Sparkles, X } from "lucide-react";
+import { Search, MapPin, TrendingUp, History, Sparkles, X, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,7 @@ export default function HeroSearch() {
   const [isFocused, setIsFocused] = useState(false);
   const [trending, setTrending] = useState<string[]>([]);
   const [query, setQuery] = useState("");
+  const [isAiSearching, setIsAiSearching] = useState(false);
 
   const tabs = [
     "Buy", "Rent", "House & Land", "New Homes", "Sold", "Retirement", "Rural"
@@ -64,7 +65,7 @@ export default function HeroSearch() {
     router.push(`/search?${params.toString()}`);
   };
 
-  const handleAiButtonClick = () => {
+  const handleAiButtonClick = async () => {
     if (!isAiMode) {
       setLastNonAiTab(activeTab);
       setActiveTab("AI Agent");
@@ -72,7 +73,37 @@ export default function HeroSearch() {
     }
 
     if (query.trim()) {
-      navigateToSearch();
+      setIsAiSearching(true);
+      try {
+        const response = await fetch("/api/ai-search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query, filters: { type: getSearchType() } }),
+        });
+
+        if (!response.ok) throw new Error("AI search failed");
+        const data = await response.json() as { filters?: Record<string, string> };
+        const filters = data.filters || {};
+        const type =
+          filters.type ||
+          (filters.transactionType === "RENT" ? "rent" : filters.readiness === "OFFPLAN" ? "new-homes" : getSearchType());
+
+        navigateToSearch({
+          type,
+          q: filters.q || query.trim(),
+          category: filters.category,
+          bedrooms: filters.bedrooms,
+          bathrooms: filters.bathrooms,
+          minPrice: filters.minPrice,
+          maxPrice: filters.maxPrice,
+          minArea: filters.minArea,
+          maxArea: filters.maxArea,
+        });
+      } catch {
+        navigateToSearch();
+      } finally {
+        setIsAiSearching(false);
+      }
     }
   };
 
@@ -124,7 +155,15 @@ export default function HeroSearch() {
                 onBlur={() => setTimeout(() => setIsFocused(false), 200)}
                 placeholder={isAiMode ? "Describe your ideal lifestyle or area..." : "Try a location or a school..."}
                 className="border-none focus-visible:ring-0 text-sm py-3 placeholder:text-gray-400 bg-transparent h-auto"
-                onKeyDown={(e) => e.key === 'Enter' && navigateToSearch()}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    if (isAiMode) {
+                      void handleAiButtonClick();
+                    } else {
+                      navigateToSearch();
+                    }
+                  }
+                }}
               />
             </div>
             
@@ -145,15 +184,16 @@ export default function HeroSearch() {
               )}
 
               <Button
-                onClick={handleAiButtonClick}
+                onClick={() => void handleAiButtonClick()}
                 variant={isAiMode ? "default" : "secondary"}
+                disabled={isAiSearching}
                 className={cn(
                   "rounded-full font-bold h-9 px-4 transition-all text-[11px] flex items-center gap-2",
                   isAiMode ? "bg-accent text-white hover:bg-accent/90" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 )}
               >
-                <Sparkles className={cn("w-3.5 h-3.5", isAiMode && "animate-pulse")} />
-                {isAiMode && query.trim() ? "Search with AI" : "AI Agent"}
+                {isAiSearching ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className={cn("w-3.5 h-3.5", isAiMode && "animate-pulse")} />}
+                {isAiSearching ? "Searching..." : isAiMode && query.trim() ? "Search with AI" : "AI Agent"}
               </Button>
               
               {!isAiMode && (

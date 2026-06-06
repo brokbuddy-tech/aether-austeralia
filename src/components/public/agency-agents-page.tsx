@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Mail, Phone, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -42,44 +42,49 @@ function AgentCard({
   agencyName: string;
 }) {
   return (
-    <Link
-      href={prefixAgencyPath(`/agents/${agent.slug || ""}`, agencySlug)}
-      className="group overflow-hidden border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
-    >
-      <div className="relative aspect-[4/5] overflow-hidden">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+      <div className="relative aspect-[4/3] bg-gray-100">
         <Image
           src={getAgentImage(agent.slug || agent.name, agent.avatar)}
           alt={agent.name}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-          <p className="font-headline text-xl font-bold uppercase tracking-tight">{agent.name}</p>
-          <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
+      </div>
+      <div className="flex min-h-[276px] flex-1 flex-col space-y-4 p-6">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
             {agent.jobTitle || agent.title || agent.tagline || "Property Consultant"}
           </p>
+          <h3 className="mt-2 font-headline text-2xl font-bold uppercase tracking-tight text-[#111111]">{agent.name}</h3>
+          <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-500">
+            {agent.bio || `${agent.name} is part of the active public roster for ${agencyName}.`}
+          </p>
         </div>
+
+        <div className="space-y-2 text-sm text-gray-500">
+          {agent.email ? (
+            <a href={`mailto:${agent.email}`} className="flex items-center gap-2 break-all hover:text-primary">
+              <Mail className="h-4 w-4" />
+              {agent.email}
+            </a>
+          ) : null}
+          {agent.phone ? (
+            <a href={`tel:${agent.phone}`} className="flex items-center gap-2 hover:text-primary">
+              <Phone className="h-4 w-4" />
+              {agent.phone}
+            </a>
+          ) : null}
+        </div>
+
+        <Link
+          href={prefixAgencyPath(`/agents/${agent.slug || ""}`, agencySlug)}
+          className="mt-auto inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.25em] text-primary"
+        >
+          View profile <ArrowRight className="h-4 w-4" />
+        </Link>
       </div>
-      <div className="space-y-4 p-6">
-        <p className="line-clamp-4 text-sm leading-6 text-gray-500">
-          {agent.bio || `${agent.name} is part of the active public roster for ${agencyName}.`}
-        </p>
-        <div className="flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-          {(agent.languages || []).slice(0, 3).map((language) => (
-            <span key={language} className="border border-gray-200 px-2 py-1">
-              {language}
-            </span>
-          ))}
-        </div>
-        <div className="flex items-center justify-between border-t border-gray-100 pt-4 text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
-          <span>{agent.totalListings ?? 0} listings</span>
-          <span className="inline-flex items-center gap-2">
-            View profile <ArrowRight className="h-3 w-3" />
-          </span>
-        </div>
-      </div>
-    </Link>
+    </article>
   );
 }
 
@@ -182,7 +187,7 @@ export function AetherAgentsPageContent({
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
             {filteredAgents.length > 0 ? (
               filteredAgents.map((agent) => (
                 <AgentCard

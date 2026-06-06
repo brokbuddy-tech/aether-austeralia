@@ -295,7 +295,7 @@ export function AetherAboutPageContent({
                 <Link
                   key={agent.slug || agent.id || agent.name}
                   href={prefixAgencyPath(`/agents/${agent.slug || ""}`, agencySlug)}
-                  className="group overflow-hidden bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+                  className="group flex h-full flex-col overflow-hidden bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
                 >
                   <div className="relative aspect-[4/5] overflow-hidden">
                     <Image
@@ -314,11 +314,11 @@ export function AetherAboutPageContent({
                       </p>
                     </div>
                   </div>
-                  <div className="space-y-4 p-6">
+                  <div className="flex flex-1 flex-col gap-4 p-6">
                     <p className="line-clamp-4 text-sm leading-6 text-gray-500">
                       {agent.bio || `${agent.name} is part of the active public roster for ${displayName}.`}
                     </p>
-                    <div className="flex items-center justify-between border-t border-gray-100 pt-4 text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
+                    <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4 text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
                       <span>{agent.totalListings ?? 0} listings</span>
                       <span>View profile</span>
                     </div>

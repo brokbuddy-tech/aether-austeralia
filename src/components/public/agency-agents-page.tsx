@@ -51,7 +51,7 @@ function AgentCard({
           className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
       </div>
-      <div className="flex min-h-[276px] flex-1 flex-col space-y-4 p-6">
+      <div className="flex min-h-[276px] flex-1 flex-col gap-4 p-6">
         <div>
           <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
             {agent.jobTitle || agent.title || agent.tagline || "Property Consultant"}

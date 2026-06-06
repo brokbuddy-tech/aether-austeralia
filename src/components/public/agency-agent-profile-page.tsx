@@ -6,8 +6,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, Mail, MessageSquare, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ReviewCarousel } from "@/components/review-carousel";
 import { getAgentProfile } from "@/lib/public-site";
 import { prefixAgencyPath, resolveAgencySlugFromPathname } from "@/lib/agency-routing";
+import { normalizeBrokerReviewCards } from "@/lib/reviews";
 
 function getAgentImage(seed: string, avatar?: string | null) {
   if (avatar) return avatar;
@@ -155,6 +157,7 @@ export function AetherAgentProfilePageContent({
     `Hi ${profile.agent.name}, I'm interested in your active listings with ${displayName}.`
   );
   const brokerRegistrationNumber = profile.agent.brn || profile.agent.licenseNumber;
+  const brokerReviews = normalizeBrokerReviewCards(profile.agent.reviewSources);
 
   return (
     <div className="min-h-screen bg-white pt-[72px]">
@@ -283,6 +286,14 @@ export function AetherAgentProfilePageContent({
               </div>
             </div>
           ) : null}
+
+          <ReviewCarousel
+            title="What My Clients Say"
+            description={`Verified feedback from clients who worked directly with ${profile.agent.name}.`}
+            items={brokerReviews}
+            variant="minimal"
+            className="border border-gray-100 px-0 py-12 shadow-sm"
+          />
 
           <div>
             <div className="mb-8">

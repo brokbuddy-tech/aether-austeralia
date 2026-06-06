@@ -235,53 +235,60 @@ export function AetherAgentProfilePageContent({
 
       <section className="px-6 py-14">
         <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-16 lg:grid-cols-[320px_minmax(0,1fr)]">
-          <aside className="border border-gray-100 bg-white p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-[#111111]">Profile snapshot</h2>
-            <div className="mt-5 grid grid-cols-2 gap-4">
-              {[
-                { label: "Active listings", value: profile.stats.activeListings },
-                { label: "Sold properties", value: profile.stats.soldListings },
-                { label: "Rented properties", value: profile.stats.rentedListings },
-                { label: "Years experience", value: profile.agent.yearsExperience || 0 },
-                { label: "Deals closed", value: profile.agent.totalDeals || 0 },
-                { label: "Languages", value: (profile.agent.languages || []).length },
-              ].map((item) => (
-                <div key={item.label} className="border border-gray-100 bg-[#F7F8FA] p-4">
-                  <p className="text-2xl font-headline font-extrabold text-[#111111]">{item.value}</p>
-                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400">
-                    {item.label}
-                  </p>
+          <aside className="space-y-10">
+            <div className="space-y-6 border border-gray-100 bg-white p-6 shadow-sm">
+              <h2 className="text-[10px] font-bold uppercase tracking-[0.35em] text-primary">Profile</h2>
+              <div className="space-y-4 text-sm leading-7 text-gray-500">
+                <p>{profile.agent.bio || profile.agent.tagline || `${profile.agent.name} is part of the public-facing agent roster for ${displayName}.`}</p>
+                <div className="space-y-3">
+                  {(profile.agent.languages || []).length > 0 ? (
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gray-400">Languages</p>
+                      <p>{(profile.agent.languages || []).join(", ")}</p>
+                    </div>
+                  ) : null}
+                  {(profile.agent.specializations || []).length > 0 ? (
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gray-400">Specializations</p>
+                      <p>{(profile.agent.specializations || []).join(", ")}</p>
+                    </div>
+                  ) : null}
+                  {profile.agent.yearsExperience ? (
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gray-400">Experience</p>
+                      <p>{profile.agent.yearsExperience}+ years</p>
+                    </div>
+                  ) : null}
+                  {brokerRegistrationNumber ? (
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gray-400">BRN</p>
+                      <p>{brokerRegistrationNumber}</p>
+                    </div>
+                  ) : null}
                 </div>
-              ))}
+              </div>
+            </div>
+
+            <div className="space-y-6 border border-gray-100 bg-white p-6 shadow-sm">
+              <h2 className="text-[10px] font-bold uppercase tracking-[0.35em] text-primary">Live Stats</h2>
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <p className="text-2xl font-headline font-extrabold text-[#111111]">{profile.stats.activeListings}</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.22em] text-gray-400">Active</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-headline font-extrabold text-[#111111]">{profile.stats.soldListings}</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.22em] text-gray-400">Sold</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-headline font-extrabold text-[#111111]">{profile.stats.rentedListings}</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.22em] text-gray-400">Rented</p>
+                </div>
+              </div>
             </div>
           </aside>
 
           <div className="space-y-12">
-          {(profile.agent.specializations?.length || profile.agent.languages?.length) ? (
-            <div className="grid gap-6 lg:grid-cols-2">
-              <div className="border border-gray-100 bg-white p-6 shadow-sm">
-                <h2 className="text-lg font-semibold text-[#111111]">Specializations</h2>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {(profile.agent.specializations || []).map((item) => (
-                    <span key={item} className="border border-gray-200 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="border border-gray-100 bg-white p-6 shadow-sm">
-                <h2 className="text-lg font-semibold text-[#111111]">Languages</h2>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {(profile.agent.languages || []).map((item) => (
-                    <span key={item} className="bg-primary/10 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ) : null}
-
           <ReviewCarousel
             title="What My Clients Say"
             description={`Verified feedback from clients who worked directly with ${profile.agent.name}.`}

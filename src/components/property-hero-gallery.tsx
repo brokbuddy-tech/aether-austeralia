@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Video } from "lucide-react";
+import { ChevronLeft, ChevronRight, Images, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -79,18 +79,6 @@ export function PropertyHeroGallery({
               </Button>
             </div>
           ) : null}
-          <div className="absolute bottom-4 right-4 z-10">
-            <Button
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                openGallery(0);
-              }}
-              className="bg-white/80 backdrop-blur-md text-black border-none font-bold text-[8px] tracking-widest rounded-none hover:bg-white h-8 px-4 shadow-lg"
-            >
-              VIEW ALL {images.length} PHOTOS
-            </Button>
-          </div>
           <div className="absolute top-4 left-4 flex gap-2">
             <Badge className="bg-primary text-white rounded-none px-2 py-0.5 font-bold text-[7px] tracking-widest border-none shadow-lg uppercase">
               AETHER EXCLUSIVE
@@ -131,6 +119,10 @@ export function PropertyHeroGallery({
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
+            <span className="pointer-events-none absolute bottom-4 right-4 z-10 inline-flex items-center gap-2 bg-white/85 px-4 py-2 text-[8px] font-bold uppercase tracking-widest text-black shadow-lg backdrop-blur-md">
+              <Images className="h-4 w-4" />
+              View More
+            </span>
           </div>
         </div>
       </div>

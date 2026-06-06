@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { getListings } from "@/lib/api";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { getRequestAgencySlug } from "@/lib/server-agency";
+import { cleanQueryForCategory, matchesTemplateCategory, normalizeCategory } from "@/lib/search-utils";
 
 export default async function SearchPage({
   searchParams,
@@ -26,21 +27,22 @@ export default async function SearchPage({
 }) {
   const params = await searchParams;
   const agencySlug = await getRequestAgencySlug();
-  const searchQuery = params.q || "";
+  const category = normalizeCategory(params.category);
+  const searchQuery = cleanQueryForCategory(params.q, category) || "";
+  const headingLabel = searchQuery || category || "";
   const searchType = params.type || "buy";
 
   const searchHeaderImage = PlaceHolderImages.find(img => img.id === 'search-header');
   const apiParams: Record<string, string> = {
     q: searchQuery,
-    category: params.category || "",
     minPrice: params.minPrice || "",
     maxPrice: params.maxPrice || "",
     bedrooms: params.bedrooms || "",
     bathrooms: params.bathrooms || "",
     minArea: params.minArea || "",
     maxArea: params.maxArea || "",
-    page: params.page || "1",
-    limit: "12",
+    page: category ? "1" : (params.page || "1"),
+    limit: category ? "96" : "12",
   };
 
   if (searchType === "rent") {
@@ -57,7 +59,11 @@ export default async function SearchPage({
     apiParams.readiness = "OFFPLAN";
   }
 
-  const { properties, total, page, totalPages } = await getListings(apiParams, agencySlug);
+  const listingsResponse = await getListings(apiParams, agencySlug);
+  const properties = listingsResponse.properties.filter((property) => matchesTemplateCategory(property, category));
+  const total = category ? properties.length : listingsResponse.total;
+  const page = category ? 1 : listingsResponse.page;
+  const totalPages = category ? 1 : listingsResponse.totalPages;
   const nextPageParams = new URLSearchParams(
     Object.entries({ ...params, page: String(page + 1) })
       .filter(([, value]) => Boolean(value))
@@ -80,7 +86,7 @@ export default async function SearchPage({
         
         <div className="relative z-20 max-w-7xl mx-auto">
           <h1 className="font-headline font-extrabold text-3xl md:text-4xl mb-2 tracking-tighter uppercase">
-            Properties for {searchType.toUpperCase()} {searchQuery && `in ${searchQuery}`}
+            Properties for {searchType.toUpperCase()} {headingLabel && `in ${headingLabel}`}
           </h1>
           <p className="text-gray-200 font-body text-base">Found {total} results matching your search</p>
         </div>

@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import AdvancedFilters from "@/components/advanced-filters";
+import { cleanQueryForCategory, normalizeCategory } from "@/lib/search-utils";
 
 type FilterBarProps = {
   total: number;
@@ -45,6 +46,8 @@ export default function FilterBar({ total }: FilterBarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const selectedCategory = normalizeCategory(searchParams.get("category"));
+  const selectedLocation = cleanQueryForCategory(searchParams.get("q"), selectedCategory) || "all";
 
   const selectedPrice = useMemo(() => {
     const minPrice = searchParams.get("minPrice");
@@ -69,8 +72,8 @@ export default function FilterBar({ total }: FilterBarProps) {
         <div className="flex items-center gap-2 flex-shrink-0">
           <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">LOCATION</span>
           <Select
-            value={searchParams.get("q") || "all"}
-            onValueChange={(value) => applyParams((params) => setOrDelete(params, "q", value))}
+            value={selectedLocation}
+            onValueChange={(value) => applyParams((params) => setOrDelete(params, "q", cleanQueryForCategory(value, selectedCategory)))}
           >
             <SelectTrigger className="w-[180px] rounded-none border-gray-200 h-10 focus:ring-0">
               <SelectValue placeholder="All Australia" />
@@ -119,8 +122,8 @@ export default function FilterBar({ total }: FilterBarProps) {
         <div className="flex items-center gap-2 flex-shrink-0">
           <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">TYPE</span>
           <Select
-            value={searchParams.get("category") || "all"}
-            onValueChange={(value) => applyParams((params) => setOrDelete(params, "category", value))}
+            value={selectedCategory || "all"}
+            onValueChange={(value) => applyParams((params) => setOrDelete(params, "category", normalizeCategory(value)))}
           >
             <SelectTrigger className="w-[150px] rounded-none border-gray-200 h-10 focus:ring-0">
               <SelectValue placeholder="All Types" />
@@ -184,7 +187,7 @@ export default function FilterBar({ total }: FilterBarProps) {
               maxPrice: searchParams.get("maxPrice") || undefined,
               minArea: searchParams.get("minArea") || undefined,
               maxArea: searchParams.get("maxArea") || undefined,
-              categories: searchParams.get("category") ? [searchParams.get("category") as string] : undefined,
+              categories: normalizeCategory(searchParams.get("category")) ? [normalizeCategory(searchParams.get("category")) as string] : undefined,
             }}
             onApply={(filters) => applyParams((params) => {
               setOrDelete(params, "bedrooms", filters.bedrooms);
@@ -193,7 +196,7 @@ export default function FilterBar({ total }: FilterBarProps) {
               setOrDelete(params, "maxPrice", filters.maxPrice);
               setOrDelete(params, "minArea", filters.minArea);
               setOrDelete(params, "maxArea", filters.maxArea);
-              setOrDelete(params, "category", filters.categories?.[0]);
+              setOrDelete(params, "category", normalizeCategory(filters.categories?.[0]));
             })}
           />
         </div>

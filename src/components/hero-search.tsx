@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { suggestTrendingAreas } from "@/ai/flows/ai-property-search-trending-areas";
 import Link from "next/link";
 import AdvancedFilters from "@/components/advanced-filters";
+import { cleanQueryForCategory, normalizeCategory } from "@/lib/search-utils";
 
 export default function HeroSearch() {
   const router = useRouter();
@@ -45,14 +46,18 @@ export default function HeroSearch() {
   const navigateToSearch = (overrides?: Record<string, string | undefined>) => {
     const params = new URLSearchParams();
     params.set("type", overrides?.type || getSearchType());
+    const category = normalizeCategory(overrides?.category);
 
-    const nextQuery = overrides?.q ?? query.trim();
+    const nextQuery = cleanQueryForCategory(overrides?.q ?? query.trim(), category);
     if (nextQuery) {
       params.set("q", nextQuery);
     }
+    if (category) {
+      params.set("category", category);
+    }
 
     Object.entries(overrides || {}).forEach(([key, value]) => {
-      if (key === "type" || key === "q") return;
+      if (key === "type" || key === "q" || key === "category") return;
       if (value) {
         params.set(key, value);
       }

@@ -11,12 +11,20 @@ export async function generateMetadata(): Promise<Metadata> {
   const agencySlug = await getRequestAgencySlug();
   const siteConfig = await getSiteConfig(agencySlug);
   const agencyName = getAgencyDisplayName(siteConfig);
+  const logoIconUrl = siteConfig.profile?.logo?.trim() || undefined;
 
   return {
     title: siteConfig.branding?.metaTitle?.trim() || `${agencyName} | Australian Real Estate Experts`,
     description:
       siteConfig.branding?.metaDescription?.trim()
       || `Premium Australian real estate platform featuring modern coastal, hamptons, and urban terrace homes through ${agencyName}.`,
+    icons: logoIconUrl
+      ? {
+          icon: [{ url: logoIconUrl }],
+          shortcut: [{ url: logoIconUrl }],
+          apple: [{ url: logoIconUrl }],
+        }
+      : undefined,
   };
 }
 

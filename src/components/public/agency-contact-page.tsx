@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getSiteConfig, hasMeaningfulSiteConfig, type SiteConfig } from "@/lib/public-site";
+import { getSiteConfig, hasMeaningfulSiteConfig, submitOrgInquiry, type SiteConfig } from "@/lib/public-site";
 import { prefixAgencyPath, resolveAgencySlugFromPathname } from "@/lib/agency-routing";
 
 function getDisplayName(siteConfig: SiteConfig | null) {
@@ -30,6 +30,8 @@ export function AetherContactPageContent({
   const pathname = usePathname();
   const agencySlug = resolveAgencySlugFromPathname(pathname);
   const [siteConfig, setSiteConfig] = useState<SiteConfig | null>(initialSiteConfig);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFeedback, setSubmitFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
   useEffect(() => {
     setSiteConfig(initialSiteConfig);
@@ -68,6 +70,43 @@ export function AetherContactPageContent({
     siteConfig?.profile?.contact?.whatsappNumber || siteConfig?.branding?.whatsapp || siteConfig?.leadAgent?.whatsapp,
     `Hi ${displayName}, I would like to speak with your team.`
   );
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitFeedback(null);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const firstName = String(formData.get("firstName") || "").trim();
+    const lastName = String(formData.get("lastName") || "").trim();
+
+    try {
+      await submitOrgInquiry({
+        name: [firstName, lastName].filter(Boolean).join(" "),
+        email: String(formData.get("email") || "").trim(),
+        phone: String(formData.get("phone") || "").trim(),
+        message: String(formData.get("message") || "").trim(),
+        templateName: "Aether Australia",
+        formContext: "contact-page",
+      }, agencySlug);
+
+      form.reset();
+      setSubmitFeedback({
+        type: "success",
+        message: `Your inquiry has been sent. ${displayName} will be in touch shortly.`,
+      });
+    } catch (error) {
+      setSubmitFeedback({
+        type: "error",
+        message: error instanceof Error ? error.message : "Please try again in a moment.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-white pt-[72px]">
@@ -160,44 +199,55 @@ export function AetherContactPageContent({
           <h2 className="font-headline text-3xl font-extrabold uppercase tracking-tight text-[#111111]">
             Send a public inquiry
           </h2>
-          <form className="mt-8 space-y-6">
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-[0.25em] text-gray-400">
                   First name
                 </label>
-                <Input className="h-14 rounded-none border-gray-200 bg-white" />
+                <Input name="firstName" className="h-14 rounded-none border-gray-200 bg-white" required />
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-[0.25em] text-gray-400">
                   Last name
                 </label>
-                <Input className="h-14 rounded-none border-gray-200 bg-white" />
+                <Input name="lastName" className="h-14 rounded-none border-gray-200 bg-white" required />
               </div>
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-[0.25em] text-gray-400">
                 Email
               </label>
-              <Input type="email" className="h-14 rounded-none border-gray-200 bg-white" />
+              <Input name="email" type="email" className="h-14 rounded-none border-gray-200 bg-white" required />
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-[0.25em] text-gray-400">
                 Phone
               </label>
-              <Input type="tel" className="h-14 rounded-none border-gray-200 bg-white" />
+              <Input name="phone" type="tel" className="h-14 rounded-none border-gray-200 bg-white" />
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-[0.25em] text-gray-400">
                 Message
               </label>
               <textarea
+                name="message"
                 className="min-h-[160px] w-full rounded-none border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:border-primary"
                 placeholder={`Tell ${displayName} how the team can help.`}
+                required
+                minLength={10}
               />
             </div>
-            <Button type="button" className="w-full rounded-none border-2 border-primary bg-white text-primary hover:bg-primary hover:text-white font-bold h-16 uppercase tracking-[0.25em]">
-              Submit inquiry
+            {submitFeedback ? (
+              <p
+                className={submitFeedback.type === "success" ? "text-sm font-semibold text-emerald-700" : "text-sm font-semibold text-red-600"}
+                aria-live="polite"
+              >
+                {submitFeedback.message}
+              </p>
+            ) : null}
+            <Button type="submit" disabled={isSubmitting} className="w-full rounded-none border-2 border-primary bg-white text-primary hover:bg-primary hover:text-white font-bold h-16 uppercase tracking-[0.25em] disabled:opacity-70">
+              {isSubmitting ? "Submitting..." : "Submit inquiry"}
             </Button>
           </form>
         </div>

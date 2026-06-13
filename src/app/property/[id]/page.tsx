@@ -150,20 +150,24 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
               </p>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6 border-y border-gray-100">
-                <div className="space-y-1">
-                  <span className="text-[6px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BEDROOMS</span>
-                  <div className="flex items-center gap-1.5">
-                    <Bed className="w-3.5 h-3.5 text-primary/30" />
-                    <span className="font-extrabold text-sm">{propertyData.beds}</span>
+                {propertyData.beds > 0 && (
+                  <div className="space-y-1">
+                    <span className="text-[6px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BEDROOMS</span>
+                    <div className="flex items-center gap-1.5">
+                      <Bed className="w-3.5 h-3.5 text-primary/30" />
+                      <span className="font-extrabold text-sm">{propertyData.beds}</span>
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-1">
-                  <span className="text-[6px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BATHROOMS</span>
-                  <div className="flex items-center gap-1.5">
-                    <Bath className="w-3.5 h-3.5 text-primary/30" />
-                    <span className="font-extrabold text-sm">{propertyData.baths}</span>
+                )}
+                {propertyData.baths > 0 && (
+                  <div className="space-y-1">
+                    <span className="text-[6px] font-bold text-gray-400 tracking-[0.2em] uppercase block">BATHROOMS</span>
+                    <div className="flex items-center gap-1.5">
+                      <Bath className="w-3.5 h-3.5 text-primary/30" />
+                      <span className="font-extrabold text-sm">{propertyData.baths}</span>
+                    </div>
                   </div>
-                </div>
+                )}
                 <div className="space-y-1">
                   <span className="text-[6px] font-bold text-gray-400 tracking-[0.2em] uppercase block">CAR SPACES</span>
                   <div className="flex items-center gap-1.5">

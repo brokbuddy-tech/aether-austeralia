@@ -70,8 +70,8 @@ function ListingPreview({
           </p>
         </div>
         <div className="grid grid-cols-3 gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
-          <span>{listing.beds} beds</span>
-          <span>{listing.baths} baths</span>
+          {listing.beds > 0 && <span>{listing.beds} beds</span>}
+          {listing.baths > 0 && <span>{listing.baths} baths</span>}
           <span>{listing.cars} cars</span>
         </div>
         <div className="border-t border-gray-100 pt-4">

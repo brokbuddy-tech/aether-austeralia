@@ -269,7 +269,24 @@ type RawListing = {
     tourUrl?: string | null;
     videoTourUrl?: string | null;
     matterportUrl?: string | null;
+    dldPermitNo?: string | null;
+    permitNumber?: string | null;
+    trakheesi?: string | null;
+    trakheesiPermit?: string | null;
+    reraPermit?: string | null;
+    reraNumber?: string | null;
+    reraProjectNumber?: string | null;
+    dldPermitLink?: string | null;
+    floorPlans?: any[] | null;
   } | null;
+  floorPlans?: any[];
+  dldPermitNo?: string;
+  permitNumber?: string;
+  trakheesi?: string;
+  reraPermit?: string;
+  reraNumber?: string;
+  reraProjectNumber?: string;
+  dldPermitLink?: string;
   bedrooms?: number | string | null;
   bathrooms?: number | string | null;
   builtUpArea?: number | string | null;
@@ -295,7 +312,9 @@ type RawListing = {
       publicEmail?: string | null;
       whatsapp?: string | null;
       slug?: string | null;
+      brn?: string | null;
     } | null;
+    licenseNumber?: string | null;
   } | null;
   agent?: {
     name?: string | null;
@@ -305,6 +324,8 @@ type RawListing = {
     phone?: string | null;
     email?: string | null;
     whatsapp?: string | null;
+    brn?: string | null;
+    licenseNumber?: string | null;
   } | null;
   organization?: {
     name?: string;
@@ -346,6 +367,12 @@ export type AetherProperty = {
   recentlyListed?: boolean;
   latitude: number | null;
   longitude: number | null;
+  floorPlans?: any[];
+  dldPermitNo?: string;
+  trakheesi?: string;
+  reraPermit?: string;
+  dldPermitLink?: string;
+  agentBrn?: string;
 };
 
 export type AetherPropertyResults = {
@@ -523,6 +550,12 @@ export function mapListingToAetherProperty(listing: RawListing, agencySlug?: str
     recentlyListed: isRecentlyListed(createdAt),
     latitude: getNumberValue(listing.latitude) ?? null,
     longitude: getNumberValue(listing.longitude) ?? null,
+    floorPlans: Array.isArray(listing.floorPlans) ? listing.floorPlans : Array.isArray(listing.fields?.floorPlans) ? listing.fields?.floorPlans : [],
+    dldPermitNo: getStringValue(listing.dldPermitNo, listing.permitNumber, listing.fields?.dldPermitNo, listing.fields?.permitNumber, listing.fields?.trakheesiPermit),
+    trakheesi: getStringValue(listing.trakheesi, listing.permitNumber, listing.fields?.trakheesi, listing.fields?.permitNumber, listing.fields?.trakheesiPermit),
+    reraPermit: getStringValue(listing.reraPermit, listing.reraNumber, listing.reraProjectNumber, listing.fields?.reraPermit, listing.fields?.reraNumber, listing.fields?.reraProjectNumber),
+    dldPermitLink: getStringValue(listing.dldPermitLink, listing.fields?.dldPermitLink) || undefined,
+    agentBrn: getStringValue(listing.agent?.brn, listing.agent?.licenseNumber, listing.broker?.brokerProfile?.brn, listing.broker?.licenseNumber) || undefined,
   };
 }
 

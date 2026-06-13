@@ -74,14 +74,23 @@ export default function PropertyCard({ property }: { property: PropertyProps }) 
 
         {/* Minimalist Metadata Overlay (Bottom-Left) */}
         <div className="absolute bottom-4 left-4 flex items-center gap-4 bg-[#111111]/90 backdrop-blur-md px-4 py-2.5 text-white border border-white/10 shadow-xl">
-          <div className="flex items-center gap-1.5">
-            <Bed className="w-3.5 h-3.5 opacity-80" />
-            <span className="font-bold text-xs">{property.beds}</span>
-          </div>
-          <div className="flex items-center gap-1.5 border-l border-white/20 pl-4">
-            <Bath className="w-3.5 h-3.5 opacity-80" />
-            <span className="font-bold text-xs">{property.baths}</span>
-          </div>
+          {property.beds > 0 ? (
+            <div className="flex items-center gap-1.5">
+              <Bed className="w-3.5 h-3.5 opacity-80" />
+              <span className="font-bold text-xs">{property.beds}</span>
+            </div>
+          ) : property.type === 'Studio' || property.category === 'Studio' ? (
+            <div className="flex items-center gap-1.5">
+              <Bed className="w-3.5 h-3.5 opacity-80" />
+              <span className="font-bold text-xs">Studio</span>
+            </div>
+          ) : null}
+          {property.baths > 0 && (
+            <div className="flex items-center gap-1.5 border-l border-white/20 pl-4">
+              <Bath className="w-3.5 h-3.5 opacity-80" />
+              <span className="font-bold text-xs">{property.baths}</span>
+            </div>
+          )}
           <div className="flex items-center gap-1.5 border-l border-white/20 pl-4">
             <Car className="w-3.5 h-3.5 opacity-80" />
             <span className="font-bold text-xs">{property.cars}</span>

@@ -253,7 +253,7 @@ export default function AdvancedFilters({ initialFilters, onApply, resultCount =
             {/* Property Types */}
             <FilterSection title="Property Type">
               <div className="flex flex-wrap gap-2">
-                {["House", "Apartment", "Townhouse", "Terrace", "Acreage", "Villa", "Duplex", "Land"].map((type) => (
+                {["House", "Apartment/flat", "Townhouse", "Unit", "Duplex / Semi-detached", "Studio", "Penthouse", "Villa", "Terrace", "Acreage", "Rural", "Block of Units", "Alpine", "Retirement Living", "Land"].map((type) => (
                   <button
                     key={type}
                     onClick={() => togglePropertyType(type)}

@@ -28,9 +28,19 @@ const PRICE_OPTIONS = [
 const TYPE_OPTIONS = [
   { value: "all", label: "All Types" },
   { value: "House", label: "House" },
-  { value: "Apartment", label: "Apartment" },
-  { value: "Acreage", label: "Acreage" },
+  { value: "Apartment/flat", label: "Apartment / Flat" },
   { value: "Townhouse", label: "Townhouse" },
+  { value: "Unit", label: "Unit" },
+  { value: "Duplex / Semi-detached", label: "Duplex / Semi-detached" },
+  { value: "Studio", label: "Studio" },
+  { value: "Penthouse", label: "Penthouse" },
+  { value: "Villa", label: "Villa" },
+  { value: "Terrace", label: "Terrace" },
+  { value: "Acreage", label: "Acreage" },
+  { value: "Rural", label: "Rural" },
+  { value: "Block of Units", label: "Block of Units" },
+  { value: "Alpine", label: "Alpine" },
+  { value: "Retirement Living", label: "Retirement Living" },
   { value: "Land", label: "Land" },
 ];
 

@@ -553,7 +553,7 @@ export function mapListingToAetherProperty(listing: RawListing, agencySlug?: str
     floorPlans: Array.isArray(listing.floorPlans) ? listing.floorPlans : Array.isArray(listing.fields?.floorPlans) ? listing.fields?.floorPlans : [],
     dldPermitNo: getStringValue(listing.dldPermitNo, listing.permitNumber, listing.fields?.dldPermitNo, listing.fields?.permitNumber, listing.fields?.trakheesiPermit),
     trakheesi: getStringValue(listing.trakheesi, listing.permitNumber, listing.fields?.trakheesi, listing.fields?.permitNumber, listing.fields?.trakheesiPermit),
-    reraPermit: getStringValue(listing.reraPermit, listing.reraNumber, listing.reraProjectNumber, listing.fields?.reraPermit, listing.fields?.reraNumber, listing.fields?.reraProjectNumber),
+    reraPermit: getStringValue(listing.reraPermit, listing.reraNumber, listing.reraProjectNumber != null ? String(listing.reraProjectNumber) : undefined, listing.fields?.reraPermit, listing.fields?.reraNumber, listing.fields?.reraProjectNumber != null ? String(listing.fields.reraProjectNumber) : undefined),
     dldPermitLink: getStringValue(listing.dldPermitLink, listing.fields?.dldPermitLink) || undefined,
     agentBrn: getStringValue(listing.agent?.brn, listing.agent?.licenseNumber, listing.broker?.brokerProfile?.brn, listing.broker?.licenseNumber) || undefined,
   };

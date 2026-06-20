@@ -219,6 +219,53 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
             {/* Auction Details Section */}
             <AuctionBlock />
 
+            {/* Regulatory Information */}
+            {(propertyData.dldPermitNo || propertyData.trakheesi || propertyData.reraPermit || propertyData.agentBrn || propertyData.dldPermitLink) && (
+              <div className="mb-12 p-6 border border-gray-100 bg-gray-50/50">
+                <h3 className="text-[8px] font-bold text-gray-400 tracking-[0.4em] uppercase mb-5 flex items-center gap-2">
+                  <ShieldCheck className="w-3.5 h-3.5" /> REGULATORY INFORMATION
+                </h3>
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-6">
+                  <div className="space-y-3 flex-1">
+                    {(propertyData.trakheesi || propertyData.dldPermitNo) && (
+                      <div className="flex justify-between items-center border-b border-gray-100 pb-2">
+                        <span className="text-[10px] text-gray-400 font-bold tracking-[0.15em] uppercase">Permit Number</span>
+                        <span className="text-[11px] font-extrabold tracking-tight">{propertyData.trakheesi || propertyData.dldPermitNo}</span>
+                      </div>
+                    )}
+                    {propertyData.reraPermit && (
+                      <div className="flex justify-between items-center border-b border-gray-100 pb-2">
+                        <span className="text-[10px] text-gray-400 font-bold tracking-[0.15em] uppercase">RERA Licence</span>
+                        <span className="text-[11px] font-extrabold tracking-tight">{propertyData.reraPermit}</span>
+                      </div>
+                    )}
+                    {propertyData.agentBrn && (
+                      <div className="flex justify-between items-center border-b border-gray-100 pb-2">
+                        <span className="text-[10px] text-gray-400 font-bold tracking-[0.15em] uppercase">BRN</span>
+                        <span className="text-[11px] font-extrabold tracking-tight">{propertyData.agentBrn}</span>
+                      </div>
+                    )}
+                  </div>
+                  {propertyData.dldPermitLink && (
+                    <div className="flex flex-col items-center shrink-0">
+                      <div className="bg-white p-2 border border-gray-100 rounded">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(propertyData.dldPermitLink)}`}
+                          alt="Permit QR Code"
+                          width={100}
+                          height={100}
+                        />
+                      </div>
+                      <a href={propertyData.dldPermitLink} target="_blank" rel="noopener noreferrer" className="mt-2 text-[8px] font-bold text-primary tracking-[0.2em] uppercase hover:underline">
+                        VERIFY PERMIT →
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Location Map Section */}
             <PropertyMap
               address={propertyData.address}
